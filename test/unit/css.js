@@ -3,7 +3,11 @@ if ( jQuery.css ) {
 QUnit.module( "css", { teardown: moduleTeardown } );
 
 QUnit.test( "css(String|Hash)", function( assert ) {
+<<<<<<< HEAD
 	assert.expect( 43 );
+=======
+	assert.expect( 42 );
+>>>>>>> refs/remotes/jquery/master
 
 	assert.equal( jQuery( "#qunit-fixture" ).css( "display" ), "block", "Check for css property \"display\"" );
 
@@ -58,12 +62,18 @@ QUnit.test( "css(String|Hash)", function( assert ) {
 	jQuery( "#foo" ).css( { "opacity": "" } );
 	assert.equal( jQuery( "#foo" ).css( "opacity" ), "1", "Assert opacity is 1 when set to an empty String" );
 
+<<<<<<< HEAD
 	assert.equal( jQuery( "#empty" ).css( "opacity" ), "0", "Assert opacity is accessible via filter property set in stylesheet in IE" );
 	jQuery( "#empty" ).css( { "opacity": "1" } );
 	assert.equal( jQuery( "#empty" ).css( "opacity" ), "1", "Assert opacity is taken from style attribute when set vs stylesheet in IE with filters" );
 	jQuery.support.opacity ?
 		assert.ok( true, "Requires the same number of tests" ) :
 		assert.ok( ~jQuery( "#empty" )[ 0 ].currentStyle.filter.indexOf( "gradient" ), "Assert setting opacity doesn't overwrite other filters of the stylesheet in IE" );
+=======
+	assert.equal( jQuery( "#empty" ).css( "opacity" ), "0", "Assert opacity is accessible" );
+	jQuery( "#empty" ).css( { "opacity": "1" } );
+	assert.equal( jQuery( "#empty" ).css( "opacity" ), "1", "Assert opacity is taken from style attribute when set" );
+>>>>>>> refs/remotes/jquery/master
 
 	div = jQuery( "#nothiddendiv" );
 	child = jQuery( "#nothiddendivchild" );
@@ -111,6 +121,7 @@ QUnit.test( "css(String|Hash)", function( assert ) {
 	// Test null
 	child.css( "font-size", null );
 	assert.equal( child[ 0 ].style.fontSize, old, "Make sure font-size isn't changed on null." );
+<<<<<<< HEAD
 
 	assert.strictEqual( child.css( "x-fake" ), undefined, "Make sure undefined is returned from css(nonexistent)." );
 
@@ -132,6 +143,29 @@ QUnit.test( "css() explicit and relative values", function( assert ) {
 	$elem.css( { width: "+=9" } );
 	assert.equal( $elem.css( "width" ), "10px", "'+=9' on width (hash)" );
 
+=======
+
+	assert.strictEqual( child.css( "x-fake" ), undefined, "Make sure undefined is returned from css(nonexistent)." );
+
+	div = jQuery( "<div/>" ).css( { position: "absolute", "z-index": 1000 } ).appendTo( "#qunit-fixture" );
+	assert.strictEqual( div.css( "z-index" ), "1000",
+		"Make sure that a string z-index is returned from css('z-index') (#14432)." );
+} );
+
+QUnit.test( "css() explicit and relative values", function( assert ) {
+	assert.expect( 29 );
+
+	var $elem = jQuery( "#nothiddendiv" );
+
+	$elem.css( { "width": 1, "height": 1, "paddingLeft": "1px", "opacity": 1 } );
+	assert.equal( $elem.css( "width" ), "1px", "Initial css set or width/height works (hash)" );
+	assert.equal( $elem.css( "paddingLeft" ), "1px", "Initial css set of paddingLeft works (hash)" );
+	assert.equal( $elem.css( "opacity" ), "1", "Initial css set of opacity works (hash)" );
+
+	$elem.css( { width: "+=9" } );
+	assert.equal( $elem.css( "width" ), "10px", "'+=9' on width (hash)" );
+
+>>>>>>> refs/remotes/jquery/master
 	$elem.css( { "width": "-=9" } );
 	assert.equal( $elem.css( "width" ), "1px", "'-=9' on width (hash)" );
 
@@ -144,7 +178,11 @@ QUnit.test( "css() explicit and relative values", function( assert ) {
 	$elem.css( "width", "+=9" );
 	assert.equal( $elem.css( "width" ), "10px", "'+=9' on width (params)" );
 
+<<<<<<< HEAD
 	$elem.css( "width", "-=9" ) ;
+=======
+	$elem.css( "width", "-=9" );
+>>>>>>> refs/remotes/jquery/master
 	assert.equal( $elem.css( "width" ), "1px", "'-=9' on width (params)" );
 
 	$elem.css( "width", "+=9px" );
@@ -209,7 +247,11 @@ QUnit.test( "css() explicit and relative values", function( assert ) {
 } );
 
 QUnit.test( "css() non-px relative values (gh-1711)", function( assert ) {
+<<<<<<< HEAD
 	assert.expect( 16 );
+=======
+	assert.expect( 17 );
+>>>>>>> refs/remotes/jquery/master
 
 	var cssCurrent,
 		units = {},
@@ -271,10 +313,14 @@ QUnit.test( "css() non-px relative values (gh-1711)", function( assert ) {
 	add( "lineHeight",  30, "pc" );
 	add( "lineHeight",   1, "cm" );
 	add( "lineHeight", -20, "mm" );
+<<<<<<< HEAD
 
 	// Opera 12 does something funky for this one
 	// Just disabling for 1.12
 	// add( "lineHeight",  50,  "%" );
+=======
+	add( "lineHeight",  50,  "%" );
+>>>>>>> refs/remotes/jquery/master
 } );
 
 QUnit.test( "css(String, Object)", function( assert ) {
@@ -352,6 +398,7 @@ QUnit.test( "css(Array)", function( assert ) {
 	assert.deepEqual( elem.css( expectedMany ).css( [ "overflow", "width" ] ), expectedMany, "Getting multiple element array" );
 	assert.deepEqual( elem.css( expectedSingle ).css( [ "width" ] ), expectedSingle, "Getting single element array" );
 } );
+<<<<<<< HEAD
 
 if ( !jQuery.support.opacity ) {
 	QUnit.test( "css(String, Object) for MSIE", function( assert ) {
@@ -386,6 +433,8 @@ if ( !jQuery.support.opacity ) {
 		assert.ok( hasFilter( test2 ), "Filter attribute remains on element that had filter in stylesheet" );
 	} );
 }
+=======
+>>>>>>> refs/remotes/jquery/master
 
 QUnit.test( "css(String, Function)", function( assert ) {
 	assert.expect( 3 );
@@ -394,8 +443,13 @@ QUnit.test( "css(String, Function)", function( assert ) {
 		sizes = [ "10px", "20px", "30px" ];
 
 	jQuery( "<div id='cssFunctionTest'><div class='cssFunction'></div>" +
+<<<<<<< HEAD
 				 "<div class='cssFunction'></div>" +
 				 "<div class='cssFunction'></div></div>" )
+=======
+				"<div class='cssFunction'></div>" +
+				"<div class='cssFunction'></div></div>" )
+>>>>>>> refs/remotes/jquery/master
 		.appendTo( "body" );
 
 	index = 0;
@@ -425,8 +479,13 @@ QUnit.test( "css(String, Function) with incoming value", function( assert ) {
 		sizes = [ "10px", "20px", "30px" ];
 
 	jQuery( "<div id='cssFunctionTest'><div class='cssFunction'></div>" +
+<<<<<<< HEAD
 				 "<div class='cssFunction'></div>" +
 				 "<div class='cssFunction'></div></div>" )
+=======
+				"<div class='cssFunction'></div>" +
+				"<div class='cssFunction'></div></div>" )
+>>>>>>> refs/remotes/jquery/master
 		.appendTo( "body" );
 
 	index = 0;
@@ -456,8 +515,13 @@ QUnit.test( "css(Object) where values are Functions", function( assert ) {
 		sizes = [ "10px", "20px", "30px" ];
 
 	jQuery( "<div id='cssFunctionTest'><div class='cssFunction'></div>" +
+<<<<<<< HEAD
 				 "<div class='cssFunction'></div>" +
 				 "<div class='cssFunction'></div></div>" )
+=======
+				"<div class='cssFunction'></div>" +
+				"<div class='cssFunction'></div></div>" )
+>>>>>>> refs/remotes/jquery/master
 		.appendTo( "body" );
 
 	index = 0;
@@ -487,8 +551,13 @@ QUnit.test( "css(Object) where values are Functions with incoming values", funct
 		sizes = [ "10px", "20px", "30px" ];
 
 	jQuery( "<div id='cssFunctionTest'><div class='cssFunction'></div>" +
+<<<<<<< HEAD
 				 "<div class='cssFunction'></div>" +
 				 "<div class='cssFunction'></div></div>" )
+=======
+				"<div class='cssFunction'></div>" +
+				"<div class='cssFunction'></div></div>" )
+>>>>>>> refs/remotes/jquery/master
 		.appendTo( "body" );
 
 	index = 0;
@@ -507,6 +576,7 @@ QUnit.test( "css(Object) where values are Functions with incoming values", funct
 		index++;
 		return computedSize;
 	} } );
+<<<<<<< HEAD
 
 	jQuery( "#cssFunctionTest" ).remove();
 } );
@@ -538,6 +608,24 @@ QUnit.test( "show();", function( assert ) {
 
 	assert.equal( jQuery.css( hiddendiv[ 0 ], "display" ), "none", "hiddendiv is display: none" );
 
+=======
+
+	jQuery( "#cssFunctionTest" ).remove();
+} );
+
+// .show(), .hide(), can be excluded from the build
+if ( jQuery.fn.show && jQuery.fn.hide ) {
+
+QUnit.test( "show()", function( assert ) {
+
+	assert.expect( 18 );
+
+	var hiddendiv, div, pass, test;
+		hiddendiv = jQuery( "div.hidden" );
+
+	assert.equal( jQuery.css( hiddendiv[ 0 ], "display" ), "none", "hiddendiv is display: none" );
+
+>>>>>>> refs/remotes/jquery/master
 	hiddendiv.css( "display", "block" );
 	assert.equal( jQuery.css( hiddendiv[ 0 ], "display" ), "block", "hiddendiv is display: block" );
 
@@ -555,10 +643,19 @@ QUnit.test( "show();", function( assert ) {
 	} );
 	assert.ok( pass, "Show" );
 
+<<<<<<< HEAD
 	// #show-tests * is set display: none in CSS
 	jQuery( "#qunit-fixture" ).append( "<div id='show-tests'><div><p><a href='#'></a></p><code></code><pre></pre><span></span></div><table><thead><tr><th></th></tr></thead><tbody><tr><td></td></tr></tbody></table><ul><li></li></ul></div><table id='test-table'></table>" );
 	old = jQuery( "#test-table" ).show().css( "display" ) !== "table";
 	jQuery( "#test-table" ).remove();
+=======
+	jQuery(
+		"<div id='show-tests'>" +
+		"<div><p><a href='#'></a></p><code></code><pre></pre><span></span></div>" +
+		"<table><thead><tr><th></th></tr></thead><tbody><tr><td></td></tr></tbody></table>" +
+		"<ul><li></li></ul></div>"
+	).appendTo( "#qunit-fixture" ).find( "*" ).css( "display", "none" );
+>>>>>>> refs/remotes/jquery/master
 
 	test = {
 		"div": "block",
@@ -567,6 +664,7 @@ QUnit.test( "show();", function( assert ) {
 		"code": "inline",
 		"pre": "block",
 		"span": "inline",
+<<<<<<< HEAD
 		"table": old ? "block" : "table",
 		"thead": old ? "block" : "table-header-group",
 		"tbody": old ? "block" : "table-row-group",
@@ -575,6 +673,16 @@ QUnit.test( "show();", function( assert ) {
 		"td": old ? "block" : "table-cell",
 		"ul": "block",
 		"li": old ? "block" : "list-item"
+=======
+		"table": "table",
+		"thead": "table-header-group",
+		"tbody": "table-row-group",
+		"tr": "table-row",
+		"th": "table-cell",
+		"td": "table-cell",
+		"ul": "block",
+		"li": "list-item"
+>>>>>>> refs/remotes/jquery/master
 	};
 
 	jQuery.each( test, function( selector, expected ) {
@@ -587,6 +695,7 @@ QUnit.test( "show();", function( assert ) {
 	jQuery( "<div>test</div> text <span>test</span>" ).hide().remove();
 } );
 
+<<<<<<< HEAD
 test( "show() resolves correct default display #8099", function() {
 	expect( 7 );
 	var tt8099 = jQuery( "<tt/>" ).appendTo( "body" ),
@@ -609,9 +718,53 @@ test( "show() resolves correct default display #8099", function() {
 
 QUnit.test( "show() resolves correct default display for detached nodes", function( assert ) {
 	assert.expect( 13 );
+=======
+QUnit.test( "show/hide detached nodes", function( assert ) {
+	assert.expect( 19 );
 
-	var div, span, tr, trDisplay;
+	var div, span, tr;
 
+	div = jQuery( "<div>" ).hide();
+	assert.equal( div.css( "display" ), "none", "hide() updates inline style of a detached div" );
+	div.appendTo( "#qunit-fixture" );
+	assert.equal( div.css( "display" ), "none",
+		"A hidden-while-detached div is hidden after attachment" );
+	div.show();
+	assert.equal( div.css( "display" ), "block",
+		"A hidden-while-detached div can be shown after attachment" );
+
+	div = jQuery( "<div class='hidden'>" );
+	div.show().appendTo( "#qunit-fixture" );
+	assert.equal( div.css( "display" ), "none",
+		"A shown-while-detached div can be hidden by the CSS cascade" );
+
+	div = jQuery( "<div><div class='hidden'></div></div>" ).children( "div" );
+	div.show().appendTo( "#qunit-fixture" );
+	assert.equal( div.css( "display" ), "none",
+		"A shown-while-detached div inside a visible div can be hidden by the CSS cascade" );
+
+	span = jQuery( "<span class='hidden'/>" );
+	span.show().appendTo( "#qunit-fixture" );
+	assert.equal( span.css( "display" ), "none",
+		"A shown-while-detached span can be hidden by the CSS cascade" );
+
+	div = jQuery( "div.hidden" );
+	div.detach().show();
+	assert.ok( !div[ 0 ].style.display,
+		"show() does not update inline style of a cascade-hidden-before-detach div" );
+	div.appendTo( "#qunit-fixture" );
+	assert.equal( div.css( "display" ), "none",
+		"A shown-while-detached cascade-hidden div is hidden after attachment" );
+	div.remove();
+>>>>>>> refs/remotes/jquery/master
+
+	span = jQuery( "<span class='hidden'/>" );
+	span.appendTo( "#qunit-fixture" ).detach().show().appendTo( "#qunit-fixture" );
+	assert.equal( span.css( "display" ), "none",
+		"A shown-while-detached cascade-hidden span is hidden after attachment" );
+	span.remove();
+
+<<<<<<< HEAD
 	div = jQuery( "<div class='hidden'>" );
 	div.show().appendTo( "#qunit-fixture" );
 	equal( div.css( "display" ), "block", "Make sure a detached, pre-hidden( through stylesheets ) div is visible." );
@@ -640,8 +793,69 @@ QUnit.test( "show() resolves correct default display for detached nodes", functi
 	div.detach().show();
 
 	equal( div.css( "display" ), "block", "Make sure a detached( through detach() ), pre-hidden div is visible." );
+=======
+	div = jQuery( document.createElement( "div" ) );
+	div.show().appendTo( "#qunit-fixture" );
+	assert.ok( !div[ 0 ].style.display, "A shown-while-detached div has no inline style" );
+	assert.equal( div.css( "display" ), "block",
+		"A shown-while-detached div has default display after attachment" );
 	div.remove();
 
+	div = jQuery( "<div style='display: none'>" );
+	div.show();
+	assert.equal( div[ 0 ].style.display, "",
+		"show() updates inline style of a detached inline-hidden div" );
+	div.appendTo( "#qunit-fixture" );
+	assert.equal( div.css( "display" ), "block",
+		"A shown-while-detached inline-hidden div has default display after attachment" );
+
+	div = jQuery( "<div><div style='display: none'></div></div>" ).children( "div" );
+	div.show().appendTo( "#qunit-fixture" );
+	assert.equal( div.css( "display" ), "block",
+		"A shown-while-detached inline-hidden div inside a visible div has default display " +
+		"after attachment" );
+
+	span = jQuery( "<span style='display: none'/>" );
+	span.show();
+	assert.equal( span[ 0 ].style.display, "",
+		"show() updates inline style of a detached inline-hidden span" );
+	span.appendTo( "#qunit-fixture" );
+	assert.equal( span.css( "display" ), "inline",
+		"A shown-while-detached inline-hidden span has default display after attachment" );
+
+	div = jQuery( "<div style='display: inline'/>" );
+	div.show().appendTo( "#qunit-fixture" );
+	assert.equal( div.css( "display" ), "inline",
+		"show() does not update inline style of a detached inline-visible div" );
+	div.remove();
+
+	tr = jQuery( "<tr/>" );
+	jQuery( "#table" ).append( tr );
+	tr.detach().hide().show();
+
+	assert.ok( !tr[ 0 ].style.display, "Not-hidden detached tr elements have no inline style" );
+	tr.remove();
+
+	span = jQuery( "<span/>" ).hide().show();
+	assert.ok( !span[ 0 ].style.display, "Not-hidden detached span elements have no inline style" );
+	span.remove();
+} );
+
+QUnit.test( "hide hidden elements (bug #7141)", function( assert ) {
+	assert.expect( 3 );
+
+	var div = jQuery( "<div style='display:none'></div>" ).appendTo( "#qunit-fixture" );
+	assert.equal( div.css( "display" ), "none", "Element is hidden by default" );
+	div.hide();
+	assert.ok( !jQuery._data( div, "olddisplay" ), "olddisplay is undefined after hiding an already-hidden element" );
+	div.show();
+	assert.equal( div.css( "display" ), "block", "Show a double-hidden element" );
+
+>>>>>>> refs/remotes/jquery/master
+	div.remove();
+} );
+
+<<<<<<< HEAD
 	span = jQuery( "<span>" );
 	span.appendTo( "#qunit-fixture" ).detach().show().appendTo( "#qunit-fixture" );
 	equal( span.css( "display" ), "inline", "Make sure a detached( through detach() ), pre-hidden span has default display." );
@@ -666,10 +880,25 @@ QUnit.test( "show() resolves correct default display for detached nodes", functi
 	jQuery( "#table" ).append( tr );
 	trDisplay = tr.css( "display" );
 	tr.detach().hide().show();
+=======
+QUnit.test( "show() after hide() should always set display to initial value (#14750)", function( assert ) {
+	assert.expect( 1 );
 
-	equal( tr[ 0 ].style.display, trDisplay, "For detached tr elements, display should always be like for attached trs" );
-	tr.remove();
+	var div = jQuery( "<div />" ),
+		fixture = jQuery( "#qunit-fixture" );
 
+	fixture.append( div );
+
+	div.css( "display", "inline" ).hide().show().css( "display", "list-item" ).hide().show();
+	assert.equal( div.css( "display" ), "list-item", "should get last set display value" );
+} );
+
+QUnit.test( "show/hide 3.0, default display", function( assert ) {
+>>>>>>> refs/remotes/jquery/master
+
+	assert.expect( 36 );
+
+<<<<<<< HEAD
 	span = jQuery( "<span/>" ).hide().show();
 	equal( span[ 0 ].style.display, "inline", "For detached span elements, display should always be inline" );
 	span.remove();
@@ -718,6 +947,248 @@ test( "show() resolves correct default display when iframe display:none #12904",
 } );
 
 QUnit.test( "toggle()", function( assert ) {
+=======
+	var i,
+		$elems = jQuery( "<div/>" )
+			.appendTo( "#qunit-fixture" )
+			.html( "<div data-expected-display='block'/>" +
+				"<span data-expected-display='inline'/>" +
+				"<ul><li data-expected-display='list-item'/></ul>" )
+			.find( "[data-expected-display]" );
+
+	$elems.each( function() {
+		var $elem = jQuery( this ),
+			name = this.nodeName,
+			expected = this.getAttribute( "data-expected-display" ),
+			sequence = [];
+
+		if ( this.className ) {
+			name += "." + this.className;
+		}
+		if ( this.getAttribute( "style" ) ) {
+			name += "[style='" + this.getAttribute( "style" ) + "']";
+		}
+		name += " ";
+
+		for ( i = 0; i < 3; i++ ) {
+			sequence.push( ".show()" );
+			$elem.show();
+			assert.equal( $elem.css( "display" ), expected,
+				name + sequence.join( "" ) + " computed" );
+			assert.equal( this.style.display, "", name + sequence.join( "" ) + " inline" );
+
+			sequence.push( ".hide()" );
+			$elem.hide();
+			assert.equal( $elem.css( "display" ), "none",
+				name + sequence.join( "" ) + " computed" );
+			assert.equal( this.style.display, "none", name + sequence.join( "" ) + " inline" );
+		}
+	} );
+} );
+
+QUnit.test( "show/hide 3.0, default body display", function( assert ) {
+
+	assert.expect( 2 );
+
+	var hideBody = supportjQuery( "<style>body{display:none}</style>" ).appendTo( document.head ),
+		body = jQuery( document.body );
+
+	assert.equal( body.css( "display" ), "none", "Correct initial display" );
+
+	body.show();
+
+	assert.equal( body.css( "display" ), "block", "Correct display after .show()" );
+
+	hideBody.remove();
+} );
+
+QUnit.test( "show/hide 3.0, cascade display", function( assert ) {
+
+	assert.expect( 36 );
+
+	var i,
+		$elems = jQuery( "<div/>" )
+			.appendTo( "#qunit-fixture" )
+			.html( "<span class='block'/><div class='inline'/><div class='list-item'/>" )
+			.children();
+
+	$elems.each( function() {
+		var $elem = jQuery( this ),
+			name = this.nodeName,
+			sequence = [];
+
+		if ( this.className ) {
+			name += "." + this.className;
+		}
+		if ( this.getAttribute( "style" ) ) {
+			name += "[style='" + this.getAttribute( "style" ) + "']";
+		}
+		name += " ";
+
+		for ( i = 0; i < 3; i++ ) {
+			sequence.push( ".show()" );
+			$elem.show();
+			assert.equal( $elem.css( "display" ), this.className,
+				name + sequence.join( "" ) + " computed" );
+			assert.equal( this.style.display, "", name + sequence.join( "" ) + " inline" );
+
+			sequence.push( ".hide()" );
+			$elem.hide();
+			assert.equal( $elem.css( "display" ), "none",
+				name + sequence.join( "" ) + " computed" );
+			assert.equal( this.style.display, "none", name + sequence.join( "" ) + " inline" );
+		}
+	} );
+} );
+
+QUnit.test( "show/hide 3.0, inline display", function( assert ) {
+
+	assert.expect( 96 );
+
+	var i,
+		$elems = jQuery( "<div/>" )
+			.appendTo( "#qunit-fixture" )
+			.html( "<span data-expected-display='block' style='display:block'/>" +
+				"<span class='list-item' data-expected-display='block' style='display:block'/>" +
+				"<div data-expected-display='inline' style='display:inline'/>" +
+				"<div class='list-item' data-expected-display='inline' style='display:inline'/>" +
+				"<ul>" +
+					"<li data-expected-display='block' style='display:block'/>" +
+					"<li class='inline' data-expected-display='block' style='display:block'/>" +
+					"<li data-expected-display='inline' style='display:inline'/>" +
+					"<li class='block' data-expected-display='inline' style='display:inline'/>" +
+				"</ul>" )
+			.find( "[data-expected-display]" );
+
+	$elems.each( function() {
+		var $elem = jQuery( this ),
+			name = this.nodeName,
+			expected = this.getAttribute( "data-expected-display" ),
+			sequence = [];
+
+		if ( this.className ) {
+			name += "." + this.className;
+		}
+		if ( this.getAttribute( "style" ) ) {
+			name += "[style='" + this.getAttribute( "style" ) + "']";
+		}
+		name += " ";
+
+		for ( i = 0; i < 3; i++ ) {
+			sequence.push( ".show()" );
+			$elem.show();
+			assert.equal( $elem.css( "display" ), expected,
+				name + sequence.join( "" ) + " computed" );
+			assert.equal( this.style.display, expected, name + sequence.join( "" ) + " inline" );
+
+			sequence.push( ".hide()" );
+			$elem.hide();
+			assert.equal( $elem.css( "display" ), "none",
+				name + sequence.join( "" ) + " computed" );
+			assert.equal( this.style.display, "none", name + sequence.join( "" ) + " inline" );
+		}
+	} );
+} );
+
+QUnit.test( "show/hide 3.0, cascade hidden", function( assert ) {
+
+	assert.expect( 72 );
+
+	var i,
+		$elems = jQuery( "<div/>" )
+			.appendTo( "#qunit-fixture" )
+			.html( "<div class='hidden' data-expected-display='block'/>" +
+				"<div class='hidden' data-expected-display='block' style='display:none'/>" +
+				"<span class='hidden' data-expected-display='inline'/>" +
+				"<span class='hidden' data-expected-display='inline' style='display:none'/>" +
+				"<ul>" +
+					"<li class='hidden' data-expected-display='list-item'/>" +
+					"<li class='hidden' data-expected-display='list-item' style='display:none'/>" +
+				"</ul>" )
+			.find( "[data-expected-display]" );
+
+	$elems.each( function() {
+		var $elem = jQuery( this ),
+			name = this.nodeName,
+			expected = this.getAttribute( "data-expected-display" ),
+			sequence = [];
+
+		if ( this.className ) {
+			name += "." + this.className;
+		}
+		if ( this.getAttribute( "style" ) ) {
+			name += "[style='" + this.getAttribute( "style" ) + "']";
+		}
+		name += " ";
+
+		for ( i = 0; i < 3; i++ ) {
+			sequence.push( ".hide()" );
+			$elem.hide();
+			assert.equal( $elem.css( "display" ), "none",
+				name + sequence.join( "" ) + " computed" );
+			assert.equal( this.style.display, "none", name + sequence.join( "" ) + " inline" );
+
+			sequence.push( ".show()" );
+			$elem.show();
+			assert.equal( $elem.css( "display" ), expected,
+				name + sequence.join( "" ) + " computed" );
+			assert.equal( this.style.display, expected, name + sequence.join( "" ) + " inline" );
+		}
+	} );
+} );
+
+QUnit.test( "show/hide 3.0, inline hidden", function( assert ) {
+
+	assert.expect( 84 );
+
+	var i,
+		$elems = jQuery( "<div/>" )
+			.appendTo( "#qunit-fixture" )
+			.html( "<span data-expected-display='inline' style='display:none'/>" +
+				"<span class='list-item' data-expected-display='list-item' style='display:none'/>" +
+				"<div data-expected-display='block' style='display:none'/>" +
+				"<div class='list-item' data-expected-display='list-item' style='display:none'/>" +
+				"<ul>" +
+					"<li data-expected-display='list-item' style='display:none'/>" +
+					"<li class='block' data-expected-display='block' style='display:none'/>" +
+					"<li class='inline' data-expected-display='inline' style='display:none'/>" +
+				"</ul>" )
+			.find( "[data-expected-display]" );
+
+	$elems.each( function() {
+		var $elem = jQuery( this ),
+			name = this.nodeName,
+			expected = this.getAttribute( "data-expected-display" ),
+			sequence = [];
+
+		if ( this.className ) {
+			name += "." + this.className;
+		}
+		if ( this.getAttribute( "style" ) ) {
+			name += "[style='" + this.getAttribute( "style" ) + "']";
+		}
+		name += " ";
+
+		for ( i = 0; i < 3; i++ ) {
+			sequence.push( ".hide()" );
+			$elem.hide();
+			assert.equal( $elem.css( "display" ), "none",
+				name + sequence.join( "" ) + " computed" );
+			assert.equal( this.style.display, "none", name + sequence.join( "" ) + " inline" );
+
+			sequence.push( ".show()" );
+			$elem.show();
+			assert.equal( $elem.css( "display" ), expected,
+				name + sequence.join( "" ) + " computed" );
+			assert.equal( this.style.display, "", name + sequence.join( "" ) + " inline" );
+		}
+	} );
+} );
+
+}
+
+QUnit[ jQuery.find.compile && jQuery.fn.toggle ? "test" : "skip" ]( "toggle()", function( assert ) {
+>>>>>>> refs/remotes/jquery/master
 	assert.expect( 9 );
 	var div, oldHide,
 		x = jQuery( "#foo" );
@@ -750,6 +1221,7 @@ QUnit.test( "toggle()", function( assert ) {
 	jQuery.fn.hide = oldHide;
 } );
 
+<<<<<<< HEAD
 QUnit.test( "hide hidden elements (bug #7141)", function( assert ) {
 	assert.expect( 3 );
 
@@ -761,6 +1233,30 @@ QUnit.test( "hide hidden elements (bug #7141)", function( assert ) {
 	assert.equal( div.css( "display" ), "block", "Show a double-hidden element" );
 
 	div.remove();
+=======
+QUnit[ jQuery.find.compile && jQuery.fn.toggle ? "test" : "skip" ]( "detached toggle()", function( assert ) {
+	assert.expect( 6 );
+	var detached = jQuery( "<p><a/><p>" ).find( "*" ).addBack(),
+		hiddenDetached = jQuery( "<p><a/></p>" ).find( "*" ).addBack().css( "display", "none" ),
+		cascadeHiddenDetached = jQuery( "<p><a/></p>" ).find( "*" ).addBack().addClass( "hidden" );
+
+	detached.toggle();
+	detached.appendTo( "#qunit-fixture" );
+	assert.equal( detached[ 0 ].style.display, "none", "detached element" );
+	assert.equal( detached[ 1 ].style.display, "none", "element in detached tree" );
+
+	hiddenDetached.toggle();
+	hiddenDetached.appendTo( "#qunit-fixture" );
+	assert.equal( hiddenDetached[ 0 ].style.display, "", "detached, hidden element" );
+	assert.equal( hiddenDetached[ 1 ].style.display, "", "hidden element in detached tree" );
+
+	cascadeHiddenDetached.toggle();
+	cascadeHiddenDetached.appendTo( "#qunit-fixture" );
+	assert.equal( cascadeHiddenDetached[ 0 ].style.display, "none",
+		"detached, cascade-hidden element" );
+	assert.equal( cascadeHiddenDetached[ 1 ].style.display, "none",
+		"cascade-hidden element in detached tree" );
+>>>>>>> refs/remotes/jquery/master
 } );
 
 QUnit.test( "jQuery.css(elem, 'height') doesn't clear radio buttons (bug #1095)", function( assert ) {
@@ -841,6 +1337,7 @@ QUnit.test( "jQuery.cssProps behavior, (bug #8402)", function( assert ) {
 	// cleanup jQuery.cssProps
 	jQuery.cssProps.top = undefined;
 } );
+<<<<<<< HEAD
 
 QUnit.test( "widows & orphans #8936", function( assert ) {
 
@@ -883,6 +1380,44 @@ QUnit.test( "Ensure styles are retrieving from parsed html on document fragments
 		jQuery.parseHTML( "<span style=\"font-family: Cuprum,sans-serif; font-size: 14px; color: #999999;\">some text</span>" )
 	);
 
+=======
+
+QUnit.test( "widows & orphans #8936", function( assert ) {
+
+	var $p = jQuery( "<p>" ).appendTo( "#qunit-fixture" );
+
+	assert.expect( 2 );
+
+	$p.css( {
+		"widows": 3,
+		"orphans": 3
+	} );
+
+	assert.equal( $p.css( "widows" ) || jQuery.style( $p[ 0 ], "widows" ), 3, "widows correctly set to 3" );
+	assert.equal( $p.css( "orphans" ) || jQuery.style( $p[ 0 ], "orphans" ), 3, "orphans correctly set to 3" );
+
+	$p.remove();
+} );
+
+QUnit.test( "can't get css for disconnected in IE<9, see #10254 and #8388", function( assert ) {
+	assert.expect( 2 );
+	var span, div;
+
+	span = jQuery( "<span/>" ).css( "background-image", "url(data/1x1.jpg)" );
+	assert.notEqual( span.css( "background-image" ), null, "can't get background-image in IE<9, see #10254" );
+
+	div = jQuery( "<div/>" ).css( "top", 10 );
+	assert.equal( div.css( "top" ), "10px", "can't get top in IE<9, see #8388" );
+} );
+
+QUnit.test( "Ensure styles are retrieving from parsed html on document fragments", function( assert ) {
+	assert.expect( 1 );
+
+	var $span = jQuery(
+		jQuery.parseHTML( "<span style=\"font-family: Cuprum,sans-serif; font-size: 14px; color: #999999;\">some text</span>" )
+	);
+
+>>>>>>> refs/remotes/jquery/master
 	assert.equal( $span.css( "font-size" ), "14px", "Font-size retrievable on parsed HTML node" );
 } );
 
@@ -908,12 +1443,15 @@ QUnit.test( "can't get background-position in IE<9, see #10796", function( asser
 		assert.ok( div.css( "background-position" ), "can't get background-position in IE<9, see #10796" );
 	}
 } );
+<<<<<<< HEAD
 
 QUnit.test( "percentage properties for bottom and right in IE<9 should not be incorrectly transformed to pixels, see #11311", function( assert ) {
 	assert.expect( 1 );
 	var div = jQuery( "<div style='position: absolute; width: 1px; height: 20px; bottom:50%;'></div>" ).appendTo( "#qunit-fixture" );
 	assert.ok( window.getComputedStyle || div.css( "bottom" ) === "50%", "position properties get incorrectly transformed in IE<8, see #11311" );
 } );
+=======
+>>>>>>> refs/remotes/jquery/master
 
 if ( jQuery.fn.offset ) {
 	QUnit.test( "percentage properties for left and top should be transformed to pixels, see #9505", function( assert ) {
@@ -932,6 +1470,7 @@ QUnit.test( "Do not append px (#9548, #12990, #2792)", function( assert ) {
 	var $div = jQuery( "<div>" ).appendTo( "#qunit-fixture" );
 
 	$div.css( "fill-opacity", 1 );
+<<<<<<< HEAD
 
 	// Support: Android 2.3 (no support for fill-opacity)
 	if ( $div.css( "fill-opacity" ) !== undefined ) {
@@ -988,8 +1527,106 @@ QUnit.test( "certain css values of 'normal' should be convertable to a number, s
 	assert.ok( jQuery.isNumeric( parseFloat( el.css( "fontWeight" ) ) ), "css('fontWeight') not convertable to number, see #8627" );
 	assert.equal( typeof el.css( "fontWeight" ), "string", ".css() returns a string" );
 } );
+=======
 
-// only run this test in IE9
+	assert.equal( $div.css( "fill-opacity" ), 1, "Do not append px to 'fill-opacity'" );
+
+	$div.css( "column-count", 1 );
+	if ( $div.css( "column-count" ) !== undefined ) {
+		assert.equal( $div.css( "column-count" ), 1, "Do not append px to 'column-count'" );
+	} else {
+		assert.ok( true, "No support for column-count CSS property" );
+	}
+
+	$div.css( "animation-iteration-count", 2 );
+	if ( $div.css( "animation-iteration-count" ) !== undefined ) {
+		// if $div.css( "animation-iteration-count" ) return "1",
+		// it actually return the default value of animation-iteration-count
+		assert.equal( $div.css( "animation-iteration-count" ), 2, "Do not append px to 'animation-iteration-count'" );
+	} else {
+		assert.ok( true, "No support for animation-iteration-count CSS property" );
+	}
+} );
+
+QUnit.test( "css('width') and css('height') should respect box-sizing, see #11004", function( assert ) {
+	assert.expect( 4 );
+
+	var el_dis = jQuery( "<div style='width:300px;height:300px;margin:2px;padding:2px;box-sizing:border-box;'>test</div>" ),
+		el = el_dis.clone().appendTo( "#qunit-fixture" );
+
+	assert.equal( el.css( "width" ), el.css( "width", el.css( "width" ) ).css( "width" ), "css('width') is not respecting box-sizing, see #11004" );
+	assert.equal( el_dis.css( "width" ), el_dis.css( "width", el_dis.css( "width" ) ).css( "width" ), "css('width') is not respecting box-sizing for disconnected element, see #11004" );
+	assert.equal( el.css( "height" ), el.css( "height", el.css( "height" ) ).css( "height" ), "css('height') is not respecting box-sizing, see #11004" );
+	assert.equal( el_dis.css( "height" ), el_dis.css( "height", el_dis.css( "height" ) ).css( "height" ), "css('height') is not respecting box-sizing for disconnected element, see #11004" );
+} );
+
+testIframe(
+	"css('width') should work correctly before document ready (#14084)",
+	"css/cssWidthBeforeDocReady.html",
+	function( assert, jQuery, window, document, cssWidthBeforeDocReady ) {
+		assert.expect( 1 );
+		assert.strictEqual( cssWidthBeforeDocReady, "100px", "elem.css('width') works correctly before document ready" );
+	}
+);
+
+( function() {
+	var supportsFractionalGBCR,
+		qunitFixture = document.getElementById( "qunit-fixture" ),
+		div = document.createElement( "div" );
+	div.style.width = "3.3px";
+	qunitFixture.appendChild( div );
+	supportsFractionalGBCR = div.getBoundingClientRect().width.toFixed( 1 ) === "3.3";
+	qunitFixture.removeChild( div );
+
+	QUnit.test( "css('width') and css('height') should return fractional values for nodes in the document", function( assert ) {
+		if ( !supportsFractionalGBCR ) {
+			assert.expect( 1 );
+			assert.ok( true, "This browser doesn't support fractional values in getBoundingClientRect()" );
+			return;
+		}
+
+		assert.expect( 2 );
+
+		var el = jQuery( "<div class='test-div'></div>" ).appendTo( "#qunit-fixture" );
+		jQuery( "<style>.test-div { width: 33.3px; height: 88.8px; }</style>" ).appendTo( "#qunit-fixture" );
+
+		assert.equal( Number( el.css( "width" ).replace( /px$/, "" ) ).toFixed( 1 ), "33.3",
+			"css('width') should return fractional values" );
+		assert.equal( Number( el.css( "height" ).replace( /px$/, "" ) ).toFixed( 1 ), "88.8",
+			"css('height') should return fractional values" );
+	} );
+
+	QUnit.test( "css('width') and css('height') should return fractional values for disconnected nodes", function( assert ) {
+		if ( !supportsFractionalGBCR ) {
+			assert.expect( 1 );
+			assert.ok( true, "This browser doesn't support fractional values in getBoundingClientRect()" );
+			return;
+		}
+
+		assert.expect( 2 );
+
+		var el = jQuery( "<div style='width: 33.3px; height: 88.8px;'></div>" );
+
+		assert.equal( Number( el.css( "width" ).replace( /px$/, "" ) ).toFixed( 1 ), "33.3",
+			"css('width') should return fractional values" );
+		assert.equal( Number( el.css( "height" ).replace( /px$/, "" ) ).toFixed( 1 ), "88.8",
+			"css('height') should return fractional values" );
+	} );
+} )();
+>>>>>>> refs/remotes/jquery/master
+
+QUnit.test( "certain css values of 'normal' should be convertable to a number, see #8627", function( assert ) {
+	assert.expect( 3 );
+
+	var el = jQuery( "<div style='letter-spacing:normal;font-weight:normal;'>test</div>" ).appendTo( "#qunit-fixture" );
+
+	assert.ok( jQuery.isNumeric( parseFloat( el.css( "letterSpacing" ) ) ), "css('letterSpacing') not convertable to number, see #8627" );
+	assert.ok( jQuery.isNumeric( parseFloat( el.css( "fontWeight" ) ) ), "css('fontWeight') not convertable to number, see #8627" );
+	assert.equal( typeof el.css( "fontWeight" ), "string", ".css() returns a string" );
+} );
+
+// Support: IE 9 only
+// Only run this test in IE9
 if ( document.documentMode === 9 ) {
 	QUnit.test( ".css('filter') returns a string in IE9, see #12537", function( assert ) {
 		assert.expect( 1 );
@@ -1039,12 +1676,17 @@ QUnit.test( "cssHooks - expand", function( assert ) {
 } );
 
 QUnit.test( "css opacity consistency across browsers (#12685)", function( assert ) {
+<<<<<<< HEAD
 	assert.expect( 4 );
+=======
+	assert.expect( 3 );
+>>>>>>> refs/remotes/jquery/master
 
 	var el,
 		fixture = jQuery( "#qunit-fixture" );
 
 	// Append style element
+<<<<<<< HEAD
 	jQuery( "<style>.opacityWithSpaces_t12685 { opacity: 0.1; filter: alpha(opacity = 10); } .opacityNoSpaces_t12685 { opacity: 0.2; filter: alpha(opacity=20); }</style>" ).appendTo( fixture );
 
 	el = jQuery( "<div class='opacityWithSpaces_t12685'></div>" ).appendTo( fixture );
@@ -1060,6 +1702,21 @@ QUnit.test( "css opacity consistency across browsers (#12685)", function( assert
 
 QUnit.test( ":visible/:hidden selectors", function( assert ) {
 	assert.expect( 19 );
+=======
+	jQuery( "<style>.opacity_t12685 { opacity: 0.1; }</style>" ).appendTo( fixture );
+
+	el = jQuery( "<div class='opacity_t12685'></div>" ).appendTo( fixture );
+
+	assert.equal( Math.round( el.css( "opacity" ) * 100 ), 10, "opacity from style sheet" );
+	el.css( "opacity", 0.3 );
+	assert.equal( Math.round( el.css( "opacity" ) * 100 ), 30, "override opacity" );
+	el.css( "opacity", "" );
+	assert.equal( Math.round( el.css( "opacity" ) * 100 ), 10, "remove opacity override" );
+} );
+
+QUnit[ jQuery.find.compile ? "test" : "skip" ]( ":visible/:hidden selectors", function( assert ) {
+	assert.expect( 17 );
+>>>>>>> refs/remotes/jquery/master
 
 	var $div, $table, $a;
 
@@ -1100,6 +1757,7 @@ QUnit.test( ":visible/:hidden selectors", function( assert ) {
 
 	$a = jQuery( "<a href='#'><h1>Header</h1></a>" ).appendTo( "#qunit-fixture" );
 	assert.ok( $a.is( ":visible" ), "Anchor tag with flow content is visible (gh-2227)" );
+<<<<<<< HEAD
 
 	assert.ok( !jQuery( "<div>Test</div>" ).is( ":visible" ), "Disconnected element is not visible" );
 	assert.ok( !jQuery( "<div><div>Test</div></div>" ).find("div").is( ":visible" ), "Disconnected element child is not visible" );
@@ -1114,6 +1772,10 @@ testIframeWithCallback(
 		assert.equal( testResult, jQuery.support.reliableHiddenOffsets(), "reliableHiddenOffsets value not affected by table styles" );
 	} );
 
+=======
+} );
+
+>>>>>>> refs/remotes/jquery/master
 QUnit.test( "Keep the last style if the new one isn't recognized by the browser (#14836)", function( assert ) {
 	assert.expect( 2 );
 
@@ -1121,7 +1783,20 @@ QUnit.test( "Keep the last style if the new one isn't recognized by the browser 
 	el = jQuery( "<div></div>" ).css( "position", "absolute" ).css( "position", "fake value" );
 	assert.equal( el.css( "position" ), "absolute", "The old style is kept when setting an unrecognized value" );
 	el = jQuery( "<div></div>" ).css( "position", "absolute" ).css( "position", " " );
+<<<<<<< HEAD
 	assert.equal( el.css( "position" ), "absolute", "The old style is kept when setting to a space" );
+=======
+
+	// Support: Edge 14
+	// Edge collapses whitespace-only values when setting a style property and
+	// there is no easy way for us to work around it. Just skip the test there
+	// and hope for the better future.
+	if ( /edge\//i.test( navigator.userAgent ) ) {
+		assert.ok( true, "Skipped (Edge 14 handles whitespace-only values incorrectly)" );
+	} else {
+		assert.equal( el.css( "position" ), "absolute", "The old style is kept when setting to a space" );
+	}
+>>>>>>> refs/remotes/jquery/master
 } );
 
 QUnit.test( "Reset the style if set to an empty string", function( assert ) {
@@ -1189,7 +1864,11 @@ QUnit.test(
 			if ( source.style[ style.name ] === undefined ) {
 				assert.ok( true, style.name +  ": style isn't supported and therefore not an issue" );
 				assert.ok( true );
+<<<<<<< HEAD
 				assert.ok( true );
+=======
+
+>>>>>>> refs/remotes/jquery/master
 				return true;
 			}
 
@@ -1221,6 +1900,7 @@ QUnit.test(
 	}
 );
 
+<<<<<<< HEAD
 QUnit.test( "show() after hide() should always set display to initial value (#14750)", function( assert ) {
 	assert.expect( 1 );
 
@@ -1267,6 +1947,9 @@ QUnit.test( "show() after hide() should always set display to initial value (#14
 } );
 
 // Support: IE < 11
+=======
+// Support: IE <=10 only
+>>>>>>> refs/remotes/jquery/master
 // We have to jump through the hoops here in order to test work with "order" CSS property,
 // that some browsers do not support. This test is not, strictly speaking, correct,
 // but it's the best that we can do.
@@ -1311,6 +1994,7 @@ QUnit.test( "Do not throw on frame elements from css method (#15098)", function(
 	}
 } );
 
+<<<<<<< HEAD
 QUnit[/msie 8\.0/.test(navigator.userAgent) ? "test" : "skip"]( "get upper case alpha opacity in IE8", function( assert ) {
 	assert.expect( 1 );
 
@@ -1325,13 +2009,19 @@ QUnit[/msie 8\.0/.test(navigator.userAgent) ? "test" : "skip"]( "get upper case 
 	fixture.removeChild( div );
 } );
 
+=======
+>>>>>>> refs/remotes/jquery/master
 ( function() {
 	var vendorPrefixes = [ "Webkit", "Moz", "ms" ];
 
 	function resetCssPropsFor( name ) {
 		delete jQuery.cssProps[ name ];
 		jQuery.each( vendorPrefixes, function( index, prefix ) {
+<<<<<<< HEAD
 			delete jQuery.cssProps[ prefix + name.charAt( 0 ).toUpperCase() + name.slice( 1 ) ];
+=======
+			delete jQuery.cssProps[ prefix + name[ 0 ].toUpperCase() + name.slice( 1 ) ];
+>>>>>>> refs/remotes/jquery/master
 		} );
 	}
 
@@ -1370,12 +2060,21 @@ QUnit[/msie 8\.0/.test(navigator.userAgent) ? "test" : "skip"]( "get upper case 
 
 		resetCssPropsFor( "appearance" );
 		resetCssPropsFor( "transform" );
+<<<<<<< HEAD
 
 		elem = jQuery( "<div/>" )
 			.css( {
 				msAppearance: "none",
 				appearance: "none",
 
+=======
+
+		elem = jQuery( "<div/>" )
+			.css( {
+				msAppearance: "none",
+				appearance: "none",
+
+>>>>>>> refs/remotes/jquery/master
 				// Only the ms prefix is used to make sure we haven't e.g. set
 				// webkitTransform ourselves in the test.
 				msTransform: transformVal,

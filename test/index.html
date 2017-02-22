@@ -14,8 +14,13 @@
 
 	<script src="../external/qunit/qunit.js"></script>
 	<script src="../external/qunit-assert-step/qunit-assert-step.js"></script>
+<<<<<<< HEAD
 	<script src="../external/sinon/sinon-1.14.1.js"></script>
 	<script src="../external/sinon/timers_ie.js"></script>
+=======
+	<script src="../external/sinon/sinon.js"></script>
+	<script src="../external/npo/npo.js"></script>
+>>>>>>> refs/remotes/jquery/master
 	<script src="../external/requirejs/require.js"></script>
 	<!-- See testinit for the list of tests -->
 	<script src="data/testinit.js"></script>
@@ -27,6 +32,7 @@
 	<script src="jquery.js"></script>
 
 	<script>
+<<<<<<< HEAD
 		// html5shiv, enabling HTML5 elements to be used with jQuery
 		( "abbr article aside audio bdi canvas data datalist details figcaption figure footer header hgroup " +
 			"mark meter nav output progress section summary time video"
@@ -34,6 +40,8 @@
 			document.createElement(n);
 		});
 
+=======
+>>>>>>> refs/remotes/jquery/master
 		// Load tests if they have not been loaded
 		// This is in a different script tag to ensure that
 		// jQuery is on the page when the testrunner executes
@@ -47,9 +55,17 @@
 	<div id="qunit"></div>
 
 	<!-- Test HTML -->
-	<!-- this iframe is outside the #qunit-fixture so it won't reload constantly wasting time, but it means the tests must be "safe" and clean up after themselves -->
+	<!-- this iframe is outside the #qunit-fixture so it won't waste time by constantly reloading; the tests are "safe" and clean up after themselves -->
 	<iframe id="loadediframe" name="loadediframe" style="display:none;" src="data/iframe.html"></iframe>
 	<dl id="dl" style="position:absolute;top:-32767px;left:-32767px;width:1px;">
+<<<<<<< HEAD
+=======
+	<div id="donor-outer">
+		<form id="donor-form">
+			<input id="donor-input" type="radio" />
+		</form>
+	</div>
+>>>>>>> refs/remotes/jquery/master
 	<div id="qunit-fixture">
 		<p id="firstp">See <a id="simon1" href="http://simon.incutio.com/archive/2003/03/25/#getElementsBySelector" rel="bookmark">this blog entry</a> for more information.</p>
 		<p id="ap">

@@ -1,8 +1,16 @@
 define( [
+<<<<<<< HEAD
 	"./core",
 	"./traversing"
 ], function( jQuery ) {
 
+=======
+	"./core"
+], function( jQuery ) {
+
+"use strict";
+
+>>>>>>> refs/remotes/jquery/master
 jQuery.fn.extend( {
 
 	bind: function( types, data, fn ) {
@@ -21,6 +29,7 @@ jQuery.fn.extend( {
 		return arguments.length === 1 ?
 			this.off( selector, "**" ) :
 			this.off( types, selector || "**", fn );
+<<<<<<< HEAD
 	}
 } );
 
@@ -30,5 +39,19 @@ jQuery.fn.size = function() {
 };
 
 jQuery.fn.andSelf = jQuery.fn.addBack;
+=======
+	},
+	holdReady: function( hold ) {
+		if ( hold ) {
+			jQuery.readyWait++;
+		} else {
+			jQuery.ready( true );
+		}
+	}
+} );
+
+jQuery.isArray = Array.isArray;
+jQuery.parseJSON = JSON.parse;
+>>>>>>> refs/remotes/jquery/master
 
 } );

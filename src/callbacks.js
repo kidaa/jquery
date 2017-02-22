@@ -1,5 +1,6 @@
 define( [
 	"./core",
+<<<<<<< HEAD
 	"./var/rnotwhite"
 ], function( jQuery, rnotwhite ) {
 
@@ -7,6 +8,17 @@ define( [
 function createOptions( options ) {
 	var object = {};
 	jQuery.each( options.match( rnotwhite ) || [], function( _, flag ) {
+=======
+	"./var/rnothtmlwhite"
+], function( jQuery, rnothtmlwhite ) {
+
+"use strict";
+
+// Convert String-formatted options into Object-formatted ones
+function createOptions( options ) {
+	var object = {};
+	jQuery.each( options.match( rnothtmlwhite ) || [], function( _, flag ) {
+>>>>>>> refs/remotes/jquery/master
 		object[ flag ] = true;
 	} );
 	return object;
@@ -67,7 +79,11 @@ jQuery.Callbacks = function( options ) {
 		fire = function() {
 
 			// Enforce single-firing
+<<<<<<< HEAD
 			locked = options.once;
+=======
+			locked = locked || options.once;
+>>>>>>> refs/remotes/jquery/master
 
 			// Execute callbacks for all pending executions,
 			// respecting firingIndex overrides and runtime changes
@@ -190,9 +206,15 @@ jQuery.Callbacks = function( options ) {
 			// Also disable .add unless we have memory (since it would have no effect)
 			// Abort any pending executions
 			lock: function() {
+<<<<<<< HEAD
 				locked = true;
 				if ( !memory ) {
 					self.disable();
+=======
+				locked = queue = [];
+				if ( !memory && !firing ) {
+					list = memory = "";
+>>>>>>> refs/remotes/jquery/master
 				}
 				return this;
 			},

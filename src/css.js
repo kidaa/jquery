@@ -7,11 +7,18 @@ define( [
 	"./var/rcssNum",
 	"./css/var/rnumnonpx",
 	"./css/var/cssExpand",
+<<<<<<< HEAD
 	"./css/var/isHidden",
 	"./css/var/swap",
 	"./css/curCSS",
 	"./css/adjustCSS",
 	"./css/defaultDisplay",
+=======
+	"./css/var/getStyles",
+	"./css/var/swap",
+	"./css/curCSS",
+	"./css/adjustCSS",
+>>>>>>> refs/remotes/jquery/master
 	"./css/addGetHookIf",
 	"./css/support",
 
@@ -19,6 +26,7 @@ define( [
 	"./core/ready",
 	"./selector" // contains
 ], function( jQuery, pnum, access, rmargin, document, rcssNum, rnumnonpx, cssExpand,
+<<<<<<< HEAD
 	isHidden, swap, curCSS, adjustCSS, defaultDisplay, addGetHookIf, support ) {
 
 var
@@ -35,12 +43,25 @@ var
 	rdisplayswap = /^(none|table(?!-c[ea]).+)/,
 	rnumsplit = new RegExp( "^(" + pnum + ")(.*)$", "i" ),
 
+=======
+	getStyles, swap, curCSS, adjustCSS, addGetHookIf, support ) {
+
+"use strict";
+
+var
+
+	// Swappable if display is none or starts with table
+	// except "table", "table-cell", or "table-caption"
+	// See here for display values: https://developer.mozilla.org/en-US/docs/CSS/display
+	rdisplayswap = /^(none|table(?!-c[ea]).+)/,
+>>>>>>> refs/remotes/jquery/master
 	cssShow = { position: "absolute", visibility: "hidden", display: "block" },
 	cssNormalTransform = {
 		letterSpacing: "0",
 		fontWeight: "400"
 	},
 
+<<<<<<< HEAD
 	cssPrefixes = [ "Webkit", "O", "Moz", "ms" ],
 	emptyStyle = document.createElement( "div" ).style;
 
@@ -51,12 +72,26 @@ curCSS = curCSS.curCSS;
 function vendorPropName( name ) {
 
 	// shortcut for names that are not vendor prefixed
+=======
+	cssPrefixes = [ "Webkit", "Moz", "ms" ],
+	emptyStyle = document.createElement( "div" ).style;
+
+// Return a css property mapped to a potentially vendor prefixed property
+function vendorPropName( name ) {
+
+	// Shortcut for names that are not vendor prefixed
+>>>>>>> refs/remotes/jquery/master
 	if ( name in emptyStyle ) {
 		return name;
 	}
 
+<<<<<<< HEAD
 	// check for vendor prefixed names
 	var capName = name.charAt( 0 ).toUpperCase() + name.slice( 1 ),
+=======
+	// Check for vendor prefixed names
+	var capName = name[ 0 ].toUpperCase() + name.slice( 1 ),
+>>>>>>> refs/remotes/jquery/master
 		i = cssPrefixes.length;
 
 	while ( i-- ) {
@@ -65,6 +100,7 @@ function vendorPropName( name ) {
 			return name;
 		}
 	}
+<<<<<<< HEAD
 }
 
 function showHide( elements, show ) {
@@ -72,13 +108,43 @@ function showHide( elements, show ) {
 		values = [],
 		index = 0,
 		length = elements.length;
+=======
+}
 
-	for ( ; index < length; index++ ) {
-		elem = elements[ index ];
-		if ( !elem.style ) {
-			continue;
+function setPositiveNumber( elem, value, subtract ) {
+
+	// Any relative (+/-) values have already been
+	// normalized at this point
+	var matches = rcssNum.exec( value );
+	return matches ?
+
+		// Guard against undefined "subtract", e.g., when used as in cssHooks
+		Math.max( 0, matches[ 2 ] - ( subtract || 0 ) ) + ( matches[ 3 ] || "px" ) :
+		value;
+}
+
+function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
+	var i,
+		val = 0;
+
+	// If we already have the right measurement, avoid augmentation
+	if ( extra === ( isBorderBox ? "border" : "content" ) ) {
+		i = 4;
+
+	// Otherwise initialize for horizontal or vertical properties
+	} else {
+		i = name === "width" ? 1 : 0;
+	}
+
+	for ( ; i < 4; i += 2 ) {
+>>>>>>> refs/remotes/jquery/master
+
+		// Both box models exclude margin, so add it if we want it
+		if ( extra === "margin" ) {
+			val += jQuery.css( elem, extra + cssExpand[ i ], true, styles );
 		}
 
+<<<<<<< HEAD
 		values[ index ] = jQuery._data( elem, "olddisplay" );
 		display = elem.style.display;
 		if ( show ) {
@@ -108,22 +174,35 @@ function showHide( elements, show ) {
 			}
 		}
 	}
+=======
+		if ( isBorderBox ) {
 
-	// Set the display of most of the elements in a second loop
-	// to avoid the constant reflow
-	for ( index = 0; index < length; index++ ) {
-		elem = elements[ index ];
-		if ( !elem.style ) {
-			continue;
-		}
-		if ( !show || elem.style.display === "none" || elem.style.display === "" ) {
-			elem.style.display = show ? values[ index ] || "" : "none";
+			// border-box includes padding, so remove it if we want content
+			if ( extra === "content" ) {
+				val -= jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
+			}
+
+			// At this point, extra isn't border nor margin, so remove border
+			if ( extra !== "margin" ) {
+				val -= jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
+			}
+		} else {
+>>>>>>> refs/remotes/jquery/master
+
+			// At this point, extra isn't content, so add padding
+			val += jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
+
+			// At this point, extra isn't content nor padding, so add border
+			if ( extra !== "padding" ) {
+				val += jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
+			}
 		}
 	}
 
-	return elements;
+	return val;
 }
 
+<<<<<<< HEAD
 function setPositiveNumber( elem, value, subtract ) {
 	var matches = rnumsplit.exec( value );
 	return matches ?
@@ -191,6 +270,28 @@ function getWidthOrHeight( elem, name, extra ) {
 	// MathML - https://bugzilla.mozilla.org/show_bug.cgi?id=491668
 	if ( val <= 0 || val == null ) {
 
+=======
+function getWidthOrHeight( elem, name, extra ) {
+
+	// Start with offset property, which is equivalent to the border-box value
+	var val,
+		valueIsBorderBox = true,
+		styles = getStyles( elem ),
+		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
+
+	// Support: IE <=11 only
+	// Running getBoundingClientRect on a disconnected node
+	// in IE throws an error.
+	if ( elem.getClientRects().length ) {
+		val = elem.getBoundingClientRect()[ name ];
+	}
+
+	// Some non-html elements return undefined for offsetWidth, so check for null/undefined
+	// svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
+	// MathML - https://bugzilla.mozilla.org/show_bug.cgi?id=491668
+	if ( val <= 0 || val == null ) {
+
+>>>>>>> refs/remotes/jquery/master
 		// Fall back to computed then uncomputed css if necessary
 		val = curCSS( elem, name, styles );
 		if ( val < 0 || val == null ) {
@@ -202,7 +303,11 @@ function getWidthOrHeight( elem, name, extra ) {
 			return val;
 		}
 
+<<<<<<< HEAD
 		// we need the check for style in case a browser which returns unreliable values
+=======
+		// Check for style in case a browser which returns unreliable values
+>>>>>>> refs/remotes/jquery/master
 		// for getComputedStyle silently falls back to the reliable elem.style
 		valueIsBorderBox = isBorderBox &&
 			( support.boxSizingReliable() || val === elem.style[ name ] );
@@ -211,7 +316,11 @@ function getWidthOrHeight( elem, name, extra ) {
 		val = parseFloat( val ) || 0;
 	}
 
+<<<<<<< HEAD
 	// use the active box-sizing model to add/subtract irrelevant styles
+=======
+	// Use the active box-sizing model to add/subtract irrelevant styles
+>>>>>>> refs/remotes/jquery/master
 	return ( val +
 		augmentWidthOrHeight(
 			elem,
@@ -260,9 +369,13 @@ jQuery.extend( {
 	// Add in properties whose names you wish to fix before
 	// setting or getting the value
 	cssProps: {
+<<<<<<< HEAD
 
 		// normalize float css property
 		"float": support.cssFloat ? "cssFloat" : "styleFloat"
+=======
+		"float": "cssFloat"
+>>>>>>> refs/remotes/jquery/master
 	},
 
 	// Get and set the style property on a DOM Node
@@ -281,8 +394,7 @@ jQuery.extend( {
 		name = jQuery.cssProps[ origName ] ||
 			( jQuery.cssProps[ origName ] = vendorPropName( origName ) || origName );
 
-		// gets hook for the prefixed version
-		// followed by the unprefixed version
+		// Gets hook for the prefixed version, then unprefixed version
 		hooks = jQuery.cssHooks[ name ] || jQuery.cssHooks[ origName ];
 
 		// Check if we're setting a value
@@ -297,7 +409,11 @@ jQuery.extend( {
 				type = "number";
 			}
 
+<<<<<<< HEAD
 			// Make sure that null and NaN values aren't set. See: #7116
+=======
+			// Make sure that null and NaN values aren't set (#7116)
+>>>>>>> refs/remotes/jquery/master
 			if ( value == null || value !== value ) {
 				return;
 			}
@@ -307,9 +423,13 @@ jQuery.extend( {
 				value += ret && ret[ 3 ] || ( jQuery.cssNumber[ origName ] ? "" : "px" );
 			}
 
+<<<<<<< HEAD
 			// Fixes #8908, it can be done more correctly by specifing setters in cssHooks,
 			// but it would mean to define eight
 			// (for every problematic property) identical functions
+=======
+			// background-* props affect original clone's values
+>>>>>>> refs/remotes/jquery/master
 			if ( !support.clearCloneStyle && value === "" && name.indexOf( "background" ) === 0 ) {
 				style[ name ] = "inherit";
 			}
@@ -318,11 +438,15 @@ jQuery.extend( {
 			if ( !hooks || !( "set" in hooks ) ||
 				( value = hooks.set( elem, value, extra ) ) !== undefined ) {
 
+<<<<<<< HEAD
 				// Support: IE
 				// Swallow errors from 'invalid' CSS values (#5509)
 				try {
 					style[ name ] = value;
 				} catch ( e ) {}
+=======
+				style[ name ] = value;
+>>>>>>> refs/remotes/jquery/master
 			}
 
 		} else {
@@ -347,8 +471,7 @@ jQuery.extend( {
 		name = jQuery.cssProps[ origName ] ||
 			( jQuery.cssProps[ origName ] = vendorPropName( origName ) || origName );
 
-		// gets hook for the prefixed version
-		// followed by the unprefixed version
+		// Try prefixed name followed by the unprefixed name
 		hooks = jQuery.cssHooks[ name ] || jQuery.cssHooks[ origName ];
 
 		// If a hook was provided get the computed value from there
@@ -361,12 +484,16 @@ jQuery.extend( {
 			val = curCSS( elem, name, styles );
 		}
 
-		//convert "normal" to computed value
+		// Convert "normal" to computed value
 		if ( val === "normal" && name in cssNormalTransform ) {
 			val = cssNormalTransform[ name ];
 		}
 
+<<<<<<< HEAD
 		// Return, converting to number if forced or a qualifier was provided and val looks numeric
+=======
+		// Make numeric if forced or a qualifier was provided and val looks numeric
+>>>>>>> refs/remotes/jquery/master
 		if ( extra === "" || extra ) {
 			num = parseFloat( val );
 			return extra === true || isFinite( num ) ? num || 0 : val;
@@ -380,10 +507,24 @@ jQuery.each( [ "height", "width" ], function( i, name ) {
 		get: function( elem, computed, extra ) {
 			if ( computed ) {
 
+<<<<<<< HEAD
 				// certain elements can have dimension info if we invisibly show them
 				// however, it must have a current display style that would benefit from this
 				return rdisplayswap.test( jQuery.css( elem, "display" ) ) &&
 					elem.offsetWidth === 0 ?
+=======
+				// Certain elements can have dimension info if we invisibly show them
+				// but it must have a current display style that would benefit
+				return rdisplayswap.test( jQuery.css( elem, "display" ) ) &&
+
+					// Support: Safari 8+
+					// Table columns in Safari have non-zero offsetWidth & zero
+					// getBoundingClientRect().width unless display is changed.
+					// Support: IE <=11 only
+					// Running getBoundingClientRect on a disconnected node
+					// in IE throws an error.
+					( !elem.getClientRects().length || !elem.getBoundingClientRect().width ) ?
+>>>>>>> refs/remotes/jquery/master
 						swap( elem, cssShow, function() {
 							return getWidthOrHeight( elem, name, extra );
 						} ) :
@@ -392,12 +533,13 @@ jQuery.each( [ "height", "width" ], function( i, name ) {
 		},
 
 		set: function( elem, value, extra ) {
-			var styles = extra && getStyles( elem );
-			return setPositiveNumber( elem, value, extra ?
-				augmentWidthOrHeight(
+			var matches,
+				styles = extra && getStyles( elem ),
+				subtract = extra && augmentWidthOrHeight(
 					elem,
 					name,
 					extra,
+<<<<<<< HEAD
 					support.boxSizing &&
 						jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
 					styles
@@ -446,14 +588,24 @@ if ( !support.opacity ) {
 				if ( value === "" || currentStyle && !currentStyle.filter ) {
 					return;
 				}
+=======
+					jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
+					styles
+				);
+
+			// Convert to pixels if value adjustment is needed
+			if ( subtract && ( matches = rcssNum.exec( value ) ) &&
+				( matches[ 3 ] || "px" ) !== "px" ) {
+
+				elem.style[ name ] = value;
+				value = jQuery.css( elem, name );
+>>>>>>> refs/remotes/jquery/master
 			}
 
-			// otherwise, set new filter values
-			style.filter = ralpha.test( filter ) ?
-				filter.replace( ralpha, opacity ) :
-				filter + " " + opacity;
+			return setPositiveNumber( elem, value, subtract );
 		}
 	};
+<<<<<<< HEAD
 }
 
 jQuery.cssHooks.marginRight = addGetHookIf( support.reliableMarginRight,
@@ -464,10 +616,14 @@ jQuery.cssHooks.marginRight = addGetHookIf( support.reliableMarginRight,
 		}
 	}
 );
+=======
+} );
+>>>>>>> refs/remotes/jquery/master
 
 jQuery.cssHooks.marginLeft = addGetHookIf( support.reliableMarginLeft,
 	function( elem, computed ) {
 		if ( computed ) {
+<<<<<<< HEAD
 			return (
 				parseFloat( curCSS( elem, "marginLeft" ) ) ||
 
@@ -483,6 +639,14 @@ jQuery.cssHooks.marginLeft = addGetHookIf( support.reliableMarginLeft,
 					0
 				)
 			) + "px";
+=======
+			return ( parseFloat( curCSS( elem, "marginLeft" ) ) ||
+				elem.getBoundingClientRect().left -
+					swap( elem, { marginLeft: 0 }, function() {
+						return elem.getBoundingClientRect().left;
+					} )
+				) + "px";
+>>>>>>> refs/remotes/jquery/master
 		}
 	}
 );
@@ -498,7 +662,11 @@ jQuery.each( {
 			var i = 0,
 				expanded = {},
 
+<<<<<<< HEAD
 				// assumes a single number if not a string
+=======
+				// Assumes a single number if not a string
+>>>>>>> refs/remotes/jquery/master
 				parts = typeof value === "string" ? value.split( " " ) : [ value ];
 
 			for ( ; i < 4; i++ ) {
@@ -522,7 +690,11 @@ jQuery.fn.extend( {
 				map = {},
 				i = 0;
 
+<<<<<<< HEAD
 			if ( jQuery.isArray( name ) ) {
+=======
+			if ( Array.isArray( name ) ) {
+>>>>>>> refs/remotes/jquery/master
 				styles = getStyles( elem );
 				len = name.length;
 
@@ -537,6 +709,7 @@ jQuery.fn.extend( {
 				jQuery.style( elem, name, value ) :
 				jQuery.css( elem, name );
 		}, name, value, arguments.length > 1 );
+<<<<<<< HEAD
 	},
 	show: function() {
 		return showHide( this, true );
@@ -556,6 +729,8 @@ jQuery.fn.extend( {
 				jQuery( this ).hide();
 			}
 		} );
+=======
+>>>>>>> refs/remotes/jquery/master
 	}
 } );
 

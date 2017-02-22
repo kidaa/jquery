@@ -2,6 +2,11 @@ define( [
 	"../core"
 ], function( jQuery ) {
 
+<<<<<<< HEAD
+=======
+"use strict";
+
+>>>>>>> refs/remotes/jquery/master
 // Register as a named AMD module, since jQuery can be concatenated with other
 // files that may use define, but not via a proper concatenation script that
 // understands anonymous AMD modules. A named AMD is safest and most robust

@@ -3,6 +3,11 @@ define( [
 	"../css"
 ], function( jQuery ) {
 
+<<<<<<< HEAD
+=======
+"use strict";
+
+>>>>>>> refs/remotes/jquery/master
 function Tween( elem, options, prop, end, easing ) {
 	return new Tween.prototype.init( elem, options, prop, end, easing );
 }
@@ -66,10 +71,17 @@ Tween.propHooks = {
 				return tween.elem[ tween.prop ];
 			}
 
+<<<<<<< HEAD
 			// passing an empty string as a 3rd parameter to .css will automatically
 			// attempt a parseFloat and fallback to a string if the parse fails
 			// so, simple values such as "10px" are parsed to Float.
 			// complex values such as "rotate(1rad)" are returned as is.
+=======
+			// Passing an empty string as a 3rd parameter to .css will automatically
+			// attempt a parseFloat and fallback to a string if the parse fails.
+			// Simple values such as "10px" are parsed to Float;
+			// complex values such as "rotate(1rad)" are returned as-is.
+>>>>>>> refs/remotes/jquery/master
 			result = jQuery.css( tween.elem, tween.prop, "" );
 
 			// Empty strings, null, undefined and "auto" are converted to 0.
@@ -77,8 +89,14 @@ Tween.propHooks = {
 		},
 		set: function( tween ) {
 
+<<<<<<< HEAD
 			// use step hook for back compat - use cssHook if its there - use .style if its
 			// available and use plain properties where available
+=======
+			// Use step hook for back compat.
+			// Use cssHook if its there.
+			// Use .style if available and use plain properties where available.
+>>>>>>> refs/remotes/jquery/master
 			if ( jQuery.fx.step[ tween.prop ] ) {
 				jQuery.fx.step[ tween.prop ]( tween );
 			} else if ( tween.elem.nodeType === 1 &&
@@ -92,9 +110,14 @@ Tween.propHooks = {
 	}
 };
 
+<<<<<<< HEAD
 // Support: IE <=9
 // Panic based approach to setting things on disconnected nodes
 
+=======
+// Support: IE <=9 only
+// Panic based approach to setting things on disconnected nodes
+>>>>>>> refs/remotes/jquery/master
 Tween.propHooks.scrollTop = Tween.propHooks.scrollLeft = {
 	set: function( tween ) {
 		if ( tween.elem.nodeType && tween.elem.parentNode ) {
@@ -115,7 +138,11 @@ jQuery.easing = {
 
 jQuery.fx = Tween.prototype.init;
 
+<<<<<<< HEAD
 // Back Compat <1.8 extension point
+=======
+// Back compat <1.8 extension point
+>>>>>>> refs/remotes/jquery/master
 jQuery.fx.step = {};
 
 } );

@@ -3,6 +3,11 @@ define( [
 	"../event"
 ], function( jQuery ) {
 
+<<<<<<< HEAD
+=======
+"use strict";
+
+>>>>>>> refs/remotes/jquery/master
 // Attach a bunch of functions for handling common AJAX events
 jQuery.each( [
 	"ajaxStart",

@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 /* jshint esnext: true */
 
+=======
+>>>>>>> refs/remotes/jquery/master
 "use strict";
 
 var assert = require( "assert" );

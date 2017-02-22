@@ -1,8 +1,17 @@
 define( [
 	"./core",
+<<<<<<< HEAD
 	"./deferred",
 	"./callbacks"
 ], function( jQuery ) {
+=======
+	"./data/var/dataPriv",
+	"./deferred",
+	"./callbacks"
+], function( jQuery, dataPriv ) {
+
+"use strict";
+>>>>>>> refs/remotes/jquery/master
 
 jQuery.extend( {
 	queue: function( elem, type, data ) {
@@ -10,12 +19,17 @@ jQuery.extend( {
 
 		if ( elem ) {
 			type = ( type || "fx" ) + "queue";
-			queue = jQuery._data( elem, type );
+			queue = dataPriv.get( elem, type );
 
 			// Speed up dequeue by getting out quickly if this is just a lookup
 			if ( data ) {
+<<<<<<< HEAD
 				if ( !queue || jQuery.isArray( data ) ) {
 					queue = jQuery._data( elem, type, jQuery.makeArray( data ) );
+=======
+				if ( !queue || Array.isArray( data ) ) {
+					queue = dataPriv.access( elem, type, jQuery.makeArray( data ) );
+>>>>>>> refs/remotes/jquery/master
 				} else {
 					queue.push( data );
 				}
@@ -49,7 +63,7 @@ jQuery.extend( {
 				queue.unshift( "inprogress" );
 			}
 
-			// clear up the last queue stop function
+			// Clear up the last queue stop function
 			delete hooks.stop;
 			fn.call( elem, next, hooks );
 		}
@@ -59,6 +73,7 @@ jQuery.extend( {
 		}
 	},
 
+<<<<<<< HEAD
 	// not intended for public consumption - generates a queueHooks object,
 	// or returns the current one
 	_queueHooks: function( elem, type ) {
@@ -67,6 +82,14 @@ jQuery.extend( {
 			empty: jQuery.Callbacks( "once memory" ).add( function() {
 				jQuery._removeData( elem, type + "queue" );
 				jQuery._removeData( elem, key );
+=======
+	// Not public - generate a queueHooks object, or return the current one
+	_queueHooks: function( elem, type ) {
+		var key = type + "queueHooks";
+		return dataPriv.get( elem, key ) || dataPriv.access( elem, key, {
+			empty: jQuery.Callbacks( "once memory" ).add( function() {
+				dataPriv.remove( elem, [ type + "queue", key ] );
+>>>>>>> refs/remotes/jquery/master
 			} )
 		} );
 	}
@@ -91,7 +114,7 @@ jQuery.fn.extend( {
 			this.each( function() {
 				var queue = jQuery.queue( this, type, data );
 
-				// ensure a hooks for this queue
+				// Ensure a hooks for this queue
 				jQuery._queueHooks( this, type );
 
 				if ( type === "fx" && queue[ 0 ] !== "inprogress" ) {
@@ -129,7 +152,11 @@ jQuery.fn.extend( {
 		type = type || "fx";
 
 		while ( i-- ) {
+<<<<<<< HEAD
 			tmp = jQuery._data( elements[ i ], type + "queueHooks" );
+=======
+			tmp = dataPriv.get( elements[ i ], type + "queueHooks" );
+>>>>>>> refs/remotes/jquery/master
 			if ( tmp && tmp.empty ) {
 				count++;
 				tmp.empty.add( resolve );

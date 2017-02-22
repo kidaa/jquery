@@ -1,5 +1,6 @@
 define( [
 	"../core",
+<<<<<<< HEAD
 	"./var/rcheckableType",
 	"./var/rtagName",
 	"./var/rscriptType",
@@ -31,6 +32,25 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 
 		nodes = [],
 		i = 0;
+=======
+	"./var/rtagName",
+	"./var/rscriptType",
+	"./wrapMap",
+	"./getAll",
+	"./setGlobalEval"
+], function( jQuery, rtagName, rscriptType, wrapMap, getAll, setGlobalEval ) {
+
+"use strict";
+
+var rhtml = /<|&#?\w+;/;
+
+function buildFragment( elems, context, scripts, selection, ignored ) {
+	var elem, tmp, tag, wrap, contains, j,
+		fragment = context.createDocumentFragment(),
+		nodes = [],
+		i = 0,
+		l = elems.length;
+>>>>>>> refs/remotes/jquery/master
 
 	for ( ; i < l; i++ ) {
 		elem = elems[ i ];
@@ -39,6 +59,12 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 
 			// Add nodes directly
 			if ( jQuery.type( elem ) === "object" ) {
+<<<<<<< HEAD
+=======
+
+				// Support: Android <=4.0 only, PhantomJS 1 only
+				// push.apply(_, arraylike) throws on ancient WebKit
+>>>>>>> refs/remotes/jquery/master
 				jQuery.merge( nodes, elem.nodeType ? [ elem ] : elem );
 
 			// Convert non-html into a text node
@@ -47,12 +73,19 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 
 			// Convert html into DOM nodes
 			} else {
+<<<<<<< HEAD
 				tmp = tmp || safe.appendChild( context.createElement( "div" ) );
+=======
+				tmp = tmp || fragment.appendChild( context.createElement( "div" ) );
+>>>>>>> refs/remotes/jquery/master
 
 				// Deserialize a standard representation
 				tag = ( rtagName.exec( elem ) || [ "", "" ] )[ 1 ].toLowerCase();
 				wrap = wrapMap[ tag ] || wrapMap._default;
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/jquery/master
 				tmp.innerHTML = wrap[ 1 ] + jQuery.htmlPrefilter( elem ) + wrap[ 2 ];
 
 				// Descend through wrappers to the right content
@@ -61,6 +94,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 					tmp = tmp.lastChild;
 				}
 
+<<<<<<< HEAD
 				// Manually add leading whitespace removed by IE
 				if ( !support.leadingWhitespace && rleadingWhitespace.test( elem ) ) {
 					nodes.push( context.createTextNode( rleadingWhitespace.exec( elem )[ 0 ] ) );
@@ -100,10 +134,22 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 
 				// Remember the top-level container for proper cleanup
 				tmp = safe.lastChild;
+=======
+				// Support: Android <=4.0 only, PhantomJS 1 only
+				// push.apply(_, arraylike) throws on ancient WebKit
+				jQuery.merge( nodes, tmp.childNodes );
+
+				// Remember the top-level container
+				tmp = fragment.firstChild;
+
+				// Ensure the created nodes are orphaned (#12392)
+				tmp.textContent = "";
+>>>>>>> refs/remotes/jquery/master
 			}
 		}
 	}
 
+<<<<<<< HEAD
 	// Fix #11356: Clear elements from fragment
 	if ( tmp ) {
 		safe.removeChild( tmp );
@@ -114,6 +160,10 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 	if ( !support.appendChecked ) {
 		jQuery.grep( getAll( nodes, "input" ), fixDefaultChecked );
 	}
+=======
+	// Remove wrapper from fragment
+	fragment.textContent = "";
+>>>>>>> refs/remotes/jquery/master
 
 	i = 0;
 	while ( ( elem = nodes[ i++ ] ) ) {
@@ -123,14 +173,21 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 			if ( ignored ) {
 				ignored.push( elem );
 			}
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/jquery/master
 			continue;
 		}
 
 		contains = jQuery.contains( elem.ownerDocument, elem );
 
 		// Append to fragment
+<<<<<<< HEAD
 		tmp = getAll( safe.appendChild( elem ), "script" );
+=======
+		tmp = getAll( fragment.appendChild( elem ), "script" );
+>>>>>>> refs/remotes/jquery/master
 
 		// Preserve script evaluation history
 		if ( contains ) {
@@ -148,9 +205,13 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 		}
 	}
 
+<<<<<<< HEAD
 	tmp = null;
 
 	return safe;
+=======
+	return fragment;
+>>>>>>> refs/remotes/jquery/master
 }
 
 return buildFragment;

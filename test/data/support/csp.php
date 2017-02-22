@@ -9,6 +9,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>CSP Test Page</title>
 	<script src="../../jquery.js"></script>
+<<<<<<< HEAD
+=======
+	<script src="../iframeTest.js"></script>
+>>>>>>> refs/remotes/jquery/master
 	<script src="csp.js"></script>
 	<script src="getComputedSupport.js"></script>
 </head>

@@ -54,11 +54,26 @@ QUnit.test( "attributes", function( assert ) {
 
 if ( jQuery.css ) {
 QUnit.test( "css", function( assert ) {
+<<<<<<< HEAD
 	assert.expect( 3 );
+=======
+	assert.expect( 1 );
+>>>>>>> refs/remotes/jquery/master
 
 	var div = jQuery( "<div/>" ).appendTo( "#qunit-fixture" );
 
 	assert.strictEqual( div.css( "width", "50px" ).css( "width" ), "50px", ".css getter/setter" );
+<<<<<<< HEAD
+=======
+} );
+}
+
+if ( jQuery.fn.show && jQuery.fn.hide ) {
+QUnit.test( "show/hide", function( assert ) {
+	assert.expect( 2 );
+
+	var div = jQuery( "<div/>" ).appendTo( "#qunit-fixture" );
+>>>>>>> refs/remotes/jquery/master
 
 	div.hide();
 	assert.strictEqual( div.css( "display" ), "none", "div hidden" );
@@ -68,7 +83,11 @@ QUnit.test( "css", function( assert ) {
 }
 
 QUnit.test( "core", function( assert ) {
+<<<<<<< HEAD
 	assert.expect( 28 );
+=======
+	assert.expect( 27 );
+>>>>>>> refs/remotes/jquery/master
 
 	var elem = jQuery( "<div></div><span></span>" );
 
@@ -127,8 +146,11 @@ QUnit.test( "core", function( assert ) {
 
 	assert.strictEqual( jQuery.parseHTML( "<div></div><span></span>" ).length,
 		2, "jQuery.parseHTML" );
+<<<<<<< HEAD
 
 	assert.deepEqual( jQuery.parseJSON( "{\"a\": 2}" ), { a: 2 }, "jQuery.parseJON" );
+=======
+>>>>>>> refs/remotes/jquery/master
 } );
 
 QUnit.test( "data", function( assert ) {
@@ -181,10 +203,14 @@ QUnit.test( "manipulation", function( assert ) {
 	assert.strictEqual( elem1.text( "foo" ).text(), "foo", ".html getter/setter" );
 
 	assert.strictEqual(
+<<<<<<< HEAD
 
 		// Support: IE 8 only
 		// IE 8 prints tag names in upper case.
 		elem1.html( "<span/>" ).html().toLowerCase(),
+=======
+		elem1.html( "<span/>" ).html(),
+>>>>>>> refs/remotes/jquery/master
 		"<span></span>",
 		".html getter/setter"
 	);
@@ -197,10 +223,14 @@ QUnit.test( "manipulation", function( assert ) {
 	child.before( "<b/>" );
 
 	assert.strictEqual(
+<<<<<<< HEAD
 
 		// Support: IE 8 only
 		// IE 8 prints tag names in upper case.
 		elem1.html().toLowerCase(),
+=======
+		elem1.html(),
+>>>>>>> refs/remotes/jquery/master
 		"<div></div><b></b><span></span><a></a>",
 		".after/.before"
 	);
@@ -209,9 +239,13 @@ QUnit.test( "manipulation", function( assert ) {
 QUnit.test( "offset", function( assert ) {
 	assert.expect( 3 );
 
+<<<<<<< HEAD
 	var parent =
 		jQuery( "<div style='position:fixed;_position:absolute;top:20px;'/>" )
 			.appendTo( "body" ),
+=======
+	var parent = jQuery( "<div style='position:fixed;top:20px;'/>" ).appendTo( "#qunit-fixture" ),
+>>>>>>> refs/remotes/jquery/master
 		elem = jQuery( "<div style='position:absolute;top:5px;'/>" ).appendTo( parent );
 
 	assert.strictEqual( elem.offset().top, 25, ".offset getter" );
@@ -271,10 +305,14 @@ QUnit.test( "wrap", function( assert ) {
 	elem.find( "b" ).wrap( "<span>" );
 
 	assert.strictEqual(
+<<<<<<< HEAD
 
 		// Support: IE 8 only
 		// IE 8 prints tag names in upper case.
 		elem.html().toLowerCase(),
+=======
+		elem.html(),
+>>>>>>> refs/remotes/jquery/master
 		"<a><span><b></b></span></a><a></a>",
 		".wrap"
 	);
@@ -282,10 +320,14 @@ QUnit.test( "wrap", function( assert ) {
 	elem.find( "span" ).wrapInner( "<em>" );
 
 	assert.strictEqual(
+<<<<<<< HEAD
 
 		// Support: IE 8 only
 		// IE 8 prints tag names in upper case.
 		elem.html().toLowerCase(),
+=======
+		elem.html(),
+>>>>>>> refs/remotes/jquery/master
 		"<a><span><em><b></b></em></span></a><a></a>",
 		".wrapInner"
 	);
@@ -293,10 +335,14 @@ QUnit.test( "wrap", function( assert ) {
 	elem.find( "a" ).wrapAll( "<i>" );
 
 	assert.strictEqual(
+<<<<<<< HEAD
 
 		// Support: IE 8 only
 		// IE 8 prints tag names in upper case.
 		elem.html().toLowerCase(),
+=======
+		elem.html(),
+>>>>>>> refs/remotes/jquery/master
 		"<i><a><span><em><b></b></em></span></a><a></a></i>",
 		".wrapAll"
 	);

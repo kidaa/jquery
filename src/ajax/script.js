@@ -4,6 +4,18 @@ define( [
 	"../ajax"
 ], function( jQuery, document ) {
 
+<<<<<<< HEAD
+=======
+"use strict";
+
+// Prevent auto-execution of scripts when no explicit dataType was provided (See gh-2432)
+jQuery.ajaxPrefilter( function( s ) {
+	if ( s.crossDomain ) {
+		s.contents.script = false;
+	}
+} );
+
+>>>>>>> refs/remotes/jquery/master
 // Install script dataType
 jQuery.ajaxSetup( {
 	accepts: {
@@ -21,14 +33,13 @@ jQuery.ajaxSetup( {
 	}
 } );
 
-// Handle cache's special case and global
+// Handle cache's special case and crossDomain
 jQuery.ajaxPrefilter( "script", function( s ) {
 	if ( s.cache === undefined ) {
 		s.cache = false;
 	}
 	if ( s.crossDomain ) {
 		s.type = "GET";
-		s.global = false;
 	}
 } );
 
@@ -37,6 +48,7 @@ jQuery.ajaxTransport( "script", function( s ) {
 
 	// This transport only deals with cross domain requests
 	if ( s.crossDomain ) {
+<<<<<<< HEAD
 
 		var script,
 			head = document.head || jQuery( "head" )[ 0 ] || document.documentElement;
@@ -74,18 +86,31 @@ jQuery.ajaxTransport( "script", function( s ) {
 						// Callback if not abort
 						if ( !isAbort ) {
 							callback( 200, "success" );
+=======
+		var script, callback;
+		return {
+			send: function( _, complete ) {
+				script = jQuery( "<script>" ).prop( {
+					charset: s.scriptCharset,
+					src: s.url
+				} ).on(
+					"load error",
+					callback = function( evt ) {
+						script.remove();
+						callback = null;
+						if ( evt ) {
+							complete( evt.type === "error" ? 404 : 200, evt.type );
+>>>>>>> refs/remotes/jquery/master
 						}
 					}
-				};
+				);
 
-				// Circumvent IE6 bugs with base elements (#2709 and #4378) by prepending
 				// Use native DOM manipulation to avoid our domManip AJAX trickery
-				head.insertBefore( script, head.firstChild );
+				document.head.appendChild( script[ 0 ] );
 			},
-
 			abort: function() {
-				if ( script ) {
-					script.onload( undefined, true );
+				if ( callback ) {
+					callback();
 				}
 			}
 		};

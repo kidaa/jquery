@@ -3,13 +3,27 @@ define( [
 	"../var/rcssNum"
 ], function( jQuery, rcssNum ) {
 
+<<<<<<< HEAD
+=======
+"use strict";
+
+>>>>>>> refs/remotes/jquery/master
 function adjustCSS( elem, prop, valueParts, tween ) {
 	var adjusted,
 		scale = 1,
 		maxIterations = 20,
 		currentValue = tween ?
+<<<<<<< HEAD
 			function() { return tween.cur(); } :
 			function() { return jQuery.css( elem, prop, "" ); },
+=======
+			function() {
+				return tween.cur();
+			} :
+			function() {
+				return jQuery.css( elem, prop, "" );
+			},
+>>>>>>> refs/remotes/jquery/master
 		initial = currentValue(),
 		unit = valueParts && valueParts[ 3 ] || ( jQuery.cssNumber[ prop ] ? "" : "px" ),
 

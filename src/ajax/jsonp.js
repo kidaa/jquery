@@ -5,6 +5,11 @@ define( [
 	"../ajax"
 ], function( jQuery, nonce, rquery ) {
 
+<<<<<<< HEAD
+=======
+"use strict";
+
+>>>>>>> refs/remotes/jquery/master
 var oldCallbacks = [],
 	rjsonp = /(=)\?(?=&|$)|\?\?/;
 
@@ -53,7 +58,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			return responseContainer[ 0 ];
 		};
 
-		// force json dataType
+		// Force json dataType
 		s.dataTypes[ 0 ] = "json";
 
 		// Install callback
@@ -77,10 +82,14 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			// Save back as free
 			if ( s[ callbackName ] ) {
 
+<<<<<<< HEAD
 				// make sure that re-using the options doesn't screw things around
+=======
+				// Make sure that re-using the options doesn't screw things around
+>>>>>>> refs/remotes/jquery/master
 				s.jsonpCallback = originalSettings.jsonpCallback;
 
-				// save the callback name for future use
+				// Save the callback name for future use
 				oldCallbacks.push( callbackName );
 			}
 

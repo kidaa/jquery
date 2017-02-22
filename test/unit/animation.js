@@ -17,16 +17,26 @@ QUnit.module( "animation", {
 		this.sandbox = sinon.sandbox.create();
 		this.clock = this.sandbox.useFakeTimers( startTime );
 		this._oldInterval = jQuery.fx.interval;
+<<<<<<< HEAD
 		this._oldNow = jQuery.now;
 		jQuery.fx.step = {};
 		jQuery.fx.interval = 10;
 		jQuery.now = Date.now || this._oldNow;
+=======
+		jQuery.fx.step = {};
+		jQuery.fx.interval = 10;
+		jQuery.now = Date.now;
+>>>>>>> refs/remotes/jquery/master
 		jQuery.Animation.prefilters = [ defaultPrefilter ];
 		jQuery.Animation.tweeners = { "*": [ defaultTweener ] };
 	},
 	teardown: function() {
 		this.sandbox.restore();
+<<<<<<< HEAD
 		jQuery.now = this._oldNow;
+=======
+		jQuery.now = Date.now;
+>>>>>>> refs/remotes/jquery/master
 		jQuery.fx.stop();
 		jQuery.fx.interval = this._oldInterval;
 		window.requestAnimationFrame = oldRaf;
@@ -42,10 +52,27 @@ QUnit.test( "Animation( subject, props, opts ) - shape", function( assert ) {
 		opts = { queue: "fx", duration: 100 },
 		animation = jQuery.Animation( subject, props, opts );
 
+<<<<<<< HEAD
 	assert.equal( animation.elem, subject, ".elem is set to the exact object passed" );
 	assert.equal( animation.originalOptions, opts, ".originalOptions is set to options passed" );
 	assert.equal(
 		animation.originalProperties, props, ".originalProperties is set to props passed"
+=======
+	assert.equal(
+		animation.elem,
+		subject,
+		".elem is set to the exact object passed"
+	);
+	assert.equal(
+		animation.originalOptions,
+		opts,
+		".originalOptions is set to options passed"
+	);
+	assert.equal(
+		animation.originalProperties,
+		props,
+		".originalProperties is set to props passed"
+>>>>>>> refs/remotes/jquery/master
 	);
 
 	assert.notEqual( animation.props, props, ".props is not the original however" );
@@ -142,6 +169,7 @@ QUnit.test( "Animation.prefilter - prefilter return hooks", function( assert ) {
 
 	assert.equal( prefilter.callCount, 1, "Called prefilter" );
 
+<<<<<<< HEAD
 	assert.equal( defaultSpy.callCount, 0,
 		"Returning something from a prefilter caused remaining prefilters to not run" );
 	assert.equal( jQuery.fx.timer.callCount, 0, "Returning something never queues a timer" );
@@ -154,6 +182,27 @@ QUnit.test( "Animation.prefilter - prefilter return hooks", function( assert ) {
 	assert.equal( TweenSpy.callCount, 0, "Returning something never creates tweens" );
 
 	// Test overriden usage on queues:
+=======
+	assert.equal(
+		defaultSpy.callCount,
+		0,
+		"Returning something from a prefilter caused remaining prefilters to not run"
+	);
+	assert.equal( jQuery.fx.timer.callCount, 0, "Returning something never queues a timer" );
+	assert.equal(
+		animation,
+		ourAnimation,
+		"Returning something returned it from jQuery.Animation"
+	);
+	assert.equal(
+		realAnimation.createTween.callCount,
+		0,
+		"Returning something never creates tweens"
+	);
+	assert.equal( TweenSpy.callCount, 0, "Returning something never creates tweens" );
+
+	// Test overridden usage on queues:
+>>>>>>> refs/remotes/jquery/master
 	prefilter.reset();
 	element = jQuery( "<div>" )
 		.css( "height", 50 )
@@ -176,7 +225,12 @@ QUnit.test( "Animation.prefilter - prefilter return hooks", function( assert ) {
 	element.stop();
 	assert.equal( ourAnimation.stop.callCount, 1, ".stop() called ourAnimation.stop()" );
 	assert.ok(
+<<<<<<< HEAD
 		!ourAnimation.stop.args[ 0 ][ 0 ], ".stop( falsy ) (undefined or false are both valid)"
+=======
+		!ourAnimation.stop.args[ 0 ][ 0 ],
+		".stop( falsy ) (undefined or false are both valid)"
+>>>>>>> refs/remotes/jquery/master
 	);
 
 	assert.equal( queueSpy.callCount, 2, "Next queue function called" );

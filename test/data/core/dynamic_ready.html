@@ -4,6 +4,10 @@
 	<meta charset="utf-8">
 	<script src="../../jquery.js"></script>
 	<script>var $j = jQuery.noConflict();</script>
+<<<<<<< HEAD
+=======
+	<script src="../iframeTest.js"></script>
+>>>>>>> refs/remotes/jquery/master
 </head>
 <body>
 <iframe id="dont_return" src="dont_return.php"></iframe>
@@ -20,14 +24,22 @@
 			$(function () {
 				clearTimeout( timeoutId );
 				if ( !timeoutFired ) {
+<<<<<<< HEAD
 					window.parent.iframeCallback( true );
+=======
+					startIframeTest( true );
+>>>>>>> refs/remotes/jquery/master
 				}
 			});
 		});
 
 		timeoutId = setTimeout(function () {
 			timeoutFired = true;
+<<<<<<< HEAD
 			window.parent.iframeCallback( false );
+=======
+			startIframeTest( false );
+>>>>>>> refs/remotes/jquery/master
 		}, 10000);
 	});
 </script>

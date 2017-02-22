@@ -1,8 +1,14 @@
 var fs = require( "fs" );
 
 module.exports = function( grunt ) {
+<<<<<<< HEAD
 	var minLoc = Object.keys( grunt.config( "uglify.all.files" ) )[ 0 ];
 	grunt.registerTask( "remove_map_comment", function() {
+=======
+	var config = grunt.config( "uglify.all.files" );
+	grunt.registerTask( "remove_map_comment", function() {
+		var minLoc = grunt.config.process( Object.keys( config )[ 0 ] );
+>>>>>>> refs/remotes/jquery/master
 
 		// Remove the source map comment; it causes way too many problems.
 		// The map file is still generated for manual associations

@@ -2,6 +2,11 @@ define( [
 	"../../core"
 ], function( jQuery ) {
 
+<<<<<<< HEAD
+=======
+"use strict";
+
+>>>>>>> refs/remotes/jquery/master
 return function( elem, dir, until ) {
 	var matched = [],
 		truncate = until !== undefined;

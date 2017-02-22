@@ -65,7 +65,11 @@ jQuery.each( tests, function( strFlags, resultString ) {
 
 				QUnit.test( "jQuery.Callbacks( " + showFlags( flags ) + " ) - " + filterLabel, function( assert ) {
 
+<<<<<<< HEAD
 					expect( 28 );
+=======
+					assert.expect( 29 );
+>>>>>>> refs/remotes/jquery/master
 
 					var cblist,
 						results = resultString.split( /\s+/ );
@@ -94,7 +98,11 @@ jQuery.each( tests, function( strFlags, resultString ) {
 					assert.strictEqual( cblist.disabled(), true, ".disabled() becomes true" );
 					assert.strictEqual( cblist.locked(), true, "disabling locks" );
 
+<<<<<<< HEAD
 					// #13517 - Emptying while firing
+=======
+					// Emptying while firing (#13517)
+>>>>>>> refs/remotes/jquery/master
 					cblist = jQuery.Callbacks( flags );
 					cblist.add( cblist.empty );
 					cblist.add( function() {
@@ -155,6 +163,7 @@ jQuery.each( tests, function( strFlags, resultString ) {
 					} );
 					cblist.lock();
 					cblist.add( function( str ) {
+<<<<<<< HEAD
 						output += str;
 					} );
 					cblist.fire( "A" );
@@ -163,6 +172,26 @@ jQuery.each( tests, function( strFlags, resultString ) {
 					} );
 					assert.strictEqual( output, "X", "Lock early" );
 					assert.strictEqual( cblist.locked(), true, "Locking reflected in accessor" );
+=======
+						output += str;
+					} );
+					cblist.fire( "A" );
+					cblist.add( function( str ) {
+						output += str;
+					} );
+					assert.strictEqual( output, "X", "Lock early" );
+					assert.strictEqual( cblist.locked(), true, "Locking reflected in accessor" );
+
+					// Locking while firing (gh-1990)
+					output = "X";
+					cblist = jQuery.Callbacks( flags );
+					cblist.add( cblist.lock );
+					cblist.add( function( str ) {
+						output += str;
+					} );
+					cblist.fire( "A" );
+					assert.strictEqual( output, "XA", "Locking doesn't abort execution (gh-1990)" );
+>>>>>>> refs/remotes/jquery/master
 
 					// Ordering
 					output = "X";
@@ -309,6 +338,7 @@ QUnit.test( "jQuery.Callbacks.has", function( assert ) {
 	cb.remove( getB );
 	assert.strictEqual( cb.has( getB ), false, "Remove a specific callback function and make sure its no longer there" );
 	assert.strictEqual( cb.has( getA ), true, "Remove a specific callback function and make sure other callback function is still there" );
+<<<<<<< HEAD
 
 	cb.empty();
 	assert.strictEqual( cb.has(), false, "Empty list and make sure there are no callback function(s)" );
@@ -333,6 +363,32 @@ QUnit.test( "jQuery.Callbacks.has", function( assert ) {
 	strictEqual( cb.has(), false, "locked() list is empty and returns false" );
 } );
 
+=======
+
+	cb.empty();
+	assert.strictEqual( cb.has(), false, "Empty list and make sure there are no callback function(s)" );
+	assert.strictEqual( cb.has( getA ), false, "Check for a specific function in an empty() list" );
+
+	cb.add( getA, getB, function() {
+		assert.strictEqual( cb.has(), true, "Check if list has callback function(s) from within a callback function" );
+		assert.strictEqual( cb.has( getA ), true, "Check if list has a specific callback from within a callback function" );
+	} ).fire();
+
+	assert.strictEqual( cb.has(), true, "Callbacks list has callback function(s) after firing" );
+
+	cb.disable();
+	assert.strictEqual( cb.has(), false, "disabled() list has no callback functions (returns false)" );
+	assert.strictEqual( cb.has( getA ), false, "Check for a specific function in a disabled() list" );
+
+	cb = jQuery.Callbacks( "unique" );
+	cb.add( getA );
+	cb.add( getA );
+	assert.strictEqual( cb.has(), true, "Check if unique list has callback function(s) attached" );
+	cb.lock();
+	assert.strictEqual( cb.has(), false, "locked() list is empty and returns false" );
+} );
+
+>>>>>>> refs/remotes/jquery/master
 QUnit.test( "jQuery.Callbacks() - adding a string doesn't cause a stack overflow", function( assert ) {
 
 	assert.expect( 1 );
@@ -356,3 +412,27 @@ QUnit.test( "jQuery.Callbacks() - disabled callback doesn't fire (gh-1790)", fun
 	cb.fire();
 	assert.ok( !fired, "Disabled callback function didn't fire" );
 } );
+<<<<<<< HEAD
+=======
+
+QUnit.test( "jQuery.Callbacks() - list with memory stays locked (gh-3469)", function( assert ) {
+
+	assert.expect( 3 );
+
+	var cb = jQuery.Callbacks( "memory" ),
+		fired = 0,
+		count1 = function() { fired += 1; },
+		count2 = function() { fired += 10; };
+
+	cb.add( count1 );
+	cb.fire();
+	assert.equal( fired, 1, "Pre-lock() fire" );
+
+	cb.lock();
+	cb.add( count2 );
+	assert.equal( fired, 11, "Post-lock() add" );
+
+	cb.fire();
+	assert.equal( fired, 11, "Post-lock() fire ignored" );
+} );
+>>>>>>> refs/remotes/jquery/master

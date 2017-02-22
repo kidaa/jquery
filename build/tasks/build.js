@@ -10,12 +10,33 @@ module.exports = function( grunt ) {
 
 	var fs = require( "fs" ),
 		requirejs = require( "requirejs" ),
+<<<<<<< HEAD
 		srcFolder = __dirname + "/../../src/",
 		rdefineEnd = /\}\s*?\);[^}\w]*$/,
 		config = {
 			baseUrl: "src",
 			name: "jquery",
 			out: "dist/jquery.js",
+=======
+		Insight = require( "insight" ),
+		pkg = require( "../../package.json" ),
+		srcFolder = __dirname + "/../../src/",
+		rdefineEnd = /\}\s*?\);[^}\w]*$/,
+		read = function( fileName ) {
+			return grunt.file.read( srcFolder + fileName );
+		},
+
+		// Catch `// @CODE` and subsequent comment lines event if they don't start
+		// in the first column.
+		wrapper = read( "wrapper.js" ).split( /[\x20\t]*\/\/ @CODE\n(?:[\x20\t]*\/\/[^\n]+\n)*/ ),
+
+		config = {
+			baseUrl: "src",
+			name: "jquery",
+
+			// Allow strict mode
+			useStrict: true,
+>>>>>>> refs/remotes/jquery/master
 
 			// We have multiple minify steps
 			optimize: "none",
@@ -29,8 +50,13 @@ module.exports = function( grunt ) {
 			// Avoid breaking semicolons inserted by r.js
 			skipSemiColonInsertion: true,
 			wrap: {
+<<<<<<< HEAD
 				startFile: "src/intro.js",
 				endFile: [ "src/exports/global.js", "src/outro.js" ]
+=======
+				start: wrapper[ 0 ].replace( /\/\*\s*eslint(?: |-).*\s*\*\/\n/, "" ),
+				end: wrapper[ 1 ]
+>>>>>>> refs/remotes/jquery/master
 			},
 			rawText: {},
 			onBuildWrite: convert
@@ -52,7 +78,16 @@ module.exports = function( grunt ) {
 		// Convert var modules
 		if ( /.\/var\//.test( path.replace( process.cwd(), "" ) ) ) {
 			contents = contents
+<<<<<<< HEAD
 				.replace( /define\([\w\W]*?return/, "var " + ( /var\/([\w-]+)/.exec( name )[ 1 ] ) + " =" )
+=======
+				.replace(
+					/define\([\w\W]*?return/,
+					"var " +
+					( /var\/([\w-]+)/.exec( name )[ 1 ] ) +
+					" ="
+				)
+>>>>>>> refs/remotes/jquery/master
 				.replace( rdefineEnd, "" );
 
 		// Sizzle treatment
@@ -72,7 +107,11 @@ module.exports = function( grunt ) {
 
 			// Remove define wrappers, closure ends, and empty declarations
 			contents = contents
+<<<<<<< HEAD
 				.replace( /define\([^{]*?{/, "" )
+=======
+				.replace( /define\([^{]*?{\s*(?:("|')use strict\1(?:;|))?/, "" )
+>>>>>>> refs/remotes/jquery/master
 				.replace( rdefineEnd, "" );
 
 			// Remove anything wrapped with
@@ -112,12 +151,20 @@ module.exports = function( grunt ) {
 			done = this.async(),
 			flags = this.flags,
 			optIn = flags[ "*" ],
+<<<<<<< HEAD
 			name = this.data.dest,
+=======
+			name = grunt.option( "filename" ),
+>>>>>>> refs/remotes/jquery/master
 			minimum = this.data.minimum,
 			removeWith = this.data.removeWith,
 			excluded = [],
 			included = [],
 			version = grunt.config( "pkg.version" ),
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/jquery/master
 			/**
 			 * Recursively calls the excluder to remove on all modules in the list
 			 * @param {Array} list
@@ -155,6 +202,10 @@ module.exports = function( grunt ) {
 					} );
 				}
 			},
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/jquery/master
 			/**
 			 * Adds the specified module to the excluded or included list, depending on the flag
 			 * @param {String} flag A module path relative to
@@ -162,18 +213,28 @@ module.exports = function( grunt ) {
 			 *  whether it should included or excluded
 			 */
 			excluder = function( flag ) {
+<<<<<<< HEAD
 				var m = /^(\+|\-|)([\w\/-]+)$/.exec( flag ),
+=======
+				var additional,
+					m = /^(\+|\-|)([\w\/-]+)$/.exec( flag ),
+>>>>>>> refs/remotes/jquery/master
 					exclude = m[ 1 ] === "-",
 					module = m[ 2 ];
 
 				if ( exclude ) {
 
+<<<<<<< HEAD
 					// Can't exclude sizzle on this branch
 					if ( module === "sizzle" ) {
 						grunt.log.error( "Sizzle cannot be excluded on the 1.x branch." );
 
 					// Can't exclude certain modules
 					} else if ( minimum.indexOf( module ) === -1 ) {
+=======
+					// Can't exclude certain modules
+					if ( minimum.indexOf( module ) === -1 ) {
+>>>>>>> refs/remotes/jquery/master
 
 						// Add to excluded
 						if ( excluded.indexOf( module ) === -1 ) {
@@ -190,10 +251,30 @@ module.exports = function( grunt ) {
 							}
 						}
 
+<<<<<<< HEAD
 						// Check removeWith list
 						excludeList( removeWith[ module ] );
 					} else {
 						grunt.log.error( "Module \"" + module + "\" is a minimum requirement." );
+=======
+						additional = removeWith[ module ];
+
+						// Check removeWith list
+						if ( additional ) {
+							excludeList( additional.remove || additional );
+							if ( additional.include ) {
+								included = included.concat( additional.include );
+								grunt.log.writeln( "+" + additional.include );
+							}
+						}
+					} else {
+						grunt.log.error( "Module \"" + module + "\" is a minimum requirement." );
+						if ( module === "selector" ) {
+							grunt.log.error(
+								"If you meant to replace Sizzle, use -sizzle instead."
+							);
+						}
+>>>>>>> refs/remotes/jquery/master
 					}
 				} else {
 					grunt.log.writeln( flag );
@@ -201,6 +282,14 @@ module.exports = function( grunt ) {
 				}
 			};
 
+<<<<<<< HEAD
+=======
+		// Filename can be passed to the command line using
+		// command line options
+		// e.g. grunt build --filename=jquery-custom.js
+		name = name ? ( "dist/" + name ) : this.data.dest;
+
+>>>>>>> refs/remotes/jquery/master
 		// append commit id to version
 		if ( process.env.COMMIT ) {
 			version += " " + process.env.COMMIT;
@@ -225,6 +314,16 @@ module.exports = function( grunt ) {
 			excluder( flag );
 		}
 
+<<<<<<< HEAD
+=======
+		// Handle Sizzle exclusion
+		// Replace with selector-native
+		if ( ( index = excluded.indexOf( "sizzle" ) ) > -1 ) {
+			config.rawText.selector = "define(['./selector-native']);";
+			excluded.splice( index, 1 );
+		}
+
+>>>>>>> refs/remotes/jquery/master
 		// Replace exports/global with a noop noConflict
 		if ( ( index = excluded.indexOf( "exports/global" ) ) > -1 ) {
 			config.rawText[ "exports/global" ] = "define(['../core']," +
@@ -295,10 +394,55 @@ module.exports = function( grunt ) {
 	//   grunt build:*:*:+ajax:-dimensions:-effects:-offset
 	grunt.registerTask( "custom", function() {
 		var args = this.args,
+<<<<<<< HEAD
 			modules = args.length ? args[ 0 ].replace( /,/g, ":" ) : "";
 
 		grunt.log.writeln( "Creating custom build...\n" );
 
 		grunt.task.run( [ "build:*:*" + ( modules ? ":" + modules : "" ), "uglify", "dist" ] );
+=======
+			modules = args.length ? args[ 0 ].replace( /,/g, ":" ) : "",
+			done = this.async(),
+			insight = new Insight( {
+				trackingCode: "UA-1076265-4",
+				pkg: pkg
+			} );
+
+		function exec( trackingAllowed ) {
+			var tracks = args.length ? args[ 0 ].split( "," ) : [];
+			var defaultPath = [ "build", "custom" ];
+
+			tracks = tracks.map( function( track ) {
+				return track.replace( /\//g, "+" );
+			} );
+
+			if ( trackingAllowed ) {
+
+				// Track individuals
+				tracks.forEach( function( module ) {
+					var path = defaultPath.concat( [ "individual" ], module );
+
+					insight.track.apply( insight, path );
+				} );
+
+				// Track full command
+				insight.track.apply( insight, defaultPath.concat( [ "full" ], tracks ) );
+			}
+
+			grunt.task.run( [ "build:*:*" + ( modules ? ":" + modules : "" ), "uglify", "dist" ] );
+			done();
+		}
+
+		grunt.log.writeln( "Creating custom build...\n" );
+
+		// Ask for permission the first time
+		if ( insight.optOut === undefined ) {
+			insight.askPermission( null, function( error, result ) {
+				exec( result );
+			} );
+		} else {
+			exec( !insight.optOut );
+		}
+>>>>>>> refs/remotes/jquery/master
 	} );
 };

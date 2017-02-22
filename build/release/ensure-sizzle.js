@@ -1,5 +1,9 @@
 var fs = require( "fs" ),
 	npm = require( "npm" ),
+<<<<<<< HEAD
+=======
+	chalk = require( "chalk" ),
+>>>>>>> refs/remotes/jquery/master
 	sizzleLoc = __dirname + "/../../external/sizzle/dist/sizzle.js",
 	rversion = /Engine v(\d+\.\d+\.\d+(?:-[-\.\d\w]+)?)/;
 
@@ -37,12 +41,21 @@ function ensureSizzle( Release, callback ) {
 
 			// colors is inherited from jquery-release
 			console.log(
+<<<<<<< HEAD
 				"The Sizzle version in the src folder (" + version.red +
 				") is not the latest tag (" + latest.green + ")."
 			);
 			Release.confirm( callback );
 		} else {
 			console.log( "Sizzle is latest (" + latest.green + ")" );
+=======
+				"The Sizzle version in the src folder (" + chalk.red( version ) +
+				") is not the latest tag (" + chalk.green( latest ) + ")."
+			);
+			Release.confirm( callback );
+		} else {
+			console.log( "Sizzle is latest (" + chalk.green( latest ) + ")" );
+>>>>>>> refs/remotes/jquery/master
 			callback();
 		}
 	} );

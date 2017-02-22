@@ -1,6 +1,7 @@
 define( [
 	"./core",
 	"./var/document",
+<<<<<<< HEAD
 	"./var/rnotwhite",
 	"./var/hasOwn",
 	"./var/slice",
@@ -16,6 +17,22 @@ var rformElems = /^(?:input|select|textarea)$/i,
 	rkeyEvent = /^key/,
 	rmouseEvent = /^(?:mouse|pointer|contextmenu|drag|drop)|click/,
 	rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
+=======
+	"./var/documentElement",
+	"./var/rnothtmlwhite",
+	"./var/rcheckableType",
+	"./var/slice",
+	"./data/var/dataPriv",
+	"./core/init",
+	"./selector"
+], function( jQuery, document, documentElement, rnothtmlwhite, rcheckableType, slice, dataPriv ) {
+
+"use strict";
+
+var
+	rkeyEvent = /^key/,
+	rmouseEvent = /^(?:mouse|pointer|contextmenu|drag|drop)|click/,
+>>>>>>> refs/remotes/jquery/master
 	rtypenamespace = /^([^.]*)(?:\.(.+)|)/;
 
 function returnTrue() {
@@ -26,7 +43,11 @@ function returnFalse() {
 	return false;
 }
 
+<<<<<<< HEAD
 // Support: IE9
+=======
+// Support: IE <=9 only
+>>>>>>> refs/remotes/jquery/master
 // See #13393 for more info
 function safeActiveElement() {
 	try {
@@ -104,11 +125,20 @@ jQuery.event = {
 	global: {},
 
 	add: function( elem, types, handler, data, selector ) {
+<<<<<<< HEAD
 		var tmp, events, t, handleObjIn,
 			special, eventHandle, handleObj,
 			handlers, type, namespaces, origType,
 			elemData = jQuery._data( elem );
 
+=======
+
+		var handleObjIn, eventHandle, tmp,
+			events, t, handleObj,
+			special, handlers, type, namespaces, origType,
+			elemData = dataPriv.get( elem );
+
+>>>>>>> refs/remotes/jquery/master
 		// Don't attach events to noData or text/comment nodes (but allow plain objects)
 		if ( !elemData ) {
 			return;
@@ -119,6 +149,12 @@ jQuery.event = {
 			handleObjIn = handler;
 			handler = handleObjIn.handler;
 			selector = handleObjIn.selector;
+		}
+
+		// Ensure that invalid selectors throw exceptions at attach time
+		// Evaluate against documentElement in case elem is a non-element node (e.g., document)
+		if ( selector ) {
+			jQuery.find.matchesSelector( documentElement, selector );
 		}
 
 		// Make sure that the handler has a unique ID, used to find/remove it later
@@ -135,6 +171,7 @@ jQuery.event = {
 
 				// Discard the second event of a jQuery.event.trigger() and
 				// when an event is called after a page has unloaded
+<<<<<<< HEAD
 				return typeof jQuery !== "undefined" &&
 					( !e || jQuery.event.triggered !== e.type ) ?
 					jQuery.event.dispatch.apply( eventHandle.elem, arguments ) :
@@ -148,6 +185,15 @@ jQuery.event = {
 
 		// Handle multiple events separated by a space
 		types = ( types || "" ).match( rnotwhite ) || [ "" ];
+=======
+				return typeof jQuery !== "undefined" && jQuery.event.triggered !== e.type ?
+					jQuery.event.dispatch.apply( elem, arguments ) : undefined;
+			};
+		}
+
+		// Handle multiple events separated by a space
+		types = ( types || "" ).match( rnothtmlwhite ) || [ "" ];
+>>>>>>> refs/remotes/jquery/master
 		t = types.length;
 		while ( t-- ) {
 			tmp = rtypenamespace.exec( types[ t ] ) || [];
@@ -185,6 +231,7 @@ jQuery.event = {
 				handlers = events[ type ] = [];
 				handlers.delegateCount = 0;
 
+<<<<<<< HEAD
 				// Only use addEventListener/attachEvent if the special events handler returns false
 				if ( !special.setup ||
 					special.setup.call( elem, data, namespaces, eventHandle ) === false ) {
@@ -192,9 +239,14 @@ jQuery.event = {
 					// Bind the global event handler to the element
 					if ( elem.addEventListener ) {
 						elem.addEventListener( type, eventHandle, false );
+=======
+				// Only use addEventListener if the special events handler returns false
+				if ( !special.setup ||
+					special.setup.call( elem, data, namespaces, eventHandle ) === false ) {
+>>>>>>> refs/remotes/jquery/master
 
-					} else if ( elem.attachEvent ) {
-						elem.attachEvent( "on" + type, eventHandle );
+					if ( elem.addEventListener ) {
+						elem.addEventListener( type, eventHandle );
 					}
 				}
 			}
@@ -218,24 +270,34 @@ jQuery.event = {
 			jQuery.event.global[ type ] = true;
 		}
 
-		// Nullify elem to prevent memory leaks in IE
-		elem = null;
 	},
 
 	// Detach an event or set of events from an element
 	remove: function( elem, types, handler, selector, mappedTypes ) {
+<<<<<<< HEAD
 		var j, handleObj, tmp,
 			origCount, t, events,
 			special, handlers, type,
 			namespaces, origType,
 			elemData = jQuery.hasData( elem ) && jQuery._data( elem );
+=======
+
+		var j, origCount, tmp,
+			events, t, handleObj,
+			special, handlers, type, namespaces, origType,
+			elemData = dataPriv.hasData( elem ) && dataPriv.get( elem );
+>>>>>>> refs/remotes/jquery/master
 
 		if ( !elemData || !( events = elemData.events ) ) {
 			return;
 		}
 
 		// Once for each type.namespace in types; type may be omitted
+<<<<<<< HEAD
 		types = ( types || "" ).match( rnotwhite ) || [ "" ];
+=======
+		types = ( types || "" ).match( rnothtmlwhite ) || [ "" ];
+>>>>>>> refs/remotes/jquery/master
 		t = types.length;
 		while ( t-- ) {
 			tmp = rtypenamespace.exec( types[ t ] ) || [];
@@ -290,16 +352,13 @@ jQuery.event = {
 			}
 		}
 
-		// Remove the expando if it's no longer used
+		// Remove data and the expando if it's no longer used
 		if ( jQuery.isEmptyObject( events ) ) {
-			delete elemData.handle;
-
-			// removeData also checks for emptiness and clears the expando if empty
-			// so use it instead of delete
-			jQuery._removeData( elem, "events" );
+			dataPriv.remove( elem, "handle events" );
 		}
 	},
 
+<<<<<<< HEAD
 	trigger: function( event, data, elem, onlyHandlers ) {
 		var handle, ontype, cur,
 			bubbleType, special, tmp, i,
@@ -458,6 +517,25 @@ jQuery.event = {
 
 		// Use the fix-ed jQuery.Event rather than the (read-only) native event
 		args[ 0 ] = event;
+=======
+	dispatch: function( nativeEvent ) {
+
+		// Make a writable jQuery.Event from the native event object
+		var event = jQuery.event.fix( nativeEvent );
+
+		var i, j, ret, matched, handleObj, handlerQueue,
+			args = new Array( arguments.length ),
+			handlers = ( dataPriv.get( this, "events" ) || {} )[ event.type ] || [],
+			special = jQuery.event.special[ event.type ] || {};
+
+		// Use the fix-ed jQuery.Event rather than the (read-only) native event
+		args[ 0 ] = event;
+
+		for ( i = 1; i < arguments.length; i++ ) {
+			args[ i ] = arguments[ i ];
+		}
+
+>>>>>>> refs/remotes/jquery/master
 		event.delegateTarget = this;
 
 		// Call the preDispatch hook for the mapped type, and let it bail if desired
@@ -467,6 +545,7 @@ jQuery.event = {
 
 		// Determine handlers
 		handlerQueue = jQuery.event.handlers.call( this, event, handlers );
+<<<<<<< HEAD
 
 		// Run delegates first; they may want to stop propagation beneath us
 		i = 0;
@@ -583,6 +662,36 @@ jQuery.event = {
 		while ( i-- ) {
 			prop = copy[ i ];
 			event[ prop ] = originalEvent[ prop ];
+=======
+
+		// Run delegates first; they may want to stop propagation beneath us
+		i = 0;
+		while ( ( matched = handlerQueue[ i++ ] ) && !event.isPropagationStopped() ) {
+			event.currentTarget = matched.elem;
+
+			j = 0;
+			while ( ( handleObj = matched.handlers[ j++ ] ) &&
+				!event.isImmediatePropagationStopped() ) {
+
+				// Triggered event must either 1) have no namespace, or 2) have namespace(s)
+				// a subset or equal to those in the bound event (both can have no namespace).
+				if ( !event.rnamespace || event.rnamespace.test( handleObj.namespace ) ) {
+
+					event.handleObj = handleObj;
+					event.data = handleObj.data;
+
+					ret = ( ( jQuery.event.special[ handleObj.origType ] || {} ).handle ||
+						handleObj.handler ).apply( matched.elem, args );
+
+					if ( ret !== undefined ) {
+						if ( ( event.result = ret ) === false ) {
+							event.preventDefault();
+							event.stopPropagation();
+						}
+					}
+				}
+			}
+>>>>>>> refs/remotes/jquery/master
 		}
 
 		// Support: IE<9
@@ -604,25 +713,41 @@ jQuery.event = {
 		return fixHook.filter ? fixHook.filter( event, originalEvent ) : event;
 	},
 
+<<<<<<< HEAD
 	// Includes some event props shared by KeyEvent and MouseEvent
 	props: ( "altKey bubbles cancelable ctrlKey currentTarget detail eventPhase " +
 		"metaKey relatedTarget shiftKey target timeStamp view which" ).split( " " ),
+=======
+	handlers: function( event, handlers ) {
+		var i, handleObj, sel, matchedHandlers, matchedSelectors,
+			handlerQueue = [],
+			delegateCount = handlers.delegateCount,
+			cur = event.target;
+>>>>>>> refs/remotes/jquery/master
 
-	fixHooks: {},
+		// Find delegate handlers
+		if ( delegateCount &&
 
+<<<<<<< HEAD
 	keyHooks: {
 		props: "char charCode key keyCode".split( " " ),
 		filter: function( event, original ) {
+=======
+			// Support: IE <=9
+			// Black-hole SVG <use> instance trees (trac-13180)
+			cur.nodeType &&
+>>>>>>> refs/remotes/jquery/master
 
-			// Add which for key events
-			if ( event.which == null ) {
-				event.which = original.charCode != null ? original.charCode : original.keyCode;
-			}
+			// Support: Firefox <=42
+			// Suppress spec-violating clicks indicating a non-primary pointer button (trac-3861)
+			// https://www.w3.org/TR/DOM-Level-3-Events/#event-type-click
+			// Support: IE 11 only
+			// ...but not arrow key "clicks" of radio inputs, which can have `button` -1 (gh-2343)
+			!( event.type === "click" && event.button >= 1 ) ) {
 
-			return event;
-		}
-	},
+			for ( ; cur !== this; cur = cur.parentNode || this ) {
 
+<<<<<<< HEAD
 	mouseHooks: {
 		props: ( "button buttons clientX clientY fromElement offsetX offsetY " +
 			"pageX pageY screenX screenY toElement" ).split( " " ),
@@ -651,17 +776,81 @@ jQuery.event = {
 					original.toElement :
 					fromElement;
 			}
+=======
+				// Don't check non-elements (#13208)
+				// Don't process clicks on disabled elements (#6911, #8165, #11382, #11764)
+				if ( cur.nodeType === 1 && !( event.type === "click" && cur.disabled === true ) ) {
+					matchedHandlers = [];
+					matchedSelectors = {};
+					for ( i = 0; i < delegateCount; i++ ) {
+						handleObj = handlers[ i ];
 
-			// Add which for click: 1 === left; 2 === middle; 3 === right
-			// Note: button is not normalized, so don't use it
-			if ( !event.which && button !== undefined ) {
-				event.which = ( button & 1 ? 1 : ( button & 2 ? 3 : ( button & 4 ? 2 : 0 ) ) );
+						// Don't conflict with Object.prototype properties (#13203)
+						sel = handleObj.selector + " ";
+>>>>>>> refs/remotes/jquery/master
+
+						if ( matchedSelectors[ sel ] === undefined ) {
+							matchedSelectors[ sel ] = handleObj.needsContext ?
+								jQuery( sel, this ).index( cur ) > -1 :
+								jQuery.find( sel, this, null, [ cur ] ).length;
+						}
+						if ( matchedSelectors[ sel ] ) {
+							matchedHandlers.push( handleObj );
+						}
+					}
+					if ( matchedHandlers.length ) {
+						handlerQueue.push( { elem: cur, handlers: matchedHandlers } );
+					}
+				}
 			}
-
-			return event;
 		}
+
+<<<<<<< HEAD
+=======
+		// Add the remaining (directly-bound) handlers
+		cur = this;
+		if ( delegateCount < handlers.length ) {
+			handlerQueue.push( { elem: cur, handlers: handlers.slice( delegateCount ) } );
+		}
+
+		return handlerQueue;
 	},
 
+	addProp: function( name, hook ) {
+		Object.defineProperty( jQuery.Event.prototype, name, {
+			enumerable: true,
+			configurable: true,
+
+			get: jQuery.isFunction( hook ) ?
+				function() {
+					if ( this.originalEvent ) {
+							return hook( this.originalEvent );
+					}
+				} :
+				function() {
+					if ( this.originalEvent ) {
+							return this.originalEvent[ name ];
+					}
+				},
+
+			set: function( value ) {
+				Object.defineProperty( this, name, {
+					enumerable: true,
+					configurable: true,
+					writable: true,
+					value: value
+				} );
+			}
+		} );
+	},
+
+	fix: function( originalEvent ) {
+		return originalEvent[ jQuery.expando ] ?
+			originalEvent :
+			new jQuery.Event( originalEvent );
+	},
+
+>>>>>>> refs/remotes/jquery/master
 	special: {
 		load: {
 
@@ -673,6 +862,7 @@ jQuery.event = {
 			// Fire native event if possible so blur/focus sequence is correct
 			trigger: function() {
 				if ( this !== safeActiveElement() && this.focus ) {
+<<<<<<< HEAD
 					try {
 						this.focus();
 						return false;
@@ -682,6 +872,10 @@ jQuery.event = {
 						// If we error on focus to hidden element (#1486, #12518),
 						// let .trigger() run the handlers
 					}
+=======
+					this.focus();
+					return false;
+>>>>>>> refs/remotes/jquery/master
 				}
 			},
 			delegateType: "focusin"
@@ -697,9 +891,17 @@ jQuery.event = {
 		},
 		click: {
 
+<<<<<<< HEAD
 			// For checkbox, fire native event so checked state will be right
 			trigger: function() {
 				if ( jQuery.nodeName( this, "input" ) && this.type === "checkbox" && this.click ) {
+=======
+			// For checkable types, fire native event so checked state will be right
+			trigger: function() {
+				if ( rcheckableType.test( this.type ) &&
+					this.click && jQuery.nodeName( this, "input" ) ) {
+
+>>>>>>> refs/remotes/jquery/master
 					this.click();
 					return false;
 				}
@@ -721,6 +923,7 @@ jQuery.event = {
 				}
 			}
 		}
+<<<<<<< HEAD
 	},
 
 	// Piggyback on a donor event to simulate a different one
@@ -774,6 +977,18 @@ jQuery.removeEvent = document.removeEventListener ?
 			elem.detachEvent( name, handle );
 		}
 	};
+=======
+	}
+};
+
+jQuery.removeEvent = function( elem, type, handle ) {
+
+	// This "if" is needed for plain objects
+	if ( elem.removeEventListener ) {
+		elem.removeEventListener( type, handle );
+	}
+};
+>>>>>>> refs/remotes/jquery/master
 
 jQuery.Event = function( src, props ) {
 
@@ -792,10 +1007,27 @@ jQuery.Event = function( src, props ) {
 		this.isDefaultPrevented = src.defaultPrevented ||
 				src.defaultPrevented === undefined &&
 
+<<<<<<< HEAD
 				// Support: IE < 9, Android < 4.0
 				src.returnValue === false ?
 			returnTrue :
 			returnFalse;
+=======
+				// Support: Android <=2.3 only
+				src.returnValue === false ?
+			returnTrue :
+			returnFalse;
+
+		// Create target properties
+		// Support: Safari <=6 - 7 only
+		// Target should not be a text node (#504, #13143)
+		this.target = ( src.target && src.target.nodeType === 3 ) ?
+			src.target.parentNode :
+			src.target;
+
+		this.currentTarget = src.currentTarget;
+		this.relatedTarget = src.relatedTarget;
+>>>>>>> refs/remotes/jquery/master
 
 	// Event type
 	} else {
@@ -815,12 +1047,13 @@ jQuery.Event = function( src, props ) {
 };
 
 // jQuery.Event is based on DOM3 Events as specified by the ECMAScript Language Binding
-// http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
+// https://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
 jQuery.Event.prototype = {
 	constructor: jQuery.Event,
 	isDefaultPrevented: returnFalse,
 	isPropagationStopped: returnFalse,
 	isImmediatePropagationStopped: returnFalse,
+<<<<<<< HEAD
 
 	preventDefault: function() {
 		var e = this.originalEvent;
@@ -838,6 +1071,17 @@ jQuery.Event.prototype = {
 		// Otherwise set the returnValue property of the original event to false
 		} else {
 			e.returnValue = false;
+=======
+	isSimulated: false,
+
+	preventDefault: function() {
+		var e = this.originalEvent;
+
+		this.isDefaultPrevented = returnTrue;
+
+		if ( e && !this.isSimulated ) {
+			e.preventDefault();
+>>>>>>> refs/remotes/jquery/master
 		}
 	},
 	stopPropagation: function() {
@@ -845,6 +1089,7 @@ jQuery.Event.prototype = {
 
 		this.isPropagationStopped = returnTrue;
 
+<<<<<<< HEAD
 		if ( !e || this.isSimulated ) {
 			return;
 		}
@@ -857,13 +1102,22 @@ jQuery.Event.prototype = {
 		// Support: IE
 		// Set the cancelBubble property of the original event to true
 		e.cancelBubble = true;
+=======
+		if ( e && !this.isSimulated ) {
+			e.stopPropagation();
+		}
+>>>>>>> refs/remotes/jquery/master
 	},
 	stopImmediatePropagation: function() {
 		var e = this.originalEvent;
 
 		this.isImmediatePropagationStopped = returnTrue;
 
+<<<<<<< HEAD
 		if ( e && e.stopImmediatePropagation ) {
+=======
+		if ( e && !this.isSimulated ) {
+>>>>>>> refs/remotes/jquery/master
 			e.stopImmediatePropagation();
 		}
 
@@ -871,13 +1125,78 @@ jQuery.Event.prototype = {
 	}
 };
 
+// Includes all common event props including KeyEvent and MouseEvent specific props
+jQuery.each( {
+	altKey: true,
+	bubbles: true,
+	cancelable: true,
+	changedTouches: true,
+	ctrlKey: true,
+	detail: true,
+	eventPhase: true,
+	metaKey: true,
+	pageX: true,
+	pageY: true,
+	shiftKey: true,
+	view: true,
+	"char": true,
+	charCode: true,
+	key: true,
+	keyCode: true,
+	button: true,
+	buttons: true,
+	clientX: true,
+	clientY: true,
+	offsetX: true,
+	offsetY: true,
+	pointerId: true,
+	pointerType: true,
+	screenX: true,
+	screenY: true,
+	targetTouches: true,
+	toElement: true,
+	touches: true,
+
+	which: function( event ) {
+		var button = event.button;
+
+		// Add which for key events
+		if ( event.which == null && rkeyEvent.test( event.type ) ) {
+			return event.charCode != null ? event.charCode : event.keyCode;
+		}
+
+		// Add which for click: 1 === left; 2 === middle; 3 === right
+		if ( !event.which && button !== undefined && rmouseEvent.test( event.type ) ) {
+			if ( button & 1 ) {
+				return 1;
+			}
+
+			if ( button & 2 ) {
+				return 3;
+			}
+
+			if ( button & 4 ) {
+				return 2;
+			}
+
+			return 0;
+		}
+
+		return event.which;
+	}
+}, jQuery.event.addProp );
+
 // Create mouseenter/leave events using mouseover/out and event-time checks
 // so that event delegation works in jQuery.
 // Do the same for pointerenter/pointerleave and pointerover/pointerout
 //
 // Support: Safari 7 only
 // Safari sends mouseenter too often; see:
+<<<<<<< HEAD
 // https://code.google.com/p/chromium/issues/detail?id=470258
+=======
+// https://bugs.chromium.org/p/chromium/issues/detail?id=470258
+>>>>>>> refs/remotes/jquery/master
 // for the description of the bug (it existed in older Chrome versions as well).
 jQuery.each( {
 	mouseenter: "mouseover",
@@ -906,6 +1225,7 @@ jQuery.each( {
 		}
 	};
 } );
+<<<<<<< HEAD
 
 // IE submit delegation
 if ( !support.submit ) {
@@ -1074,6 +1394,11 @@ if ( !support.focusin ) {
 
 jQuery.fn.extend( {
 
+=======
+
+jQuery.fn.extend( {
+
+>>>>>>> refs/remotes/jquery/master
 	on: function( types, selector, data, fn ) {
 		return on( this, types, selector, data, fn );
 	},
@@ -1115,6 +1440,7 @@ jQuery.fn.extend( {
 		return this.each( function() {
 			jQuery.event.remove( this, types, fn, selector );
 		} );
+<<<<<<< HEAD
 	},
 
 	trigger: function( type, data ) {
@@ -1127,6 +1453,8 @@ jQuery.fn.extend( {
 		if ( elem ) {
 			return jQuery.event.trigger( type, data, elem, true );
 		}
+=======
+>>>>>>> refs/remotes/jquery/master
 	}
 } );
 

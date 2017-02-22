@@ -1,12 +1,22 @@
 define( [
 	"./core",
+<<<<<<< HEAD
 	"./manipulation/var/rcheckableType",
+=======
+	"./var/rcheckableType",
+>>>>>>> refs/remotes/jquery/master
 	"./core/init",
 	"./traversing", // filter
 	"./attributes/prop"
 ], function( jQuery, rcheckableType ) {
 
+<<<<<<< HEAD
 var r20 = /%20/g,
+=======
+"use strict";
+
+var
+>>>>>>> refs/remotes/jquery/master
 	rbracket = /\[\]$/,
 	rCRLF = /\r?\n/g,
 	rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
@@ -14,6 +24,7 @@ var r20 = /%20/g,
 
 function buildParams( prefix, obj, traditional, add ) {
 	var name;
+<<<<<<< HEAD
 
 	if ( jQuery.isArray( obj ) ) {
 
@@ -21,6 +32,15 @@ function buildParams( prefix, obj, traditional, add ) {
 		jQuery.each( obj, function( i, v ) {
 			if ( traditional || rbracket.test( prefix ) ) {
 
+=======
+
+	if ( Array.isArray( obj ) ) {
+
+		// Serialize array item.
+		jQuery.each( obj, function( i, v ) {
+			if ( traditional || rbracket.test( prefix ) ) {
+
+>>>>>>> refs/remotes/jquery/master
 				// Treat each array item as a scalar.
 				add( prefix, v );
 
@@ -55,20 +75,32 @@ function buildParams( prefix, obj, traditional, add ) {
 jQuery.param = function( a, traditional ) {
 	var prefix,
 		s = [],
+<<<<<<< HEAD
 		add = function( key, value ) {
 
 			// If value is a function, invoke it and return its value
 			value = jQuery.isFunction( value ) ? value() : ( value == null ? "" : value );
 			s[ s.length ] = encodeURIComponent( key ) + "=" + encodeURIComponent( value );
 		};
+=======
+		add = function( key, valueOrFunction ) {
+>>>>>>> refs/remotes/jquery/master
 
-	// Set traditional to true for jQuery <= 1.3.2 behavior.
-	if ( traditional === undefined ) {
-		traditional = jQuery.ajaxSettings && jQuery.ajaxSettings.traditional;
-	}
+			// If value is a function, invoke it and use its return value
+			var value = jQuery.isFunction( valueOrFunction ) ?
+				valueOrFunction() :
+				valueOrFunction;
+
+			s[ s.length ] = encodeURIComponent( key ) + "=" +
+				encodeURIComponent( value == null ? "" : value );
+		};
 
 	// If an array was passed in, assume that it is an array of form elements.
+<<<<<<< HEAD
 	if ( jQuery.isArray( a ) || ( a.jquery && !jQuery.isPlainObject( a ) ) ) {
+=======
+	if ( Array.isArray( a ) || ( a.jquery && !jQuery.isPlainObject( a ) ) ) {
+>>>>>>> refs/remotes/jquery/master
 
 		// Serialize the form elements
 		jQuery.each( a, function() {
@@ -85,7 +117,7 @@ jQuery.param = function( a, traditional ) {
 	}
 
 	// Return the resulting serialization
-	return s.join( "&" ).replace( r20, "+" );
+	return s.join( "&" );
 };
 
 jQuery.fn.extend( {
@@ -94,6 +126,7 @@ jQuery.fn.extend( {
 	},
 	serializeArray: function() {
 		return this.map( function() {
+<<<<<<< HEAD
 
 			// Can add propHook for "elements" to filter or add form elements
 			var elements = jQuery.prop( this, "elements" );
@@ -117,6 +150,35 @@ jQuery.fn.extend( {
 						return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
 					} ) :
 					{ name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
+=======
+
+			// Can add propHook for "elements" to filter or add form elements
+			var elements = jQuery.prop( this, "elements" );
+			return elements ? jQuery.makeArray( elements ) : this;
+		} )
+		.filter( function() {
+			var type = this.type;
+
+			// Use .is( ":disabled" ) so that fieldset[disabled] works
+			return this.name && !jQuery( this ).is( ":disabled" ) &&
+				rsubmittable.test( this.nodeName ) && !rsubmitterTypes.test( type ) &&
+				( this.checked || !rcheckableType.test( type ) );
+		} )
+		.map( function( i, elem ) {
+			var val = jQuery( this ).val();
+
+			if ( val == null ) {
+				return null;
+			}
+
+			if ( Array.isArray( val ) ) {
+				return jQuery.map( val, function( val ) {
+					return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
+				} );
+			}
+
+			return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
+>>>>>>> refs/remotes/jquery/master
 		} ).get();
 	}
 } );

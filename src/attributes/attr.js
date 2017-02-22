@@ -2,6 +2,7 @@ define( [
 	"../core",
 	"../core/access",
 	"./support",
+<<<<<<< HEAD
 	"../var/rnotwhite",
 	"./val",
 	"../selector"
@@ -12,6 +13,16 @@ var nodeHook, boolHook,
 	ruseDefault = /^(?:checked|selected)$/i,
 	getSetAttribute = support.getSetAttribute,
 	getSetInput = support.input;
+=======
+	"../var/rnothtmlwhite",
+	"../selector"
+], function( jQuery, access, support, rnothtmlwhite ) {
+
+"use strict";
+
+var boolHook,
+	attrHandle = jQuery.expr.attrHandle;
+>>>>>>> refs/remotes/jquery/master
 
 jQuery.fn.extend( {
 	attr: function( name, value ) {
@@ -40,12 +51,20 @@ jQuery.extend( {
 			return jQuery.prop( elem, name, value );
 		}
 
+<<<<<<< HEAD
 		// All attributes are lowercase
 		// Grab necessary hook if one is defined
 		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
 			name = name.toLowerCase();
 			hooks = jQuery.attrHooks[ name ] ||
 				( jQuery.expr.match.bool.test( name ) ? boolHook : nodeHook );
+=======
+		// Attribute hooks are determined by the lowercase version
+		// Grab necessary hook if one is defined
+		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
+			hooks = jQuery.attrHooks[ name.toLowerCase() ] ||
+				( jQuery.expr.match.bool.test( name ) ? boolHook : undefined );
+>>>>>>> refs/remotes/jquery/master
 		}
 
 		if ( value !== undefined ) {
@@ -78,9 +97,12 @@ jQuery.extend( {
 			set: function( elem, value ) {
 				if ( !support.radioValue && value === "radio" &&
 					jQuery.nodeName( elem, "input" ) ) {
+<<<<<<< HEAD
 
 					// Setting the type on a radio button after the value resets the value in IE8-9
 					// Reset value to default in case type is set after value during creation
+=======
+>>>>>>> refs/remotes/jquery/master
 					var val = elem.value;
 					elem.setAttribute( "type", value );
 					if ( val ) {
@@ -93,6 +115,7 @@ jQuery.extend( {
 	},
 
 	removeAttr: function( elem, value ) {
+<<<<<<< HEAD
 		var name, propName,
 			i = 0,
 			attrNames = value && value.match( rnotwhite );
@@ -121,6 +144,18 @@ jQuery.extend( {
 				}
 
 				elem.removeAttribute( getSetAttribute ? name : propName );
+=======
+		var name,
+			i = 0,
+
+			// Attribute names can contain non-HTML whitespace characters
+			// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+			attrNames = value && value.match( rnothtmlwhite );
+
+		if ( attrNames && elem.nodeType === 1 ) {
+			while ( ( name = attrNames[ i++ ] ) ) {
+				elem.removeAttribute( name );
+>>>>>>> refs/remotes/jquery/master
 			}
 		}
 	}
@@ -133,6 +168,7 @@ boolHook = {
 
 			// Remove boolean attributes when set to false
 			jQuery.removeAttr( elem, name );
+<<<<<<< HEAD
 		} else if ( getSetInput && getSetAttribute || !ruseDefault.test( name ) ) {
 
 			// IE<8 needs the *property* name
@@ -143,6 +179,10 @@ boolHook = {
 			// Support: IE<9
 			// Use defaultChecked and defaultSelected for oldIE
 			elem[ jQuery.camelCase( "default-" + name ) ] = elem[ name ] = true;
+=======
+		} else {
+			elem.setAttribute( name, name );
+>>>>>>> refs/remotes/jquery/master
 		}
 		return name;
 	}
@@ -151,6 +191,7 @@ boolHook = {
 jQuery.each( jQuery.expr.match.bool.source.match( /\w+/g ), function( i, name ) {
 	var getter = attrHandle[ name ] || jQuery.find.attr;
 
+<<<<<<< HEAD
 	if ( getSetInput && getSetAttribute || !ruseDefault.test( name ) ) {
 		attrHandle[ name ] = function( elem, name, isXML ) {
 			var ret, handle;
@@ -277,5 +318,24 @@ if ( !support.style ) {
 		}
 	};
 }
+=======
+	attrHandle[ name ] = function( elem, name, isXML ) {
+		var ret, handle,
+			lowercaseName = name.toLowerCase();
+
+		if ( !isXML ) {
+
+			// Avoid an infinite loop by temporarily removing this function from the getter
+			handle = attrHandle[ lowercaseName ];
+			attrHandle[ lowercaseName ] = ret;
+			ret = getter( elem, name, isXML ) != null ?
+				lowercaseName :
+				null;
+			attrHandle[ lowercaseName ] = handle;
+		}
+		return ret;
+	};
+} );
+>>>>>>> refs/remotes/jquery/master
 
 } );

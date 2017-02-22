@@ -1,16 +1,30 @@
 define( [
 	"./core",
+<<<<<<< HEAD
+=======
+	"./var/indexOf",
+>>>>>>> refs/remotes/jquery/master
 	"./traversing/var/dir",
 	"./traversing/var/siblings",
 	"./traversing/var/rneedsContext",
 	"./core/init",
 	"./traversing/findFilter",
 	"./selector"
+<<<<<<< HEAD
 ], function( jQuery, dir, siblings, rneedsContext ) {
 
 var rparentsprev = /^(?:parents|prev(?:Until|All))/,
 
 	// methods guaranteed to produce a unique set when starting from a unique set
+=======
+], function( jQuery, indexOf, dir, siblings, rneedsContext ) {
+
+"use strict";
+
+var rparentsprev = /^(?:parents|prev(?:Until|All))/,
+
+	// Methods guaranteed to produce a unique set when starting from a unique set
+>>>>>>> refs/remotes/jquery/master
 	guaranteedUnique = {
 		children: true,
 		contents: true,
@@ -20,12 +34,16 @@ var rparentsprev = /^(?:parents|prev(?:Until|All))/,
 
 jQuery.fn.extend( {
 	has: function( target ) {
-		var i,
-			targets = jQuery( target, this ),
-			len = targets.length;
+		var targets = jQuery( target, this ),
+			l = targets.length;
 
 		return this.filter( function() {
+<<<<<<< HEAD
 			for ( i = 0; i < len; i++ ) {
+=======
+			var i = 0;
+			for ( ; i < l; i++ ) {
+>>>>>>> refs/remotes/jquery/master
 				if ( jQuery.contains( this, targets[ i ] ) ) {
 					return true;
 				}
@@ -38,6 +56,7 @@ jQuery.fn.extend( {
 			i = 0,
 			l = this.length,
 			matched = [],
+<<<<<<< HEAD
 			pos = rneedsContext.test( selectors ) || typeof selectors !== "string" ?
 				jQuery( selectors, context || this.context ) :
 				0;
@@ -55,6 +74,26 @@ jQuery.fn.extend( {
 
 					matched.push( cur );
 					break;
+=======
+			targets = typeof selectors !== "string" && jQuery( selectors );
+
+		// Positional selectors never match, since there's no _selection_ context
+		if ( !rneedsContext.test( selectors ) ) {
+			for ( ; i < l; i++ ) {
+				for ( cur = this[ i ]; cur && cur !== context; cur = cur.parentNode ) {
+
+					// Always skip document fragments
+					if ( cur.nodeType < 11 && ( targets ?
+						targets.index( cur ) > -1 :
+
+						// Don't pass non-elements to Sizzle
+						cur.nodeType === 1 &&
+							jQuery.find.matchesSelector( cur, selectors ) ) ) {
+
+						matched.push( cur );
+						break;
+					}
+>>>>>>> refs/remotes/jquery/master
 				}
 			}
 		}
@@ -62,8 +101,7 @@ jQuery.fn.extend( {
 		return this.pushStack( matched.length > 1 ? jQuery.uniqueSort( matched ) : matched );
 	},
 
-	// Determine the position of an element within
-	// the matched set of elements
+	// Determine the position of an element within the set
 	index: function( elem ) {
 
 		// No argument, return index in parent
@@ -71,8 +109,9 @@ jQuery.fn.extend( {
 			return ( this[ 0 ] && this[ 0 ].parentNode ) ? this.first().prevAll().length : -1;
 		}
 
-		// index in selector
+		// Index in selector
 		if ( typeof elem === "string" ) {
+<<<<<<< HEAD
 			return jQuery.inArray( this[ 0 ], jQuery( elem ) );
 		}
 
@@ -81,6 +120,17 @@ jQuery.fn.extend( {
 
 			// If it receives a jQuery object, the first element is used
 			elem.jquery ? elem[ 0 ] : elem, this );
+=======
+			return indexOf.call( jQuery( elem ), this[ 0 ] );
+		}
+
+		// Locate the position of the desired element
+		return indexOf.call( this,
+
+			// If it receives a jQuery object, the first element is used
+			elem.jquery ? elem[ 0 ] : elem
+		);
+>>>>>>> refs/remotes/jquery/master
 	},
 
 	add: function( selector, context ) {
@@ -99,10 +149,7 @@ jQuery.fn.extend( {
 } );
 
 function sibling( cur, dir ) {
-	do {
-		cur = cur[ dir ];
-	} while ( cur && cur.nodeType !== 1 );
-
+	while ( ( cur = cur[ dir ] ) && cur.nodeType !== 1 ) {}
 	return cur;
 }
 
@@ -142,36 +189,57 @@ jQuery.each( {
 		return siblings( elem.firstChild );
 	},
 	contents: function( elem ) {
-		return jQuery.nodeName( elem, "iframe" ) ?
-			elem.contentDocument || elem.contentWindow.document :
-			jQuery.merge( [], elem.childNodes );
+        if ( jQuery.nodeName( elem, "iframe" ) ) {
+            return elem.contentDocument;
+        }
+
+        // Support: IE 9 - 11 only, iOS 7 only, Android Browser <=4.3 only
+        // Treat the template element as a regular one in browsers that
+        // don't support it.
+        if ( jQuery.nodeName( elem, "template" ) ) {
+            elem = elem.content || elem;
+        }
+
+        return jQuery.merge( [], elem.childNodes );
 	}
 }, function( name, fn ) {
 	jQuery.fn[ name ] = function( until, selector ) {
-		var ret = jQuery.map( this, fn, until );
+		var matched = jQuery.map( this, fn, until );
 
 		if ( name.slice( -5 ) !== "Until" ) {
 			selector = until;
 		}
 
 		if ( selector && typeof selector === "string" ) {
-			ret = jQuery.filter( selector, ret );
+			matched = jQuery.filter( selector, matched );
 		}
 
 		if ( this.length > 1 ) {
 
 			// Remove duplicates
 			if ( !guaranteedUnique[ name ] ) {
+<<<<<<< HEAD
 				ret = jQuery.uniqueSort( ret );
+=======
+				jQuery.uniqueSort( matched );
+>>>>>>> refs/remotes/jquery/master
 			}
 
 			// Reverse order for parents* and prev-derivatives
 			if ( rparentsprev.test( name ) ) {
+<<<<<<< HEAD
 				ret = ret.reverse();
 			}
 		}
 
 		return this.pushStack( ret );
+=======
+				matched.reverse();
+			}
+		}
+
+		return this.pushStack( matched );
+>>>>>>> refs/remotes/jquery/master
 	};
 } );
 

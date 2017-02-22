@@ -1,9 +1,18 @@
 QUnit.module( "support", { teardown: moduleTeardown } );
 
+<<<<<<< HEAD
 function getComputedSupport( support ) {
 	var prop,
 		result = {};
 
+=======
+var computedSupport = getComputedSupport( jQuery.support );
+
+function getComputedSupport( support ) {
+	var prop,
+		result = {};
+
+>>>>>>> refs/remotes/jquery/master
 	for ( prop in support ) {
 		if ( typeof support[ prop ] === "function" ) {
 			result[ prop ] = support[ prop ]();
@@ -14,6 +23,7 @@ function getComputedSupport( support ) {
 
 	return result;
 }
+<<<<<<< HEAD
 
 var computedSupport = getComputedSupport( jQuery.support );
 
@@ -32,6 +42,14 @@ if ( jQuery.css ) {
 		"body background is not lost if set prior to loading jQuery (#9239)",
 		"support/bodyBackground.html",
 		function( color, support, assert ) {
+=======
+
+if ( jQuery.css ) {
+	testIframe(
+		"body background is not lost if set prior to loading jQuery (#9239)",
+		"support/bodyBackground.html",
+		function( assert, jQuery, window, document, color, support ) {
+>>>>>>> refs/remotes/jquery/master
 			assert.expect( 2 );
 			var okValue = {
 				"#000000": true,
@@ -39,6 +57,7 @@ if ( jQuery.css ) {
 			};
 			assert.ok( okValue[ color ], "color was not reset (" + color + ")" );
 
+<<<<<<< HEAD
 			QUnit.stop();
 
 			// Run doc ready tests as well
@@ -81,6 +100,26 @@ testIframeWithCallback(
 		assert.expect( 2 );
 		assert.deepEqual( jQuery.extend( {}, support ), computedSupport, "No violations of CSP polices" );
 
+=======
+			assert.deepEqual( jQuery.extend( {}, support ), computedSupport,
+				"Same support properties" );
+		}
+	);
+}
+
+// This test checks CSP only for browsers with "Content-Security-Policy" header support
+// i.e. no old WebKit or old Firefox
+testIframe(
+	"Check CSP (https://developer.mozilla.org/en-US/docs/Security/CSP) restrictions",
+	"support/csp.php",
+	function( assert, jQuery, window, document, support ) {
+		var done = assert.async();
+
+		assert.expect( 2 );
+		assert.deepEqual( jQuery.extend( {}, support ), computedSupport,
+			"No violations of CSP polices" );
+
+>>>>>>> refs/remotes/jquery/master
 		supportjQuery.get( "data/support/csp.log" ).done( function( data ) {
 			assert.equal( data, "", "No log request should be sent" );
 			supportjQuery.get( "data/support/csp-clean.php" ).done( done );
@@ -96,15 +135,20 @@ testIframeWithCallback(
 		version = userAgent.match( /edge\/(\d+)/i )[ 1 ];
 		expected = {
 			"ajax": true,
+<<<<<<< HEAD
 			"appendChecked": true,
 			"attributes": true,
 			"boxSizing": true,
 			"boxSizingReliable": true,
 			"change": true,
+=======
+			"boxSizingReliable": true,
+>>>>>>> refs/remotes/jquery/master
 			"checkClone": true,
 			"checkOn": true,
 			"clearCloneStyle": version >= 13,
 			"cors": true,
+<<<<<<< HEAD
 			"cssFloat": true,
 			"deleteExpando": true,
 			"enctype": true,
@@ -172,19 +216,34 @@ testIframeWithCallback(
 			"style": true,
 			"submit": true,
 			"tbody": true
+=======
+			"createHTMLDocument": true,
+			"focusin": false,
+			"noCloneChecked": true,
+			"optSelected": true,
+			"pixelMarginRight": true,
+			"pixelPosition": true,
+			"radioValue": true,
+			"reliableMarginLeft": true
+>>>>>>> refs/remotes/jquery/master
 		};
 	} else if ( /(msie 10\.0|trident\/7\.0)/i.test( userAgent ) ) {
 		expected = {
 			"ajax": true,
+<<<<<<< HEAD
 			"appendChecked": true,
 			"attributes": true,
 			"boxSizing": true,
 			"boxSizingReliable": false,
 			"change": true,
+=======
+			"boxSizingReliable": false,
+>>>>>>> refs/remotes/jquery/master
 			"checkClone": true,
 			"checkOn": true,
 			"clearCloneStyle": false,
 			"cors": true,
+<<<<<<< HEAD
 			"cssFloat": true,
 			"deleteExpando": true,
 			"enctype": true,
@@ -316,11 +375,30 @@ testIframeWithCallback(
 			"inlineBlockNeedsLayout": true,
 			"input": true,
 			"leadingWhitespace": false,
+=======
+			"createHTMLDocument": true,
+			"focusin": true,
 			"noCloneChecked": false,
-			"noCloneEvent": false,
-			"opacity": false,
-			"optDisabled": true,
 			"optSelected": false,
+			"pixelMarginRight": true,
+			"pixelPosition": true,
+			"radioValue": false,
+			"reliableMarginLeft": true
+		};
+	} else if ( /msie 9\.0/i.test( userAgent ) ) {
+		expected = {
+			"ajax": true,
+			"boxSizingReliable": false,
+			"checkClone": true,
+			"checkOn": true,
+			"clearCloneStyle": false,
+			"cors": false,
+			"createHTMLDocument": true,
+			"focusin": true,
+>>>>>>> refs/remotes/jquery/master
+			"noCloneChecked": false,
+			"optSelected": false,
+<<<<<<< HEAD
 			"ownFirst": false,
 			"pixelMarginRight": true,
 			"pixelPosition": false,
@@ -332,10 +410,20 @@ testIframeWithCallback(
 			"style": false,
 			"submit": false,
 			"tbody": false
+=======
+			"pixelMarginRight": true,
+			"pixelPosition": true,
+			"radioValue": false,
+			"reliableMarginLeft": true
+>>>>>>> refs/remotes/jquery/master
 		};
-	} else if ( /msie 6\.0/i.test( userAgent ) ) {
+	} else if ( /chrome/i.test( userAgent ) ) {
+
+		// Catches Chrome on Android as well (i.e. the default
+		// Android browser on Android >= 4.4).
 		expected = {
 			"ajax": true,
+<<<<<<< HEAD
 			"appendChecked": false,
 			"attributes": false,
 			"boxSizing": false,
@@ -384,10 +472,31 @@ testIframeWithCallback(
 			"boxSizing": true,
 			"boxSizingReliable": true,
 			"change": true,
+=======
+			"boxSizingReliable": true,
 			"checkClone": true,
 			"checkOn": true,
 			"clearCloneStyle": true,
 			"cors": true,
+			"createHTMLDocument": true,
+			"focusin": false,
+			"noCloneChecked": true,
+			"optSelected": true,
+			"pixelMarginRight": true,
+			"pixelPosition": true,
+			"radioValue": true,
+			"reliableMarginLeft": true
+		};
+	} else if ( /\b(?:9|10)\.\d(\.\d+)* safari/i.test( userAgent ) ) {
+		expected = {
+			"ajax": true,
+			"boxSizingReliable": true,
+>>>>>>> refs/remotes/jquery/master
+			"checkClone": true,
+			"checkOn": true,
+			"clearCloneStyle": true,
+			"cors": true,
+<<<<<<< HEAD
 			"cssFloat": true,
 			"deleteExpando": true,
 			"enctype": true,
@@ -575,19 +684,34 @@ testIframeWithCallback(
 			"style": true,
 			"submit": true,
 			"tbody": true
+=======
+			"createHTMLDocument": true,
+			"focusin": false,
+			"noCloneChecked": true,
+			"optSelected": true,
+			"pixelMarginRight": true,
+			"pixelPosition": false,
+			"radioValue": true,
+			"reliableMarginLeft": true
+>>>>>>> refs/remotes/jquery/master
 		};
 	} else if ( /firefox/i.test( userAgent ) ) {
 		expected = {
 			"ajax": true,
+<<<<<<< HEAD
 			"appendChecked": true,
 			"attributes": true,
 			"boxSizing": true,
 			"boxSizingReliable": true,
 			"change": true,
+=======
+			"boxSizingReliable": true,
+>>>>>>> refs/remotes/jquery/master
 			"checkClone": true,
 			"checkOn": true,
 			"clearCloneStyle": true,
 			"cors": true,
+<<<<<<< HEAD
 			"cssFloat": true,
 			"deleteExpando": true,
 			"enctype": true,
@@ -624,10 +748,26 @@ testIframeWithCallback(
 			"boxSizing": true,
 			"boxSizingReliable": true,
 			"change": true,
+=======
+			"createHTMLDocument": true,
+			"focusin": false,
+			"noCloneChecked": true,
+			"optSelected": true,
+			"pixelMarginRight": true,
+			"pixelPosition": true,
+			"radioValue": true,
+			"reliableMarginLeft": false
+		};
+	} else if ( /iphone os (?:9|10)_/i.test( userAgent ) ) {
+		expected = {
+			"ajax": true,
+			"boxSizingReliable": true,
+>>>>>>> refs/remotes/jquery/master
 			"checkClone": true,
 			"checkOn": true,
 			"clearCloneStyle": true,
 			"cors": true,
+<<<<<<< HEAD
 			"cssFloat": true,
 			"deleteExpando": true,
 			"enctype": true,
@@ -655,19 +795,34 @@ testIframeWithCallback(
 			"style": true,
 			"submit": true,
 			"tbody": true
+=======
+			"createHTMLDocument": true,
+			"focusin": false,
+			"noCloneChecked": true,
+			"optSelected": true,
+			"pixelMarginRight": true,
+			"pixelPosition": false,
+			"radioValue": true,
+			"reliableMarginLeft": true
+>>>>>>> refs/remotes/jquery/master
 		};
 	} else if ( /iphone os 8_/i.test( userAgent ) ) {
 		expected = {
 			"ajax": true,
+<<<<<<< HEAD
 			"appendChecked": true,
 			"attributes": true,
 			"boxSizing": true,
 			"boxSizingReliable": true,
 			"change": true,
+=======
+			"boxSizingReliable": true,
+>>>>>>> refs/remotes/jquery/master
 			"checkClone": true,
 			"checkOn": true,
 			"clearCloneStyle": true,
 			"cors": true,
+<<<<<<< HEAD
 			"cssFloat": true,
 			"deleteExpando": true,
 			"enctype": true,
@@ -695,19 +850,34 @@ testIframeWithCallback(
 			"style": true,
 			"submit": true,
 			"tbody": true
+=======
+			"createHTMLDocument": false,
+			"focusin": false,
+			"noCloneChecked": true,
+			"optSelected": true,
+			"pixelMarginRight": true,
+			"pixelPosition": false,
+			"radioValue": true,
+			"reliableMarginLeft": true
+>>>>>>> refs/remotes/jquery/master
 		};
 	} else if ( /iphone os 7_/i.test( userAgent ) ) {
 		expected = {
 			"ajax": true,
+<<<<<<< HEAD
 			"appendChecked": true,
 			"attributes": true,
 			"boxSizing": true,
 			"boxSizingReliable": true,
 			"change": true,
+=======
+			"boxSizingReliable": true,
+>>>>>>> refs/remotes/jquery/master
 			"checkClone": true,
 			"checkOn": true,
 			"clearCloneStyle": true,
 			"cors": true,
+<<<<<<< HEAD
 			"cssFloat": true,
 			"deleteExpando": true,
 			"enctype": true,
@@ -775,19 +945,34 @@ testIframeWithCallback(
 			"style": true,
 			"submit": true,
 			"tbody": true
+=======
+			"createHTMLDocument": true,
+			"focusin": false,
+			"noCloneChecked": true,
+			"optSelected": true,
+			"pixelMarginRight": true,
+			"pixelPosition": false,
+			"radioValue": true,
+			"reliableMarginLeft": true
+>>>>>>> refs/remotes/jquery/master
 		};
 	} else if ( /android 4\.[0-3]/i.test( userAgent ) ) {
 		expected = {
 			"ajax": true,
+<<<<<<< HEAD
 			"appendChecked": true,
 			"attributes": true,
 			"boxSizing": true,
 			"boxSizingReliable": true,
 			"change": true,
+=======
+			"boxSizingReliable": true,
+>>>>>>> refs/remotes/jquery/master
 			"checkClone": false,
 			"checkOn": false,
 			"clearCloneStyle": true,
 			"cors": true,
+<<<<<<< HEAD
 			"cssFloat": true,
 			"deleteExpando": true,
 			"enctype": true,
@@ -855,6 +1040,16 @@ testIframeWithCallback(
 			"style": true,
 			"submit": true,
 			"tbody": true
+=======
+			"createHTMLDocument": true,
+			"focusin": false,
+			"noCloneChecked": true,
+			"optSelected": true,
+			"pixelMarginRight": false,
+			"pixelPosition": false,
+			"radioValue": true,
+			"reliableMarginLeft": false
+>>>>>>> refs/remotes/jquery/master
 		};
 	}
 
@@ -863,10 +1058,17 @@ testIframeWithCallback(
 			assert.expect( 1 );
 			assert.ok( false, "Known client: " + userAgent );
 		}
+<<<<<<< HEAD
 
 		var i, prop,
 			j = 0;
 
+=======
+
+		var i, prop,
+			j = 0;
+
+>>>>>>> refs/remotes/jquery/master
 		for ( prop in computedSupport ) {
 			j++;
 		}

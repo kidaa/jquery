@@ -5,6 +5,7 @@ var
 
 	cdnFolder = "dist/cdn",
 
+<<<<<<< HEAD
 	devFile = "dist/jquery.js",
 	minFile = "dist/jquery.min.js",
 	mapFile = "dist/jquery.min.map",
@@ -21,6 +22,25 @@ var
 
 	msFilesCDN = [
 		"jquery-VER.js", "jquery-VER.min.js", "jquery-VER.min.map"
+=======
+	releaseFiles = {
+		"jquery-VER.js": "dist/jquery.js",
+		"jquery-VER.min.js": "dist/jquery.min.js",
+		"jquery-VER.min.map": "dist/jquery.min.map",
+		"jquery-VER.slim.js": "dist/jquery.slim.js",
+		"jquery-VER.slim.min.js": "dist/jquery.slim.min.js",
+		"jquery-VER.slim.min.map": "dist/jquery.slim.min.map"
+	},
+
+	googleFilesCDN = [
+		"jquery.js", "jquery.min.js", "jquery.min.map",
+		"jquery.slim.js", "jquery.slim.min.js", "jquery.slim.min.map"
+	],
+
+	msFilesCDN = [
+		"jquery-VER.js", "jquery-VER.min.js", "jquery-VER.min.map",
+		"jquery-VER.slim.js", "jquery-VER.slim.min.js", "jquery-VER.slim.min.map"
+>>>>>>> refs/remotes/jquery/master
 	];
 
 /**
@@ -39,11 +59,20 @@ function makeReleaseCopies( Release ) {
 
 			// Map files need to reference the new uncompressed name;
 			// assume that all files reside in the same directory.
+<<<<<<< HEAD
 			// "file":"jquery.min.js","sources":["jquery.js"]
 			text = fs.readFileSync( builtFile, "utf8" )
 				.replace( /"file":"([^"]+)","sources":\["([^"]+)"\]/,
 					"\"file\":\"" + unpathedFile.replace( /\.min\.map/, ".min.js" ) +
 					"\",\"sources\":[\"" + unpathedFile.replace( /\.min\.map/, ".js" ) + "\"]" );
+=======
+			// "file":"jquery.min.js" ... "sources":["jquery.js"]
+			text = fs.readFileSync( builtFile, "utf8" )
+				.replace( /"file":"([^"]+)"/,
+					"\"file\":\"" + unpathedFile.replace( /\.min\.map/, ".min.js\"" ) )
+				.replace( /"sources":\["([^"]+)"\]/,
+					"\"sources\":[\"" + unpathedFile.replace( /\.min\.map/, ".js" ) + "\"]" );
+>>>>>>> refs/remotes/jquery/master
 			fs.writeFileSync( releaseFile, text );
 		} else if ( builtFile !== releaseFile ) {
 			shell.cp( "-f", builtFile, releaseFile );

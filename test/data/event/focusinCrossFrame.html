@@ -5,13 +5,21 @@
 	<title>focusin event cross-frame (#14180)</title>
 
 	<script src="../../jquery.js"></script>
+<<<<<<< HEAD
+=======
+	<script src="../iframeTest.js"></script>
+>>>>>>> refs/remotes/jquery/master
 </head>
 <body>
 	<input type="text" id="frame-input" />
 	<script>
 		// Call parent when this frame is fully loaded, it will mess with #frame-input
 		jQuery( window ).one( "load", function() {
+<<<<<<< HEAD
 			window.parent.iframeCallback( document );
+=======
+			startIframeTest();
+>>>>>>> refs/remotes/jquery/master
 		});
 	</script>
 </body>

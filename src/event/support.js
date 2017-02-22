@@ -1,4 +1,5 @@
 define( [
+<<<<<<< HEAD
 	"../var/document",
 	"../var/support"
 ], function( document, support ) {
@@ -22,6 +23,14 @@ define( [
 	// Null elements to avoid leaks in IE.
 	div = null;
 } )();
+=======
+	"../var/support"
+], function( support ) {
+
+"use strict";
+
+support.focusin = "onfocusin" in window;
+>>>>>>> refs/remotes/jquery/master
 
 return support;
 

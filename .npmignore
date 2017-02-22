@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 .jshintignore
 .jshintrc
 
 /.editorconfig
 /.gitattributes
 /.jscs.json
+=======
+.eslintignore
+.eslintrc.json
+
+/.editorconfig
+/.gitattributes
+>>>>>>> refs/remotes/jquery/master
 /.mailmap
 /.travis.yml
 

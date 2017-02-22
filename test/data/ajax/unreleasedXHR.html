@@ -4,13 +4,21 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <title>Attempt to block tests because of dangling XHR requests (IE)</title>
 <script src="../../jquery.js"></script>
+<<<<<<< HEAD
+=======
+<script src="../iframeTest.js"></script>
+>>>>>>> refs/remotes/jquery/master
 <script type="text/javascript">
 window.onunload = function() {};
 jQuery(function() {
 	setTimeout(function() {
 		var parent = window.parent;
 		document.write("");
+<<<<<<< HEAD
 		parent.iframeCallback();
+=======
+		startIframeTest();
+>>>>>>> refs/remotes/jquery/master
 	}, 200 );
 	var number = 50;
 	while( number-- ) {

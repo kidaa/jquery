@@ -5,7 +5,13 @@ define( [
 	"../selector"
 ], function( jQuery, access, support ) {
 
+<<<<<<< HEAD
 var rfocusable = /^(?:input|select|textarea|button|object)$/i,
+=======
+"use strict";
+
+var rfocusable = /^(?:input|select|textarea|button)$/i,
+>>>>>>> refs/remotes/jquery/master
 	rclickable = /^(?:a|area)$/i;
 
 jQuery.fn.extend( {
@@ -14,6 +20,7 @@ jQuery.fn.extend( {
 	},
 
 	removeProp: function( name ) {
+<<<<<<< HEAD
 		name = jQuery.propFix[ name ] || name;
 		return this.each( function() {
 
@@ -22,6 +29,10 @@ jQuery.fn.extend( {
 				this[ name ] = undefined;
 				delete this[ name ];
 			} catch ( e ) {}
+=======
+		return this.each( function() {
+			delete this[ jQuery.propFix[ name ] || name ];
+>>>>>>> refs/remotes/jquery/master
 		} );
 	}
 } );
@@ -63,6 +74,7 @@ jQuery.extend( {
 		tabIndex: {
 			get: function( elem ) {
 
+<<<<<<< HEAD
 				// elem.tabIndex doesn't always return the
 				// correct value when it hasn't been explicitly set
 				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
@@ -75,6 +87,28 @@ jQuery.extend( {
 						rclickable.test( elem.nodeName ) && elem.href ?
 							0 :
 							-1;
+=======
+				// Support: IE <=9 - 11 only
+				// elem.tabIndex doesn't always return the
+				// correct value when it hasn't been explicitly set
+				// https://web.archive.org/web/20141116233347/http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+				// Use proper attribute retrieval(#12072)
+				var tabindex = jQuery.find.attr( elem, "tabindex" );
+
+				if ( tabindex ) {
+					return parseInt( tabindex, 10 );
+				}
+
+				if (
+					rfocusable.test( elem.nodeName ) ||
+					rclickable.test( elem.nodeName ) &&
+					elem.href
+				) {
+					return 0;
+				}
+
+				return -1;
+>>>>>>> refs/remotes/jquery/master
 			}
 		}
 	},
@@ -85,6 +119,7 @@ jQuery.extend( {
 	}
 } );
 
+<<<<<<< HEAD
 // Some attributes require a special call on IE
 // http://msdn.microsoft.com/en-us/library/ms536429%28VS.85%29.aspx
 if ( !support.hrefNormalized ) {
@@ -100,11 +135,15 @@ if ( !support.hrefNormalized ) {
 }
 
 // Support: Safari, IE9+
+=======
+// Support: IE <=11 only
+>>>>>>> refs/remotes/jquery/master
 // Accessing the selectedIndex property
 // forces the browser to respect setting selected
 // on the option
 // The getter ensures a default option is selected
 // when in an optgroup
+<<<<<<< HEAD
 if ( !support.optSelected ) {
 	jQuery.propHooks.selected = {
 		get: function( elem ) {
@@ -117,10 +156,29 @@ if ( !support.optSelected ) {
 				if ( parent.parentNode ) {
 					parent.parentNode.selectedIndex;
 				}
+=======
+// eslint rule "no-unused-expressions" is disabled for this code
+// since it considers such accessions noop
+if ( !support.optSelected ) {
+	jQuery.propHooks.selected = {
+		get: function( elem ) {
+
+			/* eslint no-unused-expressions: "off" */
+
+			var parent = elem.parentNode;
+			if ( parent && parent.parentNode ) {
+				parent.parentNode.selectedIndex;
+>>>>>>> refs/remotes/jquery/master
 			}
 			return null;
 		},
 		set: function( elem ) {
+<<<<<<< HEAD
+=======
+
+			/* eslint no-unused-expressions: "off" */
+
+>>>>>>> refs/remotes/jquery/master
 			var parent = elem.parentNode;
 			if ( parent ) {
 				parent.selectedIndex;
@@ -148,9 +206,12 @@ jQuery.each( [
 	jQuery.propFix[ this.toLowerCase() ] = this;
 } );
 
+<<<<<<< HEAD
 // IE6/7 call enctype encoding
 if ( !support.enctype ) {
 	jQuery.propFix.enctype = "encoding";
 }
 
+=======
+>>>>>>> refs/remotes/jquery/master
 } );

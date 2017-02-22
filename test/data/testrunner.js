@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 define( function() {
 
 // Store the old counts so that we only assert on tests that have actually leaked,
@@ -39,11 +40,39 @@ function keys( o ) {
 	return ret;
 }
 
+=======
+( function() {
+
+// Store the old counts so that we only assert on tests that have actually leaked,
+// instead of asserting every time a test has leaked sometime in the past
+var oldCacheLength = 0,
+	oldActive = 0,
+
+	expectedDataKeys = {},
+	splice = [].splice,
+	ajaxSettings = jQuery.ajaxSettings;
+
+/**
+ * QUnit configuration
+ */
+
+// Max time for stop() and asyncTest() until it aborts test
+// and start()'s the next test.
+QUnit.config.testTimeout = 12e4; // 2 minutes
+
+// Enforce an "expect" argument or expect() call in all test bodies.
+QUnit.config.requireExpects = true;
+
+>>>>>>> refs/remotes/jquery/master
 /**
  * @param {jQuery|HTMLElement|Object|Array} elems Target (or array of targets) for jQuery.data.
  * @param {string} key
  */
+<<<<<<< HEAD
 QUnit.expectJqData = QUnit.assert.expectJqData = function( env, elems, key ) {
+=======
+QUnit.assert.expectJqData = function( env, elems, key ) {
+>>>>>>> refs/remotes/jquery/master
 	var i, elem, expando;
 
 	// As of jQuery 2.0, there will be no "cache"-data is
@@ -54,7 +83,11 @@ QUnit.expectJqData = QUnit.assert.expectJqData = function( env, elems, key ) {
 		if ( elems.jquery && elems.toArray ) {
 			elems = elems.toArray();
 		}
+<<<<<<< HEAD
 		if ( !supportjQuery.isArray( elems ) ) {
+=======
+		if ( !Array.isArray( elems ) ) {
+>>>>>>> refs/remotes/jquery/master
 			elems = [ elems ];
 		}
 
@@ -98,6 +131,7 @@ QUnit.expectJqData = QUnit.assert.expectJqData = function( env, elems, key ) {
 			}
 		}
 	}
+<<<<<<< HEAD
 
 };
 QUnit.config.urlConfig.push( {
@@ -116,12 +150,35 @@ window.moduleTeardown = function( assert ) {
 		expectedKeys, actualKeys,
 		cacheLength = 0;
 
+=======
+
+};
+QUnit.config.urlConfig.push( {
+	id: "jqdata",
+	label: "Always check jQuery.data",
+	tooltip: "Trigger QUnit.expectJqData detection for all tests " +
+		"instead of just the ones that call it"
+} );
+
+/**
+ * Ensures that tests have cleaned up properly after themselves. Should be passed as the
+ * teardown function on all modules' lifecycle object.
+ */
+window.moduleTeardown = function( assert ) {
+	var i, expectedKeys, actualKeys,
+		cacheLength = 0;
+
+>>>>>>> refs/remotes/jquery/master
 	// Only look for jQuery data problems if this test actually
 	// provided some information to compare against.
 	if ( QUnit.urlParams.jqdata || this.checkJqData ) {
 		for ( i in jQuery.cache ) {
 			expectedKeys = expectedDataKeys[ i ];
+<<<<<<< HEAD
 			actualKeys = jQuery.cache[ i ] ? keys( jQuery.cache[ i ] ) : jQuery.cache[ i ];
+=======
+			actualKeys = jQuery.cache[ i ] ? Object.keys( jQuery.cache[ i ] ) : jQuery.cache[ i ];
+>>>>>>> refs/remotes/jquery/master
 			if ( !QUnit.equiv( expectedKeys, actualKeys ) ) {
 				assert.deepEqual( actualKeys, expectedKeys, "Expected keys exist in jQuery.cache" );
 			}
@@ -157,7 +214,11 @@ window.moduleTeardown = function( assert ) {
 		oldActive = jQuery.active;
 	}
 
+<<<<<<< HEAD
 	reset();
+=======
+	Globals.cleanup();
+>>>>>>> refs/remotes/jquery/master
 
 	for ( i in jQuery.cache ) {
 		++cacheLength;
@@ -179,8 +240,12 @@ QUnit.done( function() {
 	supportjQuery( "#qunit ~ *" ).remove();
 } );
 
+<<<<<<< HEAD
 // jQuery-specific post-test cleanup
 reset = function() {
+=======
+QUnit.testDone( function() {
+>>>>>>> refs/remotes/jquery/master
 
 	// Ensure jQuery events and data on the fixture are properly removed
 	jQuery( "#qunit-fixture" ).empty();
@@ -198,6 +263,7 @@ reset = function() {
 
 	// Cleanup globals
 	Globals.cleanup();
+<<<<<<< HEAD
 };
 
 QUnit.testDone( reset );
@@ -221,8 +287,33 @@ window.Globals = ( function() {
 					( supportjQuery.support.deleteExpando ? "window['" + name + "']" : name ) +
 				"; } catch( x ) {}" );
 			}
+=======
+} );
+
+// Register globals for cleanup and the cleanup code itself
+window.Globals = ( function() {
+	var globals = {};
+
+	return {
+		register: function( name ) {
+			window[ name ] = globals[ name ] = true;
+		},
+
+		cleanup: function() {
+			var name;
+
+			for ( name in globals ) {
+				delete window[ name ];
+			}
+
+			globals = {};
+>>>>>>> refs/remotes/jquery/master
 		}
 	};
 } )();
 
+<<<<<<< HEAD
 } );
+=======
+} )();
+>>>>>>> refs/remotes/jquery/master

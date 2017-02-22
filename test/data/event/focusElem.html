@@ -5,12 +5,21 @@
 	<title>.focus() (activeElement access #13393)</title>
 
 	<script src="../../jquery.js"></script>
+<<<<<<< HEAD
+=======
+	<script src="../iframeTest.js"></script>
+>>>>>>> refs/remotes/jquery/master
 </head>
 <body>
 	<a href="#" id="frame-link"></a>
 	<script>
+<<<<<<< HEAD
 		jQuery("#frame-link").focus();
 		window.parent.iframeCallback( true );
+=======
+		jQuery( "#frame-link" ).trigger( "focus" );
+		startIframeTest( true );
+>>>>>>> refs/remotes/jquery/master
 	</script>
 </body>
 </html>

@@ -116,6 +116,7 @@ QUnit.test( "callbacks keep their place in the queue", function( assert ) {
 		assert.equal( ++counter, 3, "Queue/callback order: third called" );
 		next();
 	} );
+<<<<<<< HEAD
 
 	div.promise( "fx" ).done( function() {
 		assert.equal( counter, 4, "Deferreds resolved" );
@@ -129,6 +130,29 @@ QUnit.test( "delay()", function( assert ) {
 
 	var foo = jQuery( {} ), run = 0;
 
+=======
+
+	div.promise( "fx" ).done( function() {
+		assert.equal( counter, 4, "Deferreds resolved" );
+		QUnit.start();
+	} );
+} );
+
+QUnit.test( "jQuery.queue should return array while manipulating the queue", function( assert ) {
+	assert.expect( 1 );
+
+	var div = document.createElement( "div" );
+
+	assert.ok( Array.isArray( jQuery.queue( div, "fx", jQuery.noop ) ), "jQuery.queue should return an array while manipulating the queue" );
+} );
+
+QUnit.test( "delay()", function( assert ) {
+	assert.expect( 2 );
+	QUnit.stop();
+
+	var foo = jQuery( {} ), run = 0;
+
+>>>>>>> refs/remotes/jquery/master
 	foo.delay( 100 ).queue( function() {
 		run = 1;
 		assert.ok( true, "The function was dequeued." );
@@ -223,6 +247,11 @@ QUnit.asyncTest( "fn.promise( \"queue\" ) - called whenever last queue function 
 	foo.dequeue( "queue" );
 } );
 
+<<<<<<< HEAD
+=======
+if ( jQuery.fn.animate ) {
+
+>>>>>>> refs/remotes/jquery/master
 QUnit.asyncTest( "fn.promise( \"queue\" ) - waits for animation to complete before resolving", 2, function( assert ) {
 	var foo = jQuery( "#foo" ),
 		test = 1;
@@ -241,12 +270,22 @@ QUnit.asyncTest( "fn.promise( \"queue\" ) - waits for animation to complete befo
 		assert.strictEqual( test++, 2, "step two" );
 		QUnit.start();
 	} );
+<<<<<<< HEAD
 
 } );
 
 QUnit.test( ".promise(obj)", function( assert ) {
 	assert.expect( 2 );
 
+=======
+
+} );
+}
+
+QUnit.test( ".promise(obj)", function( assert ) {
+	assert.expect( 2 );
+
+>>>>>>> refs/remotes/jquery/master
 	var obj = {},
 		promise = jQuery( "#foo" ).promise( "promise", obj );
 

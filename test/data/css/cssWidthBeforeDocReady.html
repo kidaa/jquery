@@ -4,8 +4,11 @@
 	<meta charset="utf-8">
 	<style>
 		#test {
+<<<<<<< HEAD
 			-webkit-box-sizing: border-box;
 			-moz-box-sizing: border-box;
+=======
+>>>>>>> refs/remotes/jquery/master
 			box-sizing: border-box;
 			width: 100px;
 			height: 100px;
@@ -16,11 +19,17 @@
 <body>
 <div id="test"></div>
 <script src="../../jquery.js"></script>
+<<<<<<< HEAD
 <script>
 	var testWidth = jQuery( "#test" ).css( 'width' );
 	jQuery(function() {
 		window.parent.iframeCallback( testWidth );
 	});
+=======
+<script src="../iframeTest.js"></script>
+<script>
+	startIframeTest( jQuery( "#test" ).css( 'width' ) );
+>>>>>>> refs/remotes/jquery/master
 </script>
 </body>
 </html>

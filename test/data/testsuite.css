@@ -1,7 +1,9 @@
-/* for testing opacity set in styles in IE */
 ol#empty {
 	opacity: 0;
+<<<<<<< HEAD
 	filter:Alpha(opacity=0) progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffff0000', EndColorStr='#ffffffff');
+=======
+>>>>>>> refs/remotes/jquery/master
 }
 
 div#fx-tests h4 {
@@ -20,10 +22,13 @@ div#fx-tests div.box {
 
 div#fx-tests div.overflow {
 	overflow: visible;
+<<<<<<< HEAD
 }
 
 div.inline {
 	display: inline;
+=======
+>>>>>>> refs/remotes/jquery/master
 }
 
 div.autoheight {
@@ -35,7 +40,11 @@ div.autowidth {
 }
 
 div.autoopacity {
+<<<<<<< HEAD
 	opacity: auto;
+=======
+	opacity: 1;
+>>>>>>> refs/remotes/jquery/master
 }
 
 div.largewidth {
@@ -44,10 +53,13 @@ div.largewidth {
 
 div.largeheight {
 	height: 100px;
+<<<<<<< HEAD
 }
 
 div.largeopacity {
 	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=100);
+=======
+>>>>>>> refs/remotes/jquery/master
 }
 
 div.medwidth {
@@ -60,6 +72,7 @@ div.medheight {
 
 div.medopacity {
 	opacity: 0.5;
+<<<<<<< HEAD
 	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
 }
 
@@ -69,15 +82,28 @@ div.nowidth {
 
 div.noheight {
 	height: 0px;
+=======
+}
+
+div.nowidth {
+	width: 0;
+}
+
+div.noheight {
+	height: 0;
+>>>>>>> refs/remotes/jquery/master
 }
 
 div.noopacity {
 	opacity: 0;
+<<<<<<< HEAD
 	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
 }
 
 div.hidden {
 	display: none;
+=======
+>>>>>>> refs/remotes/jquery/master
 }
 
 div#fx-tests div.widewidth {
@@ -124,27 +150,12 @@ div#fx-tests div.noback {
 	display: none;
 }
 
-/* tests to ensure jQuery can determine the native display mode of elements
-   that have been set as display: none in stylesheets */
-div#show-tests * { display: none; }
-
 #nothiddendiv { font-size: 16px; }
 #nothiddendivchild.em { font-size: 2em; }
 #nothiddendivchild.prct { font-size: 150%; }
 
-/* For testing type on vml in IE #7071 */
-v\:oval { behavior:url(#default#VML); display:inline-block; }
-
-/* 8099 changes to default styles are read correctly */
-tt { display: none; }
-sup { display: none; }
-dfn { display: none; }
-
 /* #9239 Attach a background to the body( avoid crashes in removing the test element in support ) */
 body, div { background: url(http://static.jquery.com/files/rocker/images/logo_jquery_215x53.gif) no-repeat -1000px 0; }
-
-/* #6652 REMOVE FILTER:ALPHA(OPACITY=100) AFTER ANIMATION */
-#t6652 div { filter: alpha(opacity=50); }
 
 /* #10501 */
 section { background:#f0f; display:block; }
@@ -157,11 +168,18 @@ section { background:#f0f; display:block; }
 
 #display { display: list-item !important; }
 
+<<<<<<< HEAD
 /* fix get alpha opacity in IE8 */
 .fix-get-alpha-opacity-in-ie8 {
 	opacity: 0.5;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 }
+=======
+.block { display: block; }
+.inline { display: inline; }
+.list-item { display: list-item; }
+.hidden, .none { display: none; }
+>>>>>>> refs/remotes/jquery/master
 
 #div-gh-2836 {
 	position: relative;
@@ -174,4 +192,7 @@ section { background:#f0f; display:block; }
 	padding: 0;
 	margin: 0;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/jquery/master

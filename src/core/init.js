@@ -6,13 +6,23 @@ define( [
 	"../traversing/findFilter"
 ], function( jQuery, document, rsingleTag ) {
 
+<<<<<<< HEAD
+=======
+"use strict";
+
+>>>>>>> refs/remotes/jquery/master
 // A central reference to the root jQuery(document)
 var rootjQuery,
 
 	// A simple way to check for HTML strings
 	// Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
 	// Strict HTML recognition (#11290: must start with <)
+<<<<<<< HEAD
 	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,
+=======
+	// Shortcut simple #id case for speed
+	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]+))$/,
+>>>>>>> refs/remotes/jquery/master
 
 	init = jQuery.fn.init = function( selector, context, root ) {
 		var match, elem;
@@ -22,14 +32,23 @@ var rootjQuery,
 			return this;
 		}
 
+<<<<<<< HEAD
 		// init accepts an alternate rootjQuery
+=======
+		// Method init() accepts an alternate rootjQuery
+>>>>>>> refs/remotes/jquery/master
 		// so migrate can support jQuery.sub (gh-2101)
 		root = root || rootjQuery;
 
 		// Handle HTML strings
 		if ( typeof selector === "string" ) {
+<<<<<<< HEAD
 			if ( selector.charAt( 0 ) === "<" &&
 				selector.charAt( selector.length - 1 ) === ">" &&
+=======
+			if ( selector[ 0 ] === "<" &&
+				selector[ selector.length - 1 ] === ">" &&
+>>>>>>> refs/remotes/jquery/master
 				selector.length >= 3 ) {
 
 				// Assume that strings that start and end with <> are HTML and skip the regex check
@@ -46,7 +65,11 @@ var rootjQuery,
 				if ( match[ 1 ] ) {
 					context = context instanceof jQuery ? context[ 0 ] : context;
 
+<<<<<<< HEAD
 					// scripts is true for back-compat
+=======
+					// Option to run scripts is true for back-compat
+>>>>>>> refs/remotes/jquery/master
 					// Intentionally let the error be thrown if parseHTML is not present
 					jQuery.merge( this, jQuery.parseHTML(
 						match[ 1 ],
@@ -75,6 +98,7 @@ var rootjQuery,
 				} else {
 					elem = document.getElementById( match[ 2 ] );
 
+<<<<<<< HEAD
 					// Check parentNode to catch when Blackberry 4.6 returns
 					// nodes that are no longer in the document #6963
 					if ( elem && elem.parentNode ) {
@@ -92,6 +116,14 @@ var rootjQuery,
 
 					this.context = document;
 					this.selector = selector;
+=======
+					if ( elem ) {
+
+						// Inject the element directly into the jQuery object
+						this[ 0 ] = elem;
+						this.length = 1;
+					}
+>>>>>>> refs/remotes/jquery/master
 					return this;
 				}
 
@@ -107,25 +139,36 @@ var rootjQuery,
 
 		// HANDLE: $(DOMElement)
 		} else if ( selector.nodeType ) {
+<<<<<<< HEAD
 			this.context = this[ 0 ] = selector;
+=======
+			this[ 0 ] = selector;
+>>>>>>> refs/remotes/jquery/master
 			this.length = 1;
 			return this;
 
 		// HANDLE: $(function)
 		// Shortcut for document ready
 		} else if ( jQuery.isFunction( selector ) ) {
+<<<<<<< HEAD
 			return typeof root.ready !== "undefined" ?
+=======
+			return root.ready !== undefined ?
+>>>>>>> refs/remotes/jquery/master
 				root.ready( selector ) :
 
 				// Execute immediately if ready is not present
 				selector( jQuery );
 		}
 
+<<<<<<< HEAD
 		if ( selector.selector !== undefined ) {
 			this.selector = selector.selector;
 			this.context = selector.context;
 		}
 
+=======
+>>>>>>> refs/remotes/jquery/master
 		return jQuery.makeArray( selector, this );
 	};
 

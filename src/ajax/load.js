@@ -1,9 +1,14 @@
 define( [
 	"../core",
+<<<<<<< HEAD
+=======
+	"../core/stripAndCollapse",
+>>>>>>> refs/remotes/jquery/master
 	"../core/parseHTML",
 	"../ajax",
 	"../traversing",
 	"../manipulation",
+<<<<<<< HEAD
 	"../selector",
 
 	// Optional event/alias dependency
@@ -12,21 +17,34 @@ define( [
 
 // Keep a copy of the old load method
 var _load = jQuery.fn.load;
+=======
+	"../selector"
+], function( jQuery, stripAndCollapse ) {
+
+"use strict";
+>>>>>>> refs/remotes/jquery/master
 
 /**
  * Load a url into a page
  */
 jQuery.fn.load = function( url, params, callback ) {
+<<<<<<< HEAD
 	if ( typeof url !== "string" && _load ) {
 		return _load.apply( this, arguments );
 	}
 
+=======
+>>>>>>> refs/remotes/jquery/master
 	var selector, type, response,
 		self = this,
 		off = url.indexOf( " " );
 
 	if ( off > -1 ) {
+<<<<<<< HEAD
 		selector = jQuery.trim( url.slice( off, url.length ) );
+=======
+		selector = stripAndCollapse( url.slice( off ) );
+>>>>>>> refs/remotes/jquery/master
 		url = url.slice( 0, off );
 	}
 

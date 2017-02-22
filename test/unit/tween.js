@@ -13,6 +13,7 @@ QUnit.module( "tween", {
 		this.sandbox = sinon.sandbox.create();
 		this.clock = this.sandbox.useFakeTimers( 505877050 );
 		this._oldInterval = jQuery.fx.interval;
+<<<<<<< HEAD
 		this._oldNow = jQuery.now;
 		jQuery.fx.step = {};
 		jQuery.fx.interval = 10;
@@ -21,6 +22,15 @@ QUnit.module( "tween", {
 	teardown: function() {
 		this.sandbox.restore();
 		jQuery.now = this._oldNow;
+=======
+		jQuery.fx.step = {};
+		jQuery.fx.interval = 10;
+		jQuery.now = Date.now;
+	},
+	teardown: function() {
+		this.sandbox.restore();
+		jQuery.now = Date.now;
+>>>>>>> refs/remotes/jquery/master
 		jQuery.fx.stop();
 		jQuery.fx.interval = this._oldInterval;
 		window.requestAnimationFrame = oldRaf;
@@ -33,9 +43,13 @@ QUnit.test( "jQuery.Tween - Default propHooks on plain objects", function( asser
 	var propHooks, defaultHook, testObject, fakeTween, stepSpy;
 
 	propHooks = jQuery.Tween.propHooks;
+<<<<<<< HEAD
 	assert.equal(
 		typeof propHooks, "object", "jQuery.Tween.propHooks exists"
 	);
+=======
+	assert.equal( typeof propHooks, "object", "jQuery.Tween.propHooks exists" );
+>>>>>>> refs/remotes/jquery/master
 
 	defaultHook = propHooks._default;
 	assert.ok( defaultHook, "_default propHook exists" );
@@ -43,6 +57,7 @@ QUnit.test( "jQuery.Tween - Default propHooks on plain objects", function( asser
 	testObject = { test: 0 };
 	fakeTween = { elem: testObject, prop: "test", now: 10, unit: "px" };
 
+<<<<<<< HEAD
 	assert.equal(
 		defaultHook.get( fakeTween ), 0, "Can get property of object"
 	);
@@ -62,15 +77,32 @@ QUnit.test( "jQuery.Tween - Default propHooks on plain objects", function( asser
 	assert.equal(
 		testObject.opacity, 10, "Correctly set opacity on plain object"
 	);
+=======
+	assert.equal( defaultHook.get( fakeTween ), 0, "Can get property of object" );
+
+	fakeTween.prop = "testMissing";
+	assert.equal( defaultHook.get( fakeTween ), undefined, "Can get missing property on object" );
+
+	defaultHook.set( fakeTween );
+	assert.equal( testObject.testMissing, 10, "Sets missing value properly on plain object" );
+
+	fakeTween.prop = "opacity";
+	defaultHook.set( fakeTween );
+	assert.equal( testObject.opacity, 10, "Correctly set opacity on plain object" );
+>>>>>>> refs/remotes/jquery/master
 
 	fakeTween.prop = "test";
 	stepSpy = jQuery.fx.step.test = this.sandbox.spy();
 
 	defaultHook.set( fakeTween );
 	assert.ok( stepSpy.calledWith( fakeTween ), "Step function called with Tween" );
+<<<<<<< HEAD
 	assert.equal(
 		testObject.test, 0, "Because step didn't set, value is unchanged"
 	);
+=======
+	assert.equal( testObject.test, 0, "Because step didn't set, value is unchanged" );
+>>>>>>> refs/remotes/jquery/master
 } );
 
 QUnit.test( "jQuery.Tween - Default propHooks on elements", function( assert ) {
@@ -78,9 +110,13 @@ QUnit.test( "jQuery.Tween - Default propHooks on elements", function( assert ) {
 	var propHooks, defaultHook, testElement, fakeTween, cssStub, styleStub, stepSpy;
 
 	propHooks = jQuery.Tween.propHooks;
+<<<<<<< HEAD
 	assert.equal(
 		typeof propHooks, "object", "jQuery.Tween.propHooks exists"
 	);
+=======
+	assert.equal( typeof propHooks, "object", "jQuery.Tween.propHooks exists" );
+>>>>>>> refs/remotes/jquery/master
 
 	defaultHook = propHooks._default;
 	assert.ok( defaultHook, "_default propHook exists" );
@@ -90,15 +126,20 @@ QUnit.test( "jQuery.Tween - Default propHooks on elements", function( assert ) {
 
 	cssStub = this.sandbox.stub( jQuery, "css" ).returns( 10 );
 
+<<<<<<< HEAD
 	assert.equal(
 		defaultHook.get( fakeTween ), 10, "Gets expected style value"
 	);
+=======
+	assert.equal( defaultHook.get( fakeTween ), 10, "Gets expected style value" );
+>>>>>>> refs/remotes/jquery/master
 	assert.ok( cssStub.calledWith( testElement, "height", "" ), "Calls jQuery.css correctly" );
 
 	fakeTween.prop = "testOpti";
 	testElement.testOpti = 15;
 	cssStub.reset();
 
+<<<<<<< HEAD
 	assert.equal(
 		defaultHook.get( fakeTween ), 15, "Gets expected value not defined on style"
 	);
@@ -131,6 +172,26 @@ QUnit.test( "jQuery.Tween - Default propHooks on elements", function( assert ) {
 	assert.equal(
 		defaultHook.get( fakeTween ), 0, "Uses 0 for undefined"
 	);
+=======
+	assert.equal( defaultHook.get( fakeTween ), 15, "Gets expected value not defined on style" );
+	assert.equal( cssStub.callCount, 0, "Did not call jQuery.css" );
+
+	fakeTween.prop = "testMissing";
+	assert.equal( defaultHook.get( fakeTween ), 10, "Can get missing property on element" );
+	assert.ok( cssStub.calledWith( testElement, "testMissing", "" ), "...using jQuery.css" );
+
+	cssStub.returns( "" );
+	assert.equal( defaultHook.get( fakeTween ), 0, "Uses 0 for empty string" );
+
+	cssStub.returns( "auto" );
+	assert.equal( defaultHook.get( fakeTween ), 0, "Uses 0 for 'auto'" );
+
+	cssStub.returns( null );
+	assert.equal( defaultHook.get( fakeTween ), 0, "Uses 0 for null" );
+
+	cssStub.returns( undefined );
+	assert.equal( defaultHook.get( fakeTween ), 0, "Uses 0 for undefined" );
+>>>>>>> refs/remotes/jquery/master
 
 	cssStub.reset();
 
@@ -146,12 +207,17 @@ QUnit.test( "jQuery.Tween - Default propHooks on elements", function( assert ) {
 	fakeTween.prop = "testMissing";
 
 	defaultHook.set( fakeTween );
+<<<<<<< HEAD
 	assert.equal(
 		styleStub.callCount, 0, "Did not call jQuery.style for non css property"
 	);
 	assert.equal(
 		testElement.testMissing, 10, "Instead, set value on element directly"
 	);
+=======
+	assert.equal( styleStub.callCount, 0, "Did not call jQuery.style for non css property" );
+	assert.equal( testElement.testMissing, 10, "Instead, set value on element directly" );
+>>>>>>> refs/remotes/jquery/master
 
 	jQuery.cssHooks.testMissing = jQuery.noop;
 	fakeTween.now = 11;
@@ -161,9 +227,13 @@ QUnit.test( "jQuery.Tween - Default propHooks on elements", function( assert ) {
 
 	assert.ok( styleStub.calledWith( testElement, "testMissing", "11px" ),
 		"Presence of cssHooks causes jQuery.style with elem, prop, now+unit" );
+<<<<<<< HEAD
 	assert.equal(
 		testElement.testMissing, 10, "And value was unchanged"
 	);
+=======
+	assert.equal( testElement.testMissing, 10, "And value was unchanged" );
+>>>>>>> refs/remotes/jquery/master
 
 	stepSpy = jQuery.fx.step.test = this.sandbox.spy();
 	styleStub.reset();
@@ -171,9 +241,13 @@ QUnit.test( "jQuery.Tween - Default propHooks on elements", function( assert ) {
 	fakeTween.prop = "test";
 	defaultHook.set( fakeTween );
 	assert.ok( stepSpy.calledWith( fakeTween ), "Step function called with Tween" );
+<<<<<<< HEAD
 	assert.equal(
 		styleStub.callCount, 0, "Did not call jQuery.style"
 	);
+=======
+	assert.equal( styleStub.callCount, 0, "Did not call jQuery.style" );
+>>>>>>> refs/remotes/jquery/master
 } );
 
 QUnit.test( "jQuery.Tween - Plain Object", function( assert ) {
@@ -183,6 +257,7 @@ QUnit.test( "jQuery.Tween - Plain Object", function( assert ) {
 		tween, easingSpy;
 
 	tween = jQuery.Tween( testObject, testOptions, "test", 0, "linear" );
+<<<<<<< HEAD
 	assert.equal(
 		tween.elem, testObject, "Sets .element"
 	);
@@ -232,6 +307,33 @@ QUnit.test( "jQuery.Tween - Plain Object", function( assert ) {
 	assert.equal(
 		testObject.test, 100, "Can even go back in time"
 	);
+=======
+	assert.equal( tween.elem, testObject, "Sets .element" );
+	assert.equal( tween.options, testOptions, "sets .options" );
+	assert.equal( tween.prop, "test", "sets .prop" );
+	assert.equal( tween.end, 0, "sets .end" );
+
+	assert.equal( tween.easing, "linear", "sets .easing when provided" );
+
+	assert.equal( tween.start, 100, "Reads .start value during construction" );
+	assert.equal( tween.now, 100, "Reads .now value during construction" );
+
+	easingSpy = this.sandbox.spy( jQuery.easing, "linear" );
+
+	assert.equal( tween.run( 0.1 ), tween, ".run() returns this" );
+
+	assert.equal( tween.now, 90, "Calculated tween" );
+
+	assert.ok( easingSpy.calledWith( 0.1, 0.1 * testOptions.duration, 0, 1, testOptions.duration ),
+		"...using jQuery.easing.linear with back-compat arguments" );
+	assert.equal( testObject.test, 90, "Set value" );
+
+	tween.run( 1 );
+	assert.equal( testObject.test, 0, "Checking another value" );
+
+	tween.run( 0 );
+	assert.equal( testObject.test, 100, "Can even go back in time" );
+>>>>>>> refs/remotes/jquery/master
 } );
 
 QUnit.test( "jQuery.Tween - Element", function( assert ) {
@@ -241,6 +343,7 @@ QUnit.test( "jQuery.Tween - Element", function( assert ) {
 		tween, easingSpy, eased;
 
 	tween = jQuery.Tween( testElement, testOptions, "height", 0 );
+<<<<<<< HEAD
 	assert.equal(
 		tween.elem, testElement, "Sets .element"
 	);
@@ -296,6 +399,44 @@ QUnit.test( "jQuery.Tween - Element", function( assert ) {
 	assert.equal(
 		testElement.style.height, "100px", "Can even go back in time"
 	);
+=======
+	assert.equal( tween.elem, testElement, "Sets .element" );
+	assert.equal( tween.options, testOptions, "sets .options" );
+	assert.equal( tween.prop, "height", "sets .prop" );
+	assert.equal( tween.end, 0, "sets .end" );
+
+	assert.equal(
+		tween.easing,
+		jQuery.easing._default,
+		"sets .easing to default when not provided"
+	);
+	assert.equal( tween.unit, "px", "sets .unit to px when not provided" );
+
+	assert.equal( tween.start, 100, "Reads .start value during construction" );
+	assert.equal( tween.now, 100, "Reads .now value during construction" );
+
+	easingSpy = this.sandbox.spy( jQuery.easing, "swing" );
+
+	assert.equal( tween.run( 0.1 ), tween, ".run() returns this" );
+	assert.equal( tween.pos, jQuery.easing.swing( 0.1 ), "set .pos" );
+	eased = 100 - ( jQuery.easing.swing( 0.1 ) * 100 );
+	assert.equal( tween.now, eased, "Calculated tween" );
+
+	assert.ok(
+		easingSpy.calledWith( 0.1, 0.1 * testOptions.duration, 0, 1, testOptions.duration ),
+		"...using jQuery.easing.linear with back-compat arguments"
+	);
+	assert.equal(
+		parseFloat( testElement.style.height ).toFixed( 2 ),
+		eased.toFixed( 2 ), "Set value"
+	);
+
+	tween.run( 1 );
+	assert.equal( testElement.style.height, "0px", "Checking another value" );
+
+	tween.run( 0 );
+	assert.equal( testElement.style.height, "100px", "Can even go back in time" );
+>>>>>>> refs/remotes/jquery/master
 } );
 
 QUnit.test( "jQuery.Tween - No duration", function( assert ) {
@@ -309,6 +450,7 @@ QUnit.test( "jQuery.Tween - No duration", function( assert ) {
 	easingSpy = this.sandbox.spy( jQuery.easing, "swing" );
 	tween.run( 0.5 );
 
+<<<<<<< HEAD
 	assert.equal(
 		tween.pos, 0.5, "set .pos correctly"
 	);
@@ -318,6 +460,11 @@ QUnit.test( "jQuery.Tween - No duration", function( assert ) {
 	assert.equal(
 		easingSpy.callCount, 0, "didn't ease the value"
 	);
+=======
+	assert.equal( tween.pos, 0.5, "set .pos correctly" );
+	assert.equal( testObject.test, 50, "set value on object correctly" );
+	assert.equal( easingSpy.callCount, 0, "didn't ease the value" );
+>>>>>>> refs/remotes/jquery/master
 } );
 
 QUnit.test( "jQuery.Tween - step function option", function( assert ) {
@@ -330,6 +477,7 @@ QUnit.test( "jQuery.Tween - step function option", function( assert ) {
 	propHookSpy = this.sandbox.spy( jQuery.Tween.propHooks._default, "set" );
 
 	tween = jQuery.Tween( testObject, testOptions, "test", 0, "linear" );
+<<<<<<< HEAD
 	assert.equal(
 		testOptions.step.callCount, 0, "didn't call step on create"
 	);
@@ -337,13 +485,29 @@ QUnit.test( "jQuery.Tween - step function option", function( assert ) {
 	tween.run( 0.5 );
 	assert.ok( testOptions.step.calledOn( testObject ),
 		"Called step function in context of animated object" );
+=======
+	assert.equal( testOptions.step.callCount, 0, "didn't call step on create" );
+
+	tween.run( 0.5 );
+	assert.ok(
+		testOptions.step.calledOn( testObject ),
+		"Called step function in context of animated object"
+	);
+>>>>>>> refs/remotes/jquery/master
 	assert.ok(
 		testOptions.step.calledWith( 50, tween ),
 		"Called step function with correct parameters"
 	);
+<<<<<<< HEAD
 
 	assert.ok( testOptions.step.calledBefore( propHookSpy ),
 		"Called step function before calling propHook.set" );
+=======
+	assert.ok(
+		testOptions.step.calledBefore( propHookSpy ),
+		"Called step function before calling propHook.set"
+	);
+>>>>>>> refs/remotes/jquery/master
 
 } );
 
@@ -362,9 +526,13 @@ QUnit.test( "jQuery.Tween - custom propHooks", function( assert ) {
 
 	tween = jQuery.Tween( testObject, testOptions, "testHooked", 0, "linear" );
 	assert.ok( propHook.get.calledWith( tween ), "called propHook.get on create" );
+<<<<<<< HEAD
 	assert.equal(
 		tween.now, 100, "Used return value from propHook.get"
 	);
+=======
+	assert.equal( tween.now, 100, "Used return value from propHook.get" );
+>>>>>>> refs/remotes/jquery/master
 
 	tween.run( 0.5 );
 	assert.ok(
@@ -396,9 +564,13 @@ QUnit.test( "jQuery.Tween - custom propHooks - advanced values", function( asser
 
 	// Some day this NaN assumption might change - perhaps add a "calc" helper to the hooks?
 	assert.ok( isNaN( tween.now ), "Used return value from propHook.get" );
+<<<<<<< HEAD
 	assert.equal(
 		tween.pos, 0.5, "But the eased percent is still available"
 	);
+=======
+	assert.equal( tween.pos, 0.5, "But the eased percent is still available" );
+>>>>>>> refs/remotes/jquery/master
 	assert.ok(
 		propHook.set.calledWith( tween ),
 		"Called propHook.set function with correct parameters"

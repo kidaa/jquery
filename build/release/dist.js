@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 module.exports = function( Release, complete ) {
+=======
+module.exports = function( Release, files, complete ) {
+>>>>>>> refs/remotes/jquery/master
 
 	var
 		fs = require( "fs" ),
@@ -10,7 +14,11 @@ module.exports = function( Release, complete ) {
 			.replace( /jquery(\.git|$)/, "jquery-dist$1" ),
 
 		// These files are included with the distribution
+<<<<<<< HEAD
 		files = [
+=======
+		extras = [
+>>>>>>> refs/remotes/jquery/master
 			"src",
 			"LICENSE.txt",
 			"AUTHORS.txt",
@@ -57,12 +65,23 @@ module.exports = function( Release, complete ) {
 		// Copy dist files
 		var distFolder = Release.dir.dist + "/dist",
 			externalFolder = Release.dir.dist + "/external",
+<<<<<<< HEAD
 			rmIgnore = [
 				"README.md",
 				"node_modules"
 			].map( function( file ) {
 				return Release.dir.dist + "/" + file;
 			} );
+=======
+			rmIgnore = files
+				.concat( [
+					"README.md",
+					"node_modules"
+				] )
+				.map( function( file ) {
+					return Release.dir.dist + "/" + file;
+				} );
+>>>>>>> refs/remotes/jquery/master
 
 		shell.config.globOptions = {
 			ignore: rmIgnore
@@ -72,11 +91,15 @@ module.exports = function( Release, complete ) {
 		shell.rm( "-rf", Release.dir.dist + "/**/*" );
 
 		shell.mkdir( "-p", distFolder );
+<<<<<<< HEAD
 		[
 			"dist/jquery.js",
 			"dist/jquery.min.js",
 			"dist/jquery.min.map"
 		].forEach( function( file ) {
+=======
+		files.forEach( function( file ) {
+>>>>>>> refs/remotes/jquery/master
 			shell.cp( "-f", Release.dir.repo + "/" + file, distFolder );
 		} );
 
@@ -85,25 +108,47 @@ module.exports = function( Release, complete ) {
 		shell.cp( "-rf", Release.dir.repo + "/external/sizzle", externalFolder );
 
 		// Copy other files
+<<<<<<< HEAD
 		files.forEach( function( file ) {
 			shell.cp( "-rf", Release.dir.repo + "/" + file, Release.dir.dist );
 		} );
 
+=======
+		extras.forEach( function( file ) {
+			shell.cp( "-rf", Release.dir.repo + "/" + file, Release.dir.dist );
+		} );
+
+		// Remove the wrapper from the dist repo
+		shell.rm( "-f", Release.dir.dist + "/src/wrapper.js" );
+
+>>>>>>> refs/remotes/jquery/master
 		// Write generated bower file
 		fs.writeFileSync( Release.dir.dist + "/bower.json", generateBower() );
 
 		console.log( "Adding files to dist..." );
+<<<<<<< HEAD
 		Release.exec( "git add .", "Error adding files." );
 		Release.exec(
 			"git commit -m 'Release " + Release.newVersion + "'",
 			"Error commiting files."
+=======
+
+		Release.exec( "git add -A", "Error adding files." );
+		Release.exec(
+			"git commit -m \"Release " + Release.newVersion + "\"",
+			"Error committing files."
+>>>>>>> refs/remotes/jquery/master
 		);
 		console.log();
 
 		console.log( "Tagging release on dist..." );
 		Release.exec( "git tag " + Release.newVersion,
 			"Error tagging " + Release.newVersion + " on dist repo." );
+<<<<<<< HEAD
 		Release.tagTime = Release.exec( "git log -1 --format='%ad'",
+=======
+		Release.tagTime = Release.exec( "git log -1 --format=\"%ad\"",
+>>>>>>> refs/remotes/jquery/master
 			"Error getting tag timestamp." ).trim();
 	}
 

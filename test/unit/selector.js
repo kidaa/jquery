@@ -4,7 +4,11 @@ QUnit.module( "selector", { teardown: moduleTeardown } );
  * This test page is for selector tests that require jQuery in order to do the selection
  */
 
+<<<<<<< HEAD
 QUnit.test( "element - jQuery only", function( assert ) {
+=======
+QUnit.test( "element", function( assert ) {
+>>>>>>> refs/remotes/jquery/master
 	assert.expect( 7 );
 
 	var fixture = document.getElementById( "qunit-fixture" );
@@ -30,7 +34,11 @@ QUnit.test( "id", function( assert ) {
 	assert.t( "ID Selector w/ Element", "body#body", [ "body" ] );
 	assert.t( "ID Selector w/ Element", "ul#first", [] );
 	assert.t( "ID selector with existing ID descendant", "#firstp #simon1", [ "simon1" ] );
+<<<<<<< HEAD
 	assert.t( "ID selector with non-existant descendant", "#firstp #foobar", [] );
+=======
+	assert.t( "ID selector with non-existent descendant", "#firstp #foobar", [] );
+>>>>>>> refs/remotes/jquery/master
 	assert.t( "ID selector using UTF8", "#台北Táiběi", [ "台北Táiběi" ] );
 	assert.t( "Multiple ID selectors using UTF8", "#台北Táiběi, #台北", [ "台北Táiběi", "台北" ] );
 	assert.t( "Descendant ID selector using UTF8", "div #台北", [ "台北" ] );
@@ -46,6 +54,7 @@ QUnit.test( "id", function( assert ) {
 	assert.t( "ID Selector, child ID present", "#form > #radio1", [ "radio1" ] ); // bug #267
 	assert.t( "ID Selector, not an ancestor ID", "#form #first", [] );
 	assert.t( "ID Selector, not a child ID", "#form > #option1a", [] );
+<<<<<<< HEAD
 
 	assert.t( "All Children of ID", "#foo > *", [ "sndp", "en", "sap" ] );
 	assert.t( "All Children of ID with no children", "#firstUL > *", [] );
@@ -129,16 +138,111 @@ QUnit.test( "child and adjacent", function( assert ) {
 
 	assert.equal( jQuery( "#listWithTabIndex" ).length, 1, "Parent div for next test is found via ID (#8310)" );
 	assert.equal( jQuery( "#listWithTabIndex li:eq(2) ~ li" ).length, 1, "Find by general sibling combinator (#8310)" );
+=======
+
+	assert.t( "All Children of ID", "#foo > *", [ "sndp", "en", "sap" ] );
+	assert.t( "All Children of ID with no children", "#firstUL > *", [] );
+
+	a = jQuery( "<a id='backslash\\foo'></a>" ).appendTo( "#qunit-fixture" );
+	assert.t( "ID Selector contains backslash", "#backslash\\\\foo", [ "backslash\\foo" ] );
+
+	assert.t( "ID Selector on Form with an input that has a name of 'id'", "#lengthtest", [ "lengthtest" ] );
+
+	assert.t( "ID selector with non-existent ancestor", "#asdfasdf #foobar", [] ); // bug #986
+
+	assert.t( "Underscore ID", "#types_all", [ "types_all" ] );
+	assert.t( "Dash ID", "#qunit-fixture", [ "qunit-fixture" ] );
+
+	assert.t( "ID with weird characters in it", "#name\\+value", [ "name+value" ] );
+} );
+
+QUnit.test( "class", function( assert ) {
+	assert.expect( 4 );
+
+	assert.deepEqual( jQuery( ".blog", document.getElementsByTagName( "p" ) ).get(), q( "mark", "simon" ), "Finding elements with a context." );
+	assert.deepEqual( jQuery( ".blog", "p" ).get(), q( "mark", "simon" ), "Finding elements with a context." );
+	assert.deepEqual( jQuery( ".blog", jQuery( "p" ) ).get(), q( "mark", "simon" ), "Finding elements with a context." );
+	assert.deepEqual( jQuery( "p" ).find( ".blog" ).get(), q( "mark", "simon" ), "Finding elements with a context." );
+} );
+
+QUnit.test( "name", function( assert ) {
+	assert.expect( 5 );
+
+	var form;
+
+	assert.t( "Name selector", "input[name=action]", [ "text1" ] );
+	assert.t( "Name selector with single quotes", "input[name='action']", [ "text1" ] );
+	assert.t( "Name selector with double quotes", "input[name=\"action\"]", [ "text1" ] );
+
+	assert.t( "Name selector for grouped input", "input[name='types[]']", [ "types_all", "types_anime", "types_movie" ] );
+
+	form = jQuery( "<form><input name='id'/></form>" ).appendTo( "body" );
+	assert.equal( jQuery( "input", form[ 0 ] ).length, 1, "Make sure that rooted queries on forms (with possible expandos) work." );
+
+	form.remove();
+} );
+
+QUnit.test( "selectors with comma", function( assert ) {
+	assert.expect( 4 );
+
+	var fixture = jQuery( "<div><h2><span/></h2><div><p><span/></p><p/></div></div>" );
+
+	assert.equal( fixture.find( "h2, div p" ).filter( "p" ).length, 2, "has to find two <p>" );
+	assert.equal( fixture.find( "h2, div p" ).filter( "h2" ).length, 1, "has to find one <h2>" );
+	assert.equal( fixture.find( "h2 , div p" ).filter( "p" ).length, 2, "has to find two <p>" );
+	assert.equal( fixture.find( "h2 , div p" ).filter( "h2" ).length, 1, "has to find one <h2>" );
+} );
+
+QUnit.test( "child and adjacent", function( assert ) {
+	assert.expect( 27 );
+
+	assert.t( "Child", "p > a", [ "simon1", "google", "groups", "mark", "yahoo", "simon" ] );
+	assert.t( "Child", "p> a", [ "simon1", "google", "groups", "mark", "yahoo", "simon" ] );
+	assert.t( "Child", "p >a", [ "simon1", "google", "groups", "mark", "yahoo", "simon" ] );
+	assert.t( "Child", "p>a", [ "simon1", "google", "groups", "mark", "yahoo", "simon" ] );
+	assert.t( "Child w/ Class", "p > a.blog", [ "mark", "simon" ] );
+	assert.t( "All Children", "code > *", [ "anchor1", "anchor2" ] );
+	assert.selectInFixture( "All Grandchildren", "p > * > *", [ "anchor1", "anchor2" ] );
+	assert.t( "Adjacent", "p + p", [ "ap", "en", "sap" ] );
+	assert.t( "Adjacent", "p#firstp + p", [ "ap" ] );
+	assert.t( "Adjacent", "p[lang=en] + p", [ "sap" ] );
+	assert.t( "Adjacent", "a.GROUPS + code + a", [ "mark" ] );
+	assert.t( "Element Preceded By", "#groups ~ a", [ "mark" ] );
+	assert.t( "Element Preceded By", "#length ~ input", [ "idTest" ] );
+	assert.t( "Element Preceded By", "#siblingfirst ~ em", [ "siblingnext", "siblingthird" ] );
+	assert.t( "Element Preceded By (multiple)", "#siblingTest em ~ em ~ em ~ span", [ "siblingspan" ] );
+
+	if ( jQuery.find.compile ) {
+		assert.t( "Element Preceded By, Containing", "#liveHandlerOrder ~ div em:contains('1')", [ "siblingfirst" ] );
+		assert.t( "Combinators are not skipped when mixing general and specific", "#siblingTest > em:contains('x') + em ~ span", [] );
+		assert.equal( jQuery( "#listWithTabIndex li:eq(2) ~ li" ).length, 1, "Find by general sibling combinator (#8310)" );
+	} else {
+		assert.ok( "skip", ":contains not supported in selector-native" );
+		assert.ok( "skip", ":contains not supported in selector-native" );
+		assert.ok( "skip", ":eq not supported in selector-native" );
+	}
+
+	assert.t( "Multiple combinators selects all levels", "#siblingTest em *", [ "siblingchild", "siblinggrandchild", "siblinggreatgrandchild" ] );
+	assert.t( "Multiple combinators selects all levels", "#siblingTest > em *", [ "siblingchild", "siblinggrandchild", "siblinggreatgrandchild" ] );
+	assert.t( "Multiple sibling combinators doesn't miss general siblings", "#siblingTest > em:first-child + em ~ span", [ "siblingspan" ] );
+
+	assert.equal( jQuery( "#listWithTabIndex" ).length, 1, "Parent div for next test is found via ID (#8310)" );
+>>>>>>> refs/remotes/jquery/master
 	assert.equal( jQuery( "#__sizzle__" ).length, 0, "Make sure the temporary id assigned by sizzle is cleared out (#8310)" );
 	assert.equal( jQuery( "#listWithTabIndex" ).length, 1, "Parent div for previous test is still found via ID (#8310)" );
 
 	assert.t( "Verify deep class selector", "div.blah > p > a", [] );
+<<<<<<< HEAD
 
 	assert.t( "No element deep selector", "div.foo > span > a", [] );
 
 	nothiddendiv = document.getElementById( "nothiddendiv" );
 
 	assert.t( "Non-existant ancestors", ".fototab > .thumbnails > a", [] );
+=======
+	assert.t( "No element deep selector", "div.foo > span > a", [] );
+	assert.t( "Non-existent ancestors", ".fototab > .thumbnails > a", [] );
+>>>>>>> refs/remotes/jquery/master
 } );
 
 QUnit.test( "attributes", function( assert ) {
@@ -162,8 +266,13 @@ QUnit.test( "attributes", function( assert ) {
 	assert.t( "Attribute Equals", "#qunit-fixture a[rel=bookmark]", [ "simon1" ] );
 	assert.t( "Attribute Equals", "#qunit-fixture a[href='http://www.google.com/']", [ "google" ] );
 	assert.t( "Attribute Equals", "#qunit-fixture a[ rel = 'bookmark' ]", [ "simon1" ] );
+<<<<<<< HEAD
 	assert.t( "Attribute Equals Number", "#qunit-fixture option[value=1]", [ "option1b", "option2b", "option3b", "option4b", "option5c" ] );
 	assert.t( "Attribute Equals Number", "#qunit-fixture li[tabIndex=-1]", [ "foodWithNegativeTabIndex" ] );
+=======
+	assert.t( "Attribute Equals Number", "#qunit-fixture option[value='1']", [ "option1b", "option2b", "option3b", "option4b", "option5c" ] );
+	assert.t( "Attribute Equals Number", "#qunit-fixture li[tabIndex='-1']", [ "foodWithNegativeTabIndex" ] );
+>>>>>>> refs/remotes/jquery/master
 
 	document.getElementById( "anchor2" ).href = "#2";
 	assert.t( "href Attribute", "p a[href^='#']", [ "anchor2" ] );
@@ -189,6 +298,7 @@ QUnit.test( "attributes", function( assert ) {
 	assert.t( "Attribute Begins With", "a[href ^= 'http://www']", [ "google", "yahoo" ] );
 	assert.t( "Attribute Ends With", "a[href $= 'org/']", [ "mark" ] );
 	assert.t( "Attribute Contains", "a[href *= 'google']", [ "google", "groups" ] );
+<<<<<<< HEAD
 	assert.t( "Attribute Is Not Equal", "#ap a[hreflang!='en']", [ "google", "groups", "anchor1" ] );
 
 	assert.t( "Empty values", "#select1 option[value='']", [ "option1a" ] );
@@ -244,6 +354,80 @@ QUnit.test( "attributes", function( assert ) {
 	assert.ok( jQuery( "<input type='text' value='12600'/>" ).prop( "value", "option" ).is( ":input[value='12600']" ),
 		":input[value=foo] selects text input by attribute"
 	);
+=======
+
+	if ( jQuery.find.compile ) {
+		assert.t( "Empty values", "#select1 option[value!='']", [ "option1b", "option1c", "option1d" ] );
+		assert.t( "Attribute Is Not Equal", "#ap a[hreflang!='en']", [ "google", "groups", "anchor1" ] );
+		assert.t( "Select options via :selected", "#select1 option:selected", [ "option1a" ] );
+		assert.t( "Select options via :selected", "#select2 option:selected", [ "option2d" ] );
+		assert.t( "Select options via :selected", "#select3 option:selected", [ "option3b", "option3c" ] );
+		assert.t( "Select options via :selected", "select[name='select2'] option:selected", [ "option2d" ] );
+	} else {
+		assert.ok( "skip", "!= not supported in selector-native" );
+		assert.ok( "skip", "!= not supported in selector-native" );
+		assert.ok( "skip", ":selected not supported in selector-native" );
+		assert.ok( "skip", ":selected not supported in selector-native" );
+		assert.ok( "skip", ":selected not supported in selector-native" );
+		assert.ok( "skip", ":selected not supported in selector-native" );
+	}
+
+	assert.t( "Empty values", "#select1 option[value='']", [ "option1a" ] );
+
+
+	assert.t( "Grouped Form Elements", "input[name='foo[bar]']", [ "hidden2" ] );
+
+	// Make sure attribute value quoting works correctly. See jQuery #6093; #6428; #13894
+	// Use seeded results to bypass querySelectorAll optimizations
+	attrbad = jQuery(
+		"<input type='hidden' id='attrbad_space' name='foo bar'/>" +
+		"<input type='hidden' id='attrbad_dot' value='2' name='foo.baz'/>" +
+		"<input type='hidden' id='attrbad_brackets' value='2' name='foo[baz]'/>" +
+		"<input type='hidden' id='attrbad_injection' data-attr='foo_baz&#39;]'/>" +
+		"<input type='hidden' id='attrbad_quote' data-attr='&#39;'/>" +
+		"<input type='hidden' id='attrbad_backslash' data-attr='&#92;'/>" +
+		"<input type='hidden' id='attrbad_backslash_quote' data-attr='&#92;&#39;'/>" +
+		"<input type='hidden' id='attrbad_backslash_backslash' data-attr='&#92;&#92;'/>" +
+		"<input type='hidden' id='attrbad_unicode' data-attr='&#x4e00;'/>"
+	).appendTo( "#qunit-fixture" ).get();
+
+	assert.t( "Underscores don't need escaping", "input[id=types_all]", [ "types_all" ] );
+
+	assert.t( "input[type=text]", "#form input[type=text]", [ "text1", "text2", "hidden2", "name" ] );
+	assert.t( "input[type=search]", "#form input[type=search]", [ "search" ] );
+
+	withScript = supportjQuery( "<div><span><script src=''/></span></div>" );
+	assert.ok( withScript.find( "#moretests script[src]" ).has( "script" ), "script[src] (jQuery #13777)" );
+
+	div = document.getElementById( "foo" );
+	assert.t( "Object.prototype property \"constructor\" (negative)", "[constructor]", [] );
+	assert.t( "Gecko Object.prototype property \"watch\" (negative)", "[watch]", [] );
+	div.setAttribute( "constructor", "foo" );
+	div.setAttribute( "watch", "bar" );
+	assert.t( "Object.prototype property \"constructor\"", "[constructor='foo']", [ "foo" ] );
+	assert.t( "Gecko Object.prototype property \"watch\"", "[watch='bar']", [ "foo" ] );
+
+	assert.t( "Value attribute is retrieved correctly", "input[value=Test]", [ "text1", "text2" ] );
+
+	if ( jQuery.find.compile ) {
+
+		// #12600
+		assert.ok(
+			jQuery( "<select value='12600'><option value='option' selected='selected'></option><option value=''></option></select>" )
+			.prop( "value", "option" )
+			.is( ":input[value='12600']" ),
+
+			":input[value=foo] selects select by attribute"
+		);
+		assert.ok( jQuery( "<input type='text' value='12600'/>" ).prop( "value", "option" ).is( ":input[value='12600']" ),
+			":input[value=foo] selects text input by attribute"
+		);
+	} else {
+		assert.ok( "skip", ":input not supported in selector-native" );
+		assert.ok( "skip", ":input not supported in selector-native" );
+	}
+
+>>>>>>> refs/remotes/jquery/master
 
 	// #11115
 	assert.ok( jQuery( "<input type='checkbox' checked='checked'/>" ).prop( "checked", false ).is( "[checked]" ),
@@ -261,7 +445,11 @@ QUnit.test( "disconnected nodes", function( assert ) {
 	assert.equal( $div.is( "div" ), true, "Make sure .is('nodeName') works on disconnected nodes." );
 } );
 
+<<<<<<< HEAD
 QUnit.test( "disconnected nodes - jQuery only", function( assert ) {
+=======
+QUnit[ jQuery.find.compile ? "test" : "skip" ]( "disconnected nodes", function( assert ) {
+>>>>>>> refs/remotes/jquery/master
 	assert.expect( 3 );
 
 	var $opt = jQuery( "<option></option>" ).attr( "value", "whipit" ).appendTo( "#qunit-fixture" ).detach();
@@ -272,10 +460,17 @@ QUnit.test( "disconnected nodes - jQuery only", function( assert ) {
 } );
 
 testIframe(
+<<<<<<< HEAD
 	"selector/html5_selector",
 	"attributes - jQuery.attr",
 	function( jQuery, window, document, assert ) {
 		assert.expect( 35 );
+=======
+	"attributes - jQuery.attr",
+	"selector/html5_selector.html",
+	function( assert, jQuery, window, document ) {
+		assert.expect( 38 );
+>>>>>>> refs/remotes/jquery/master
 
 		/**
 		 * Returns an array of elements with the given IDs
@@ -333,10 +528,17 @@ testIframe(
 		t( "Attribute Exists", "[indeterminate]",  [] );
 		t( "Attribute Exists", "[ismap]",          [ "img1" ] );
 		t( "Attribute Exists", "[itemscope]",      [ "div1" ] );
+<<<<<<< HEAD
 		// t( "Attribute Exists", "[loop]",           [ "video1" ] ); // IE 6/7 cannot differentiate here. loop is also used on img, input, and marquee tags as well as video/audio. getAttributeNode unfortunately also retrieves the property value.
 		t( "Attribute Exists", "[multiple]",       [ "select1" ] );
 		t( "Attribute Exists", "[muted]",          [ "audio1" ] );
 		// t( "Attribute Exists", "[nohref]",         [ "area1" ] ); // IE 6/7 keep this set to false regardless of presence. The attribute node is not retrievable.
+=======
+		t( "Attribute Exists", "[loop]",           [ "video1" ] );
+		t( "Attribute Exists", "[multiple]",       [ "select1" ] );
+		t( "Attribute Exists", "[muted]",          [ "audio1" ] );
+		t( "Attribute Exists", "[nohref]",         [ "area1" ] );
+>>>>>>> refs/remotes/jquery/master
 		t( "Attribute Exists", "[noresize]",       [ "textarea1" ] );
 		t( "Attribute Exists", "[noshade]",        [ "hr1" ] );
 		t( "Attribute Exists", "[nowrap]",         [ "td1", "div1" ] );
@@ -358,6 +560,7 @@ testIframe(
 		} );
 		t( "Enumerated attribute", "[spellcheck]", [ "span1" ] );
 
+<<<<<<< HEAD
 		// t( "tabindex selector does not retrieve all elements in IE6/7(#8473)", "form, [tabindex]", ["form1", "text1"] ); // sigh, FF12 QSA mistakenly includes video elements even though they have no tabindex attribute (see https://bugzilla.mozilla.org/show_bug.cgi?id=618737)
 		t( "Improperly named form elements do not interfere with form selections (#9570)", "form[name='formName']", [ "form1" ] );
 	}
@@ -398,6 +601,49 @@ QUnit.test( "jQuery.uniqueSort", function( assert ) {
 			this[ i ] = arr[ i ];
 		}
 	}
+=======
+		t( "tabindex selector does not retrieve all elements in IE6/7 (#8473)",
+			"form, [tabindex]", [ "form1", "text1" ] );
+		t( "Improperly named form elements do not interfere with form selections (#9570)", "form[name='formName']", [ "form1" ] );
+	}
+);
+
+QUnit.test( "jQuery.contains", function( assert ) {
+	assert.expect( 16 );
+
+	var container = document.getElementById( "nonnodes" ),
+		element = container.firstChild,
+		text = element.nextSibling,
+		nonContained = container.nextSibling,
+		detached = document.createElement( "a" );
+	assert.ok( element && element.nodeType === 1, "preliminary: found element" );
+	assert.ok( text && text.nodeType === 3, "preliminary: found text" );
+	assert.ok( nonContained, "preliminary: found non-descendant" );
+	assert.ok( jQuery.contains( container, element ), "child" );
+	assert.ok( jQuery.contains( container.parentNode, element ), "grandchild" );
+	assert.ok( jQuery.contains( container, text ), "text child" );
+	assert.ok( jQuery.contains( container.parentNode, text ), "text grandchild" );
+	assert.ok( !jQuery.contains( container, container ), "self" );
+	assert.ok( !jQuery.contains( element, container ), "parent" );
+	assert.ok( !jQuery.contains( container, nonContained ), "non-descendant" );
+	assert.ok( !jQuery.contains( container, document ), "document" );
+	assert.ok( !jQuery.contains( container, document.documentElement ), "documentElement (negative)" );
+	assert.ok( !jQuery.contains( container, null ), "Passing null does not throw an error" );
+	assert.ok( jQuery.contains( document, document.documentElement ), "documentElement (positive)" );
+	assert.ok( jQuery.contains( document, element ), "document container (positive)" );
+	assert.ok( !jQuery.contains( document, detached ), "document container (negative)" );
+} );
+
+QUnit.test( "jQuery.uniqueSort", function( assert ) {
+	assert.expect( 15 );
+
+	function Arrayish( arr ) {
+		var i = this.length = arr.length;
+		while ( i-- ) {
+			this[ i ] = arr[ i ];
+		}
+	}
+>>>>>>> refs/remotes/jquery/master
 	Arrayish.prototype = {
 		slice: [].slice,
 		sort: [].sort,
@@ -471,10 +717,17 @@ QUnit.test( "jQuery.uniqueSort", function( assert ) {
 } );
 
 testIframe(
+<<<<<<< HEAD
 	"selector/sizzle_cache",
 	"Sizzle cache collides with multiple Sizzles on a page",
 	function( jQuery, window, document, assert ) {
 		var $cached = window[ "$cached" ];
+=======
+	"Sizzle cache collides with multiple Sizzles on a page",
+	"selector/sizzle_cache.html",
+	function( assert, jQuery, window, document ) {
+		var $cached = window.$cached;
+>>>>>>> refs/remotes/jquery/master
 
 		assert.expect( 4 );
 		assert.notStrictEqual( jQuery, $cached, "Loaded two engines" );
@@ -512,8 +765,21 @@ QUnit.asyncTest( "Iframe dispatch should not affect jQuery (#13936)", 1, functio
 			form.submit();
 		}
 	} );
+<<<<<<< HEAD
 
 	iframeDoc.open();
 	iframeDoc.write( "<body><form id='navigate' action='?'></form></body>" );
 	iframeDoc.close();
+=======
+
+	iframeDoc.open();
+	iframeDoc.write( "<body><form id='navigate' action='?'></form></body>" );
+	iframeDoc.close();
+} );
+
+QUnit.test( "Ensure escapeSelector exists (escape tests in Sizzle)", function( assert ) {
+	assert.expect( 1 );
+
+	assert.equal( jQuery.escapeSelector( "#foo.bar" ), "\\#foo\\.bar", "escapeSelector present" );
+>>>>>>> refs/remotes/jquery/master
 } );

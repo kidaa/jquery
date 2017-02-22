@@ -1,5 +1,10 @@
 define( function() {
 
+<<<<<<< HEAD
+=======
+"use strict";
+
+>>>>>>> refs/remotes/jquery/master
 return function( n, elem ) {
 	var matched = [];
 
