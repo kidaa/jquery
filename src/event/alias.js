@@ -1,7 +1,11 @@
 define( [
 	"../core",
-	"../event"
+
+	"../event",
+	"./trigger"
 ], function( jQuery ) {
+
+"use strict";
 
 jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +

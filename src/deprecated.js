@@ -1,4 +1,8 @@
-define( function() {
+define( [
+	"./core"
+], function( jQuery ) {
+
+"use strict";
 
 jQuery.fn.extend( {
 
@@ -18,7 +22,17 @@ jQuery.fn.extend( {
 		return arguments.length === 1 ?
 			this.off( selector, "**" ) :
 			this.off( types, selector || "**", fn );
+	},
+	holdReady: function( hold ) {
+		if ( hold ) {
+			jQuery.readyWait++;
+		} else {
+			jQuery.ready( true );
+		}
 	}
 } );
+
+jQuery.isArray = Array.isArray;
+jQuery.parseJSON = JSON.parse;
 
 } );
